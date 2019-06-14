@@ -7,6 +7,7 @@ use App\Models\Coach\Coach;
 use App\Models\Activity\Activity;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Models\Customer\Customer;
 
 /**
  * Class RouteServiceProvider.
@@ -46,6 +47,12 @@ class RouteServiceProvider extends ServiceProvider
             $activity = new Activity;
 
             return Activity::withTrashed()->where($activity->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('customer', function ($value) {
+            $customer = new Customer();
+
+            return Customer::withTrashed()->where($customer->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();
