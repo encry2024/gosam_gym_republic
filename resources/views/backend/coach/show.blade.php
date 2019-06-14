@@ -15,8 +15,10 @@
             </div><!--card-body-->
         </div><!--card-->
     </div> <!--col-4-->
+</div> <!-- row -->
 
-    <div class="col-8">
+<div class="row">
+    <div class="col-4">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -42,8 +44,8 @@
                 </div>
             </div><!--card-body-->
         </div><!--card-->
-    </div> <!--col-4-->
-</div> <!-- row -->
+    </div> <!--col-8-->
+</div>
 
 <!-- Add Activities Modal -->
 <form action="{{ route('admin.coach.assignActivities', ['coach' => $coach->id]) }}" method="POST" class="modal fade in" tabindex="-1" role="dialog" id="assignActivitiesModal">
