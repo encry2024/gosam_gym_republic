@@ -147,6 +147,6 @@ class CoachController extends Controller
     {
         $coach = $this->coachRepository->assignActivities($coach, $request->only('activities'));
 
-        return redirect()->back()->withFlashSuccess('Activities was successfully added to coach.');
+        return redirect()->back()->withFlashSuccess('Coach\'s activities was successfully updated.');
     }
 }

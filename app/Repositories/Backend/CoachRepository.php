@@ -159,6 +159,12 @@ class CoachRepository extends BaseRepository
     {
         $activityIdArr = array();
         return DB::transaction(function () use ($coach, $data, $activityIdArr) {
+            if (count($data) == 0) {
+                $coach->activityCoaches()->detach();
+
+                return $coach;
+            }
+
             foreach ($data['activities'] as $activity) {
                 $findActivity = Activity::whereName($activity)->first();
 
@@ -166,19 +172,6 @@ class CoachRepository extends BaseRepository
             }
 
             $coach->activityCoaches()->sync($activityIdArr);
-
-            return $coach;
-        });
-    }
-
-    public function detachActivities($coach, array $data) : Coach
-    {
-        return DB::transaction(function () use ($coach, $data) {
-            foreach ($data['activity'] as $activity) {
-                $activity = Activity::whereName($activity)->first();
-
-                $coach->activityCoaches->detach($activity->id);
-            }
 
             return $coach;
         });
