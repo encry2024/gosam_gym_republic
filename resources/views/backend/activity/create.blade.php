@@ -60,24 +60,24 @@
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.activities.coach_fee'))->class('col-md-2 form-control-label')->for('coach_fee') }}
-
-                            <div class="col-md-10">
-                                {{ html()->text('coach_fee')
-                                    ->class('form-control')
-                                    ->placeholder(__('validation.attributes.backend.activities.coach_fee'))
-                                    ->attribute('maxlength', 191)
-                                    ->required() }}
-                            </div><!--col-->
-                        </div><!--form-group-->
-
-                        <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))->class('col-md-2 form-control-label')->for('monthly_rate') }}
 
                             <div class="col-md-10">
                                 {{ html()->text('monthly_rate')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                    ->attribute('maxlength', 191)
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.activities.coach_fee'))->class('col-md-2 form-control-label')->for('coach_fee') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('coach_fee')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.activities.coach_fee'))
                                     ->attribute('maxlength', 191)
                                     ->required() }}
                             </div><!--col-->
@@ -103,6 +103,7 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.activities.sessions'))
                                     ->attribute('maxlength', 191)
+                                    ->value('12')
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
@@ -115,6 +116,7 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.activities.quota'))
                                     ->attribute('maxlength', 191)
+                                    ->value('2')
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
@@ -136,3 +138,7 @@
         </div><!--card-->
     {{ html()->form()->close() }}
 @endsection
+
+@push('before-scripts')
+<script></script>
+@endpush

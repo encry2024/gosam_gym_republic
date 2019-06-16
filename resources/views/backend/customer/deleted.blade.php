@@ -24,7 +24,7 @@
                             <th>@lang('labels.backend.customers.table.first_name')</th>
                             <th>@lang('labels.backend.customers.table.address')</th>
                             <th>@lang('labels.backend.customers.table.contact_number')</th>
-                            <th>@lang('labels.backend.customers.table.updated_at')</th>
+                            <th>@lang('labels.backend.customers.table.deleted_at')</th>
                             <th>@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
@@ -37,7 +37,7 @@
                                     <td>{{ $customer->first_name }}</td>
                                     <td>{{ $customer->address }}</td>
                                     <td>{{ $customer->contact_number }}</td>
-                                    <td>{{ date('F d, Y h:i A', strtotime($customer->email)) }}</td>
+                                    <td>{{ date('F d, Y h:i A', strtotime($customer->deleted_at)) }}</td>
                                     <td>{!! $customer->action_buttons !!}</td>
                                 </tr>
                             @endforeach

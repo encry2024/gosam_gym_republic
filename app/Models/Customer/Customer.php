@@ -19,8 +19,7 @@ class Customer extends Model
         'age',
         'address',
         'contact_number',
-        'emergency_number',
-        'membership_status'
+        'emergency_number'
     ];
 
     protected $appends = ['name'];

@@ -32,8 +32,3 @@
     <label for="Age">Age</label>
     <input class="form-control" id="Age" name="age" value="{{ $customer->age }}" disabled>
 </div>
-
-<div class="form-group">
-    <label for="MembershipStatus">Membership Status</label>
-    <input class="form-control" id="MembershipStatus" name="membership_status" value="{{ $customer->membership_status }}" disabled>
-</div>

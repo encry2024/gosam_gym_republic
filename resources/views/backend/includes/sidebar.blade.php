@@ -14,40 +14,40 @@
             </li>
 
             <li class="nav-item nav-dropdown {{
-                active_class(Active::checkUriPattern('admin/customer*'), 'open')
+                active_class(Active::checkUriPattern('admin/activity*'), 'open')
                 }}">
                 <a class="nav-link nav-dropdown-toggle {{
-                    active_class(Active::checkUriPattern('admin/customer*'))
+                    active_class(Active::checkUriPattern('admin/activity*'))
                 }}" href="#">
-                    Customer
+                    Activity
                 </a>
 
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/customer'))
-                            }}" href="{{ route('admin.customer.index') }}">
+                            active_class(Active::checkUriPattern('admin/activity'))
+                            }}" href="{{ route('admin.activity.index') }}">
                             List
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/customer/create'))
-                            }}" href="{{ route('admin.customer.create') }}">
+                            active_class(Active::checkUriPattern('admin/activity/create'))
+                            }}" href="{{ route('admin.activity.create') }}">
                             Create
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/customer/deleted'))
-                            }}" href="{{ route('admin.customer.deleted') }}">
+                            active_class(Active::checkUriPattern('admin/activity/deleted'))
+                            }}" href="{{ route('admin.activity.deleted') }}">
                             Deleted
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> <!-- activity -->
 
             <li class="nav-item nav-dropdown {{
                 active_class(Active::checkUriPattern('admin/coach*'), 'open')
@@ -83,43 +83,43 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> <!-- coach -->
 
             <li class="nav-item nav-dropdown {{
-                active_class(Active::checkUriPattern('admin/activity*'), 'open')
+                active_class(Active::checkUriPattern('admin/customer*'), 'open')
                 }}">
                 <a class="nav-link nav-dropdown-toggle {{
-                    active_class(Active::checkUriPattern('admin/activity*'))
+                    active_class(Active::checkUriPattern('admin/customer*'))
                 }}" href="#">
-                    Activity
+                    Customer
                 </a>
 
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/activity'))
-                            }}" href="{{ route('admin.activity.index') }}">
+                            active_class(Active::checkUriPattern('admin/customer'))
+                            }}" href="{{ route('admin.customer.index') }}">
                             List
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/activity/create'))
-                            }}" href="{{ route('admin.activity.create') }}">
+                            active_class(Active::checkUriPattern('admin/customer/create'))
+                            }}" href="{{ route('admin.customer.create') }}">
                             Create
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/activity/deleted'))
-                            }}" href="{{ route('admin.activity.deleted') }}">
+                            active_class(Active::checkUriPattern('admin/customer/deleted'))
+                            }}" href="{{ route('admin.customer.deleted') }}">
                             Deleted
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> <!-- customer -->
 
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')

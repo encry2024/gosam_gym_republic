@@ -137,7 +137,7 @@ class CustomerController extends Controller
 
         $customer = $this->customerRepository->deleteById($customer->id);
 
-        event(new CustomerDeleted(Auth::user()->full_name, $customer));
+        event(new CustomerDeleted(Auth::user()->full_name, $customerName));
 
         return redirect()->route('admin.customer.deleted')->withFlashSuccess(__('alerts.backend.customers.deleted', ['customer' => $customerName]));
     }

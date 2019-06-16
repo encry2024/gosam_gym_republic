@@ -77,12 +77,11 @@ class CustomerRepository extends BaseRepository
                 'age' => $age,
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'],
-                'emergency_number' => $data['emergency_number'],
-                'membership_status' => 'IN-ACTIVE'
+                'emergency_number' => $data['emergency_number']
             ]);
 
             if ($customer) {
-                event(new CustomerCreated(Auth::user()->full_name, $customer));
+                event(new CustomerCreated(Auth::user()->full_name, $customer->name));
 
                 return $customer;
             }
@@ -114,10 +113,9 @@ class CustomerRepository extends BaseRepository
                 'age' => $age,
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'],
-                'emergency_number' => $data['emergency_number'],
-                'membership_status' => 'IN-ACTIVE'
+                'emergency_number' => $data['emergency_number']
             ])) {
-                event(new CustomerUpdated(Auth::user()->full_name, $customer));
+                event(new CustomerUpdated(Auth::user()->full_name, $customer->name));
 
                 return $customer;
             }
@@ -142,7 +140,7 @@ class CustomerRepository extends BaseRepository
 
         return DB::transaction(function () use ($customer) {
             if ($customer->forceDelete()) {
-                event(new CustomerPermanentlyDeleted(Auth::user()->full_name, $customer));
+                event(new CustomerPermanentlyDeleted(Auth::user()->full_name, $customer->name));
 
                 return $customer;
             }
@@ -164,7 +162,7 @@ class CustomerRepository extends BaseRepository
         }
 
         if ($customer->restore()) {
-            event(new CustomerRestored(Auth::user()->full_name, $customer));
+            event(new CustomerRestored(Auth::user()->full_name, $customer->name));
 
             return $customer;
         }

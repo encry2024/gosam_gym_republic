@@ -21,7 +21,7 @@
                         <tr>
                             <th>@lang('labels.backend.customers.table.last_name')</th>
                             <th>@lang('labels.backend.customers.table.first_name')</th>
-                            <th>@lang('labels.backend.customers.table.membership_status')</th>
+                            <th>@lang('labels.backend.customers.table.email')</th>
                             <th>@lang('labels.backend.customers.table.contact_number')</th>
                             <th>@lang('labels.backend.customers.table.updated_at')</th>
                             <th>@lang('labels.general.actions')</th>
@@ -32,7 +32,7 @@
                             <tr>
                                 <td>{{ $customer->last_name }}</td>
                                 <td>{{ $customer->first_name }}</td>
-                                <td>{{ $customer->membership_status }}</td>
+                                <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->contact_number }}</td>
                                 <td>{{ $customer->updated_at->diffForHumans() }}</td>
                                 <td>{!! $customer->action_buttons !!}</td>
