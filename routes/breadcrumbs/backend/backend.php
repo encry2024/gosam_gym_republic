@@ -8,3 +8,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';
 require __DIR__.'/coach.php';
 require __DIR__.'/activity.php';
+require __DIR__.'/customer.php';

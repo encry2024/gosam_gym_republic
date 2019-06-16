@@ -48,6 +48,22 @@ class CoachEventListener
     }
 
     /**
+     * @param $event
+     */
+    public function onCoachAssignActivity($event)
+    {
+        \Log::info('User "'.$event->doer.'" assigned Activities "'.$event->activities.'" to Coach "'.$event->object.'"');
+    }
+
+    /**
+     * @param $event
+     */
+    public function onCoachRemovedActivity($event)
+    {
+        \Log::info('User "'.$event->doer.'" removed all activities to Coach "'.$event->object.'"');
+    }
+
+    /**
      * Register the listeners for the subscriber.
      *
      * @param \Illuminate\Events\Dispatcher $events
@@ -77,6 +93,16 @@ class CoachEventListener
         $events->listen(
             \App\Events\Backend\Coach\CoachRestored::class,
             'App\Listeners\Backend\Coach\CoachEventListener@onRestored'
+        );
+
+        $events->listen(
+            \App\Events\Backend\Coach\CoachAssignActivity::class,
+            'App\Listeners\Backend\Coach\CoachEventListener@onCoachAssignActivity'
+        );
+
+        $events->listen(
+            \App\Events\Backend\Coach\CoachRemovedActivity::class,
+            'App\Listeners\Backend\Coach\CoachEventListener@onCoachRemovedActivity'
         );
     }
 }

@@ -12,6 +12,8 @@ use App\Events\Backend\Coach\CoachRestored;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Auth;
 use App\Models\Activity\Activity;
+use App\Events\Backend\Coach\CoachAssignActivity;
+use App\Events\Backend\Coach\CoachRemovedActivity;
 
 /**
  * Class CoachRepository.
@@ -69,7 +71,8 @@ class CoachRepository extends BaseRepository
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'address' => $data['address'],
-                'contact_number' => $data['contact_number']
+                'contact_number' => $data['contact_number'],
+                'employment_type' => $data['employment_type']
             ]);
 
             if ($coach) {
@@ -78,7 +81,7 @@ class CoachRepository extends BaseRepository
                 return $coach;
             }
 
-            throw new GeneralException(__('exceptions.backend.access.users.create_error'));
+            throw new GeneralException(__('exceptions.backend.coaches.create_error'));
         });
     }
 
@@ -98,14 +101,15 @@ class CoachRepository extends BaseRepository
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'address' => $data['address'],
-                'contact_number' => $data['contact_number']
+                'contact_number' => $data['contact_number'],
+                'employment_type' => $data['employment_type']
             ])) {
                 event(new CoachUpdated(Auth::user()->full_name, $coach));
 
                 return $coach;
             }
 
-            throw new GeneralException(__('exceptions.backend.access.users.update_error'));
+            throw new GeneralException(__('exceptions.backend.coaches.update_error'));
         });
     }
 
@@ -120,7 +124,7 @@ class CoachRepository extends BaseRepository
     public function forceDelete(Coach $coach) : Coach
     {
         if ($coach->deleted_at === null) {
-            throw new GeneralException(__('exceptions.backend.access.users.delete_first'));
+            throw new GeneralException(__('exceptions.backend.coaches.delete_first'));
         }
 
         return DB::transaction(function () use ($coach) {
@@ -130,7 +134,7 @@ class CoachRepository extends BaseRepository
                 return $coach;
             }
 
-            throw new GeneralException(__('exceptions.backend.access.users.delete_error'));
+            throw new GeneralException(__('exceptions.backend.coaches.delete_error'));
         });
     }
 
@@ -143,7 +147,7 @@ class CoachRepository extends BaseRepository
     public function restore(Coach $coach) : Coach
     {
         if ($coach->deleted_at === null) {
-            throw new GeneralException(__('exceptions.backend.access.users.cant_restore'));
+            throw new GeneralException(__('exceptions.backend.coaches.cant_restore'));
         }
 
         if ($coach->restore()) {
@@ -152,18 +156,26 @@ class CoachRepository extends BaseRepository
             return $coach;
         }
 
-        throw new GeneralException(__('exceptions.backend.access.users.restore_error'));
+        throw new GeneralException(__('exceptions.backend.coaches.restore_error'));
     }
 
-    public function assignActivities($coach, array $data) : Coach
+    public function assignActivities($coach, array $data)
     {
         $activityIdArr = array();
-        return DB::transaction(function () use ($coach, $data, $activityIdArr) {
+        $activities = "";
+
+        return DB::transaction(function () use ($coach, $data, $activityIdArr, $activities) {
+
+
             if (count($data) == 0) {
                 $coach->activityCoaches()->detach();
 
+                event(new CoachRemovedActivity(Auth::user()->name, $activities, $coach->name));
+
                 return $coach;
             }
+
+            $activities = implode(", ", $data['activities']);
 
             foreach ($data['activities'] as $activity) {
                 $findActivity = Activity::whereName($activity)->first();
@@ -173,7 +185,9 @@ class CoachRepository extends BaseRepository
 
             $coach->activityCoaches()->sync($activityIdArr);
 
-            return $coach;
+            event(new CoachAssignActivity(Auth::user()->name, $activities, $coach->name));
+
+            return ['coach' => $coach, 'activities' => $activities];
         });
     }
 }

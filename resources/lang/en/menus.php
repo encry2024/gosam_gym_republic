@@ -13,6 +13,11 @@ return [
     */
 
     'backend' => [
+        'customers' => [
+            'view'      => ':customer',
+            'deleted'   => 'Deleted Customers',
+        ],
+
         'activities' => [
             'view'      => ':activity',
             'deleted'   => 'Deleted Activities',

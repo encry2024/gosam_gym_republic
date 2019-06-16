@@ -35,6 +35,55 @@ return [
     ],
 
     'backend' => [
+        'customers' => [
+            'management'    => 'Customer Management',
+            'list'          => 'Customer List',
+            'create'        => 'Create Customer',
+            'deleted'       => 'Deleted Customers',
+
+            'table' => [
+                'first_name'        => 'First Name',
+                'last_name'         => 'Last Name',
+                'email'             => 'E-mail',
+                'address'           => 'Address',
+                'contact_number'    => 'Contact Number',
+                'emergency_number'  => 'Emergency Contact Number',
+                'date_of_birth'     => 'Date of Birth',
+                'age'               => 'Age',
+                'membership_status'  => 'Membership Status',
+                'created_at'        => 'Date Created',
+                'updated_at'        => 'Last Updated',
+                'deleted_at'        => 'Date Deleted',
+                'total'             => 'activity total|customers total'
+            ],
+
+            'tabs' => [
+                'titles' => [
+                    'overview' => 'Overview',
+                    'history' => 'History',
+                ],
+
+                'content' => [
+                    'overview' => [
+                        'first_name'        => 'First Name',
+                        'last_name'         => 'Last Name',
+                        'email'             => 'E-mail',
+                        'address'           => 'Address',
+                        'contact_number'    => 'Contact Number',
+                        'emergency_number'  => 'Emergency Contact Number',
+                        'date_of_birth'     => 'Date of Birth',
+                        'age'               => 'Age',
+                        'membership_status'  => 'Membership Status',
+                        'created_at'        => 'Date Created',
+                        'updated_at'        => 'Last Updated',
+                        'deleted_at'        => 'Date Deleted',
+                    ],
+                ],
+            ],
+
+            'view' => 'View :customer',
+        ],
+
         'activities' => [
             'management' => 'Activity Management',
             'list' => 'Activity List',
@@ -79,7 +128,7 @@ return [
                 ],
             ],
 
-            'view' => 'View :activity Activity',
+            'view' => 'View :activity',
         ],
 
         'coaches' => [
@@ -120,7 +169,7 @@ return [
                 ],
             ],
 
-            'view' => ':coach',
+            'view' => 'View :coach',
         ],
 
         'access' => [

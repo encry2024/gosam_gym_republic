@@ -3,50 +3,48 @@
 @section('title', __('labels.backend.coaches.management') . ' | ' . __('labels.backend.coaches.view', ['coach' => $coach->name]))
 
 @section('content')
-<div class="col">
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h5>Coach Information</h5>
-                    </div>
-                    <hr>
-                    @include('backend.coach.show.tabs.overview')
-                </div><!--card-body-->
-            </div><!--card-->
-        </div> <!--col-4-->
-    </div> <!-- row -->
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h5>Coach Information</h5>
+                </div>
+                <hr>
+                @include('backend.coach.show.tabs.overview')
+            </div><!--card-body-->
+        </div><!--card-->
+    </div> <!--col-4-->
+</div> <!-- row -->
 
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <h4 class="card-title mb-0">
-                                Coach Activities
-                            </h4>
-                        </div><!--col-->
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Coach Activities
+                        </h4>
+                    </div><!--col-->
 
-                        <div class="col-sm-7">
-                            <div class="btn-toolbar float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
-                                <a href="#" data-toggle="modal" data-target="#assignActivitiesModal" class="btn btn-success ml-1" rel="tooltip" data-original-title="Assign Activities"><i class="fas fa-plus-circle"></i></a>
-                            </div><!--btn-toolbar-->
-                        </div><!--col-->
-                    </div>
-                    <!--  -->
-                    <hr>
-
+                    <div class="col-sm-7">
+                        <div class="btn-toolbar float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
+                            <a href="#" data-toggle="modal" data-target="#assignActivitiesModal" class="btn btn-success ml-1" rel="tooltip" data-original-title="Assign Activities"><i class="fas fa-plus-circle"></i></a>
+                        </div><!--btn-toolbar-->
+                    </div><!--col-->
+                </div>
+                <!--  -->
+                <hr>
                     <div class="row">
                         <div class="col">
                             @include('backend.coach.show.tabs.activities')
                         </div>
                     </div>
-                </div><!--card-body-->
-            </div><!--card-->
-        </div> <!--col-4-->
-    </div>
+                </div>
+            </div><!--card-body-->
+        </div><!--card-->
+    </div> <!--col-8-->
 </div>
 
 <!-- Add Activities Modal -->

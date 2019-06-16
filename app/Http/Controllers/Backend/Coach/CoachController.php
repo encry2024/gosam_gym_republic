@@ -67,7 +67,8 @@ class CoachController extends Controller
             'first_name',
             'last_name',
             'address',
-            'contact_number'
+            'contact_number',
+            'employment_type'
         ));
 
         return redirect()->route('admin.coach.index')->withFlashSuccess(__('alerts.backend.coaches.created', ['coach' => $coach->name]));
@@ -119,7 +120,8 @@ class CoachController extends Controller
             'first_name',
             'last_name',
             'address',
-            'contact_number'
+            'contact_number',
+            'employment_type'
         ));
 
         return redirect()->route('admin.coach.index')->withFlashSuccess(__('alerts.backend.coaches.updated', ['coach' => $coach->name]));
@@ -145,8 +147,14 @@ class CoachController extends Controller
 
     public function assignActivities(ManageCoachRequest $request, Coach $coach)
     {
+        $checkRelationship = count($coach->activityCoaches);
+
         $coach = $this->coachRepository->assignActivities($coach, $request->only('activities'));
 
-        return redirect()->back()->withFlashSuccess('Coach\'s activities was successfully updated.');
+        if (!$request->has('activities')) {
+            return redirect()->back()->withFlashSuccess(__('alerts.backend.coaches.removed_activities', ['coach' => $coach->name]));
+        }
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.coaches.assigned_activities', ['coach' => $coach['coach']['name'], 'activities' => trim($coach['activities'], ", ")]));
     }
 }

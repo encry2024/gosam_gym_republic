@@ -14,6 +14,42 @@
             </li>
 
             <li class="nav-item nav-dropdown {{
+                active_class(Active::checkUriPattern('admin/customer*'), 'open')
+                }}">
+                <a class="nav-link nav-dropdown-toggle {{
+                    active_class(Active::checkUriPattern('admin/customer*'))
+                }}" href="#">
+                    Customer
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/customer'))
+                            }}" href="{{ route('admin.customer.index') }}">
+                            List
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/customer/create'))
+                            }}" href="{{ route('admin.customer.create') }}">
+                            Create
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/customer/deleted'))
+                            }}" href="{{ route('admin.customer.deleted') }}">
+                            Deleted
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item nav-dropdown {{
                 active_class(Active::checkUriPattern('admin/coach*'), 'open')
                 }}">
                 <a class="nav-link nav-dropdown-toggle {{

@@ -13,6 +13,14 @@ return [
     */
 
     'backend' => [
+        'customers' => [
+            'already_exists' => 'Customer ":customer" already exists. Please choose a different name.',
+            'create_error' => 'There was a problem creating customer ":customer". Please try again.',
+            'delete_error' => 'There was a problem deleting customer ":customer". Please try again.',
+            'not_found' => 'Customer ":customer" does not exist.',
+            'update_error' => 'There was a problem updating customer ":customer". Please try again.',
+        ],
+
         'activities' => [
             'already_exists' => 'Activity ":activity" already exists. Please choose a different name.',
             'create_error' => 'There was a problem creating activity ":activity". Please try again.',

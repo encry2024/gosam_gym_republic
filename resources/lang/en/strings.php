@@ -13,6 +13,12 @@ return [
     */
 
     'backend' => [
+        'customers' => [
+            'delete_customer_confirm' => 'Are you sure you want to delete this customer permanently? Anywhere in the application that references this customer\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
+            'no_deleted' => 'There are no deleted customers.',
+            'restore_customer_confirm' => 'Restore this customer to its original state?',
+        ],
+
         'activities' => [
             'delete_activity_confirm' => 'Are you sure you want to delete this activity permanently? Anywhere in the application that references this activity\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
             'no_deleted' => 'There are no deleted activities.',

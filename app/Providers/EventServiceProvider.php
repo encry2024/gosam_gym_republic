@@ -36,6 +36,8 @@ class EventServiceProvider extends ServiceProvider
         \App\Listeners\Backend\Auth\Role\RoleEventListener::class,
         \App\Listeners\Backend\Coach\CoachEventListener::class,
         \App\Listeners\Backend\Activity\ActivityEventListener::class,
+        \App\Listeners\Backend\Customer\CustomerEventListener::class,
+
     ];
 
     /**

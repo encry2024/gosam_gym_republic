@@ -145,6 +145,16 @@ return [
 
     'attributes' => [
         'backend' => [
+            'customers' => [
+                'first_name'        => 'First Name',
+                'last_name'         => 'Last Name',
+                'email'             => 'E-mail',
+                'address'           => 'Address',
+                'contact_number'    => 'Contact Number',
+                'emergency_number'  => 'Emergency Contact Number',
+                'date_of_birth'     => 'Date of Birth'
+            ],
+
             'activities' => [
                 'name'              => 'Activity Name',
                 'member_rate'       => 'Member Rate',
@@ -160,7 +170,8 @@ return [
                 'first_name' => 'First Name',
                 'last_name' => 'Last Name',
                 'address' => 'Address',
-                'contact_number' => 'Contact Number'
+                'contact_number' => 'Contact Number',
+                'employment_type' => "Employment Type"
             ],
 
             'access' => [

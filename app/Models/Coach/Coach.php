@@ -21,7 +21,8 @@ class Coach extends Model implements AuditableInterface
         'first_name',
         'last_name',
         'address',
-        'contact_number'
+        'contact_number',
+        'employment_type'
     ];
 
     protected $appends = ['name'];

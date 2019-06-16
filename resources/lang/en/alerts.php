@@ -13,6 +13,14 @@ return [
     */
 
     'backend' => [
+        'customers' => [
+            'created' => 'Customer ":customer" was successfully created.',
+            'deleted' => 'Customer ":customer" was successfully deleted.',
+            'updated' => 'Customer ":customer" was successfully updated.',
+            'restored' => 'Customer ":customer" was successfully restored.',
+            'deleted_permanently' => 'Customer ":customer" was successfully deleted permanently.'
+        ],
+
         'activities' => [
             'created' => 'Activity ":activity" was successfully created.',
             'deleted' => 'Activity ":activity" was successfully deleted.',
@@ -25,6 +33,8 @@ return [
             'deleted' => 'Coach ":coach" was successfully deleted.',
             'updated' => 'Coach ":coach" was successfully updated.',
             'restored' => 'Coach ":coach" was successfully restored.',
+            'assigned_activities' => 'Activities ":activities" was successfully assigned to this coach.',
+            'removed_activities' => 'All activities was successfully removed to this coach.'
         ],
 
         'roles' => [
