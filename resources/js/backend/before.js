@@ -8,3 +8,7 @@
 import '../bootstrap';
 import 'pace';
 import '../plugins';
+
+$(function() {
+    $('[rel="tooltip"]').tooltip({trigger: "hover"});
+});
