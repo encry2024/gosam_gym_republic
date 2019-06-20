@@ -9,7 +9,7 @@
                 <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/dashboard'))
                 }}" href="{{ route('admin.dashboard') }}">
-                    @lang('menus.backend.sidebar.dashboard')
+                    <i class="nav-icon fas fa-dashcube"></i> @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
 
@@ -19,7 +19,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/activity*'))
                 }}" href="#">
-                    Activity
+                    <i class="nav-icon fas fa-dumbbell"></i> Activities
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -55,7 +55,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/coach*'))
                 }}" href="#">
-                    Coach
+                    <i class="nav-icon fas fa-chalkboard-teacher"></i> Coaches
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -91,7 +91,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/customer*'))
                 }}" href="#">
-                    Customer
+                    <i class="nav-icon fas fa-users"></i> Customers
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -115,6 +115,34 @@
                         <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/customer/deleted'))
                             }}" href="{{ route('admin.customer.deleted') }}">
+                            Deleted
+                        </a>
+                    </li>
+                </ul>
+            </li> <!-- customer -->
+
+            <li class="nav-item nav-dropdown {{
+                active_class(Active::checkUriPattern('admin/membership*'), 'open')
+                }}">
+                <a class="nav-link nav-dropdown-toggle {{
+                    active_class(Active::checkUriPattern('admin/membership*'))
+                }}" href="#">
+                    <i class="nav-icon fas fa-certificate"></i> Memberships
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/membership'))
+                            }}" href="{{ route('admin.membership.index') }}">
+                            List
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/membership/deleted'))
+                            }}" href="{{ route('admin.membership.deleted') }}">
                             Deleted
                         </a>
                     </li>

@@ -13,6 +13,14 @@ return [
     */
 
     'backend' => [
+        'memberships' => [
+            'created' => 'Membership ":membership" was successfully created.',
+            'deleted' => 'Membership ":membership" was successfully deleted.',
+            'updated' => 'Membership ":membership" was successfully updated.',
+            'restored' => 'Membership ":membership" was successfully restored.',
+            'deleted_permanently' => 'Membership ":membership" was successfully deleted permanently.'
+        ],
+
         'customers' => [
             'created' => 'Customer ":customer" was successfully created.',
             'deleted' => 'Customer ":customer" was successfully deleted.',

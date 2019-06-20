@@ -35,6 +35,53 @@ return [
     ],
 
     'backend' => [
+        'memberships' => [
+            'management'    => 'Membership Management',
+            'list'          => 'Membership List',
+            'create'        => 'Create Membership',
+            'deleted'       => 'Deleted Memberships',
+
+            'table' => [
+                'customer_name'             => 'Customer Name',
+                'activity_name'             => 'Last Name',
+                'coach_name'                => 'Coach Name',
+                'activity_date_registered'  => 'Date Activity Registered',
+                'activity_date_expiry'      => 'Activity Membership Expiry',
+                'fee'                       => 'Monthly Membership Fee',
+                'date_registered'           => 'Membership Date Registered',
+                'date_expiry'               => 'Membership Expiration Date',
+                'created_at'                => 'Date Created',
+                'updated_at'                => 'Last Updated',
+                'deleted_at'                => 'Date Deleted',
+                'total'                     => 'membership total|memberships total'
+            ],
+
+            'tabs' => [
+                'titles' => [
+                    'overview' => 'Overview',
+                    'history' => 'History',
+                ],
+
+                'content' => [
+                    'overview' => [
+                        'customer_name'             => 'Customer Name',
+                        'activity_name'             => 'Last Name',
+                        'coach_name'                => 'Coach Name',
+                        'activity_date_registered'  => 'Date Activity Registered',
+                        'activity_date_expiry'      => 'Activity Membership Expiry',
+                        'fee'                       => 'Monthly Membership Fee',
+                        'date_registered'           => 'Membership Date Registered',
+                        'date_expiry'               => 'Membership Expiration Date',
+                        'created_at'                => 'Date Created',
+                        'updated_at'                => 'Last Updated',
+                        'deleted_at'                => 'Date Deleted',
+                    ],
+                ],
+            ],
+
+            'view' => 'View :membership',
+        ],
+
         'customers' => [
             'management'    => 'Customer Management',
             'list'          => 'Customer List',
@@ -53,7 +100,7 @@ return [
                 'created_at'        => 'Date Created',
                 'updated_at'        => 'Last Updated',
                 'deleted_at'        => 'Date Deleted',
-                'total'             => 'activity total|customers total'
+                'total'             => 'customer total|customers total'
             ],
 
             'tabs' => [

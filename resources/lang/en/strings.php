@@ -13,6 +13,12 @@ return [
     */
 
     'backend' => [
+        'memberships' => [
+            'delete_membership_confirm' => 'Are you sure you want to delete this membership permanently? Anywhere in the application that references this membership\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
+            'no_deleted' => 'There are no deleted memberships.',
+            'restore_membership_confirm' => 'Restore this membership to its original state?',
+        ],
+
         'customers' => [
             'delete_customer_confirm' => 'Are you sure you want to delete this customer permanently? Anywhere in the application that references this customer\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
             'no_deleted' => 'There are no deleted customers.',

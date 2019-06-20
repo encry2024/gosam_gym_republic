@@ -145,6 +145,16 @@ return [
 
     'attributes' => [
         'backend' => [
+            'memberships' => [
+                'customer_id'                   => 'Customer Name',
+                'activity_id'                   => 'Activity',
+                'coach_id'                      => 'Coach',
+                'activity_date_subscription'    => 'Activity Date Registered',
+                'activity_date_expiry'          => 'Activity Date Expiry',
+                'fee'                           => 'Membership Fee',
+                'date_registered'               => 'Date Registered'
+            ],
+
             'customers' => [
                 'first_name'        => 'First Name',
                 'last_name'         => 'Last Name',
