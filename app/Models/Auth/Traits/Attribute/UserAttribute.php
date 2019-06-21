@@ -279,7 +279,7 @@ trait UserAttribute
         }
 
         return '
-    	<div class="btn-group" role="group" aria-label="'.__('labels.backend.access.users.user_actions').'">
+    	<div class="btn-group btn-group-sm" role="group" aria-label="'.__('labels.backend.access.users.user_actions').'">
 		  '.$this->show_button.'
 		  '.$this->edit_button.'
 

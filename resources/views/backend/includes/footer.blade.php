@@ -1,11 +1,14 @@
-<footer class="app-footer">
-    <div>
-        <strong>@lang('labels.general.copyright') &copy; {{ date('Y') }}
-            <a href="http://laravel-boilerplate.com">
-                @lang('strings.backend.general.boilerplate_link')
-            </a>
-        </strong> @lang('strings.backend.general.all_rights_reserved')
-    </div>
+<footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn" style="position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3.5rem;">
+    <!-- Social icons -->
 
-    <div class="ml-auto">Theme by <a href="http://coreui.io">CoreUI</a></div>
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+        © 2019 Copyright:
+        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> GOSAM GYM REPUBLIC </a>
+    </div>
+    <!--/.Copyright-->
+
 </footer>

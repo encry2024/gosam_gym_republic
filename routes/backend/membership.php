@@ -19,6 +19,10 @@ Route::group([
         // Deleted
         Route::get('delete', [MembershipStatusController::class, 'delete'])->name('membership.delete-permanently');
         Route::get('restore', [MembershipStatusController::class, 'restore'])->name('membership.restore');
+
+        // Membership Renewal
+        Route::patch('renew', [MembershipStatusController::class, 'renew'])->name('membership.renew');
+        Route::patch('cancel', [MembershipStatusController::class, 'cancel'])->name('membership.cancel');
     });
 
 });
