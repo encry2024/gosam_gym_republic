@@ -38,8 +38,14 @@
                         </div><!--col-->
 
                         <div class="col-sm-5">
-                            <div class="btn-toolbar float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
-                                <a href="#" data-toggle="modal" data-target="#registerActivityModal" class="btn btn-md btn-success ml-1" rel="tooltip" data-original-title="Register Activity"><i class="fas fa-plus-circle"></i></a>
+                            <div class="btn-toolbar float-right" role="toolbar"
+                                 aria-label="@lang('labels.general.toolbar_btn_groups')">
+                                <a href="#" data-toggle="modal"
+                                   data-target="#registerActivityModal"
+                                   class="btn btn-md btn-success ml-1"
+                                   rel="tooltip"
+                                   data-original-title="Register Activity">
+                                    <i class="fas fa-plus-circle"></i></a>
                             </div><!--btn-toolbar-->
                         </div><!--col-->
                     </div><!--row-->
@@ -84,10 +90,12 @@
                 <div class="row mt-4 mb-4">
                     <div class="col">
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.activity_id'))->class('col-md-4 form-control-label')->for('activity_id') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_id'))
+                            ->class('col-md-4 form-control-label')->for('activity_id') }}
 
                             <div class="col-md-8">
-                                <select name="activity_id" id="activity_id" class="form-control">
+                                <select name="activity_id" id="activity_id" class="form-control select2-single">
+                                    <option value=""></option>
                                     @foreach ($activities as $activity)
                                         <option value="{{ $activity->id }}">{{ $activity->name }}</option>
                                     @endforeach
@@ -96,19 +104,19 @@
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.coach_id'))->class('col-md-4 form-control-label')->for('coach_id') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.coach_id'))
+                            ->class('col-md-4 form-control-label')->for('coach_id') }}
 
                             <div class="col-md-8">
-                                {{ html()->text('coach_id')
-                                    ->class('form-control')
-                                    ->placeholder(__('validation.attributes.backend.memberships.coach_id'))
-                                    ->attribute('maxlength', 191)
-                                    ->required() }}
+                                <select name="coach_id" id="coach_id" class="form-control select2-single">
+
+                                </select>
                             </div><!--col-->
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_subscription'))->class('col-md-4 form-control-label')->for('activity_date_subscription') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_subscription'))
+                            ->class('col-md-4 form-control-label')->for('activity_date_subscription') }}
 
                             <div class="col-md-8">
                                 {{ html()->text('activity_date_subscription')
@@ -120,7 +128,8 @@
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_expiry'))->class('col-md-4 form-control-label')->for('activity_date_expiry') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_expiry'))
+                            ->class('col-md-4 form-control-label')->for('activity_date_expiry') }}
 
                             <div class="col-md-8">
                                 {{ html()->date('activity_date_expiry')
@@ -132,7 +141,8 @@
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.fee'))->class('col-md-4 form-control-label')->for('fee') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.fee'))
+                            ->class('col-md-4 form-control-label')->for('fee') }}
 
                             <div class="col-md-8">
                                 {{ html()->text('fee')
@@ -144,7 +154,8 @@
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                            {{ html()->label(__('validation.attributes.backend.memberships.date_subscription'))->class('col-md-4 form-control-label')->for('date_subscription') }}
+                            {{ html()->label(__('validation.attributes.backend.memberships.date_subscription'))
+                            ->class('col-md-4 form-control-label')->for('date_subscription') }}
 
                             <div class="col-md-8">
                                 {{ html()->date('date_subscription')
@@ -160,7 +171,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Save Activities</button>
+                <button type="button" class="btn btn-success" id="registerActivityBtn">Save Activities</button>
             </div>
         </div>
     </div>
@@ -169,12 +180,48 @@
 
 @push('before-scripts')
     <script>
-        $(function () {
-            $("select").select2({
-                placeholder: 'Select Activities...',
-                width: '100%',
-                dropdownParent: $('#assignActivitiesModal')
+        (function ($) {
+            $(function () {
+                let activityField = $("#activity_id");
+                var activity = {
+                    object: {},
+                    getRelatedCoaches: function (activityId) {
+                        var url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
+                            url = url.replace(':activity', activityId);
+
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            dataType: "JSON",
+                            success: function (activityObject) {
+                                activity.object = activityObject
+
+                                return;
+                            }
+                        });
+                    }
+                };
+                const registerActivityBtn = $("#registerActivityBtn");
+
+                $("select").select2({
+                    placeholder: 'Select Activities...',
+                    width: '100%',
+                    dropdownParent: $('#registerActivityModal'),
+                    theme: 'bootstrap'
+                });
+
+                activityField.on('select2:select', function (e) {
+                    var selectedId = $(this).val();
+
+                    activity.getRelatedCoaches(selectedId);
+                });
+
+                registerActivityBtn.on('click', function () {
+                    for (let i=0; i<Object.keys(activity.object).length; i++) {
+
+                    }
+                });
             });
-        })
+        }) ( jQuery );
     </script>
 @endpush

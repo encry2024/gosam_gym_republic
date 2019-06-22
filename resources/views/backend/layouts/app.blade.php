@@ -11,18 +11,18 @@
         <title>@yield('title', app_name())</title>
         <meta name="description" content="@yield('meta_description', 'Laravel 5 Boilerplate')">
         <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
+        @yield('meta')
 
-        <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.css') }}">
+        {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
+        @stack('before-styles')
 
-    @yield('meta')
-
-    {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
-    @stack('before-styles')
-
-    <!-- Check if the language is set to RTL, so apply the RTL layouts -->
+        <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         {{ style(mix('css/backend.css')) }}
         <link rel="stylesheet" href="{{ asset('css/global_custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2-bootstrap.min.css') }}">
+
         @stack('after-styles')
 
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
@@ -64,4 +64,4 @@
     {!! script(mix('js/backend.js')) !!}
     @stack('after-scripts')
     </body>
-    </html>
+</html>

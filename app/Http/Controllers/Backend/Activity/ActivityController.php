@@ -155,4 +155,9 @@ class ActivityController extends Controller
 
         return $ifActivityExists;
     }
+
+    public function getRelatedCoaches($activity)
+    {
+        return json_encode($activity->activityCoach);
+    }
 }
