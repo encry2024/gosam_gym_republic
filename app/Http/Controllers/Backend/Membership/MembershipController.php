@@ -52,7 +52,9 @@ class MembershipController extends Controller
      */
     public function create(ManageMembershipRequest $request)
     {
-        return view('backend.membership.create');
+        $activities = Activity::all();
+
+        return view('backend.membership.create')->withActivities($activities);
     }
 
     /**

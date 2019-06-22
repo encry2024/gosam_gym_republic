@@ -147,12 +147,12 @@ return [
         'backend' => [
             'memberships' => [
                 'customer_id'                   => 'Customer Name',
-                'activity_id'                   => 'Activity',
+                'activity_id'                   => 'Activity Name',
                 'coach_id'                      => 'Coach',
                 'activity_date_subscription'    => 'Activity Date Registered',
                 'activity_date_expiry'          => 'Activity Date Expiry',
                 'fee'                           => 'Membership Fee',
-                'date_registered'               => 'Date Registered'
+                'date_subscription'             => 'Date Registered'
             ],
 
             'customers' => [
