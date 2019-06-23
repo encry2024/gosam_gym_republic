@@ -152,7 +152,8 @@ return [
                 'activity_date_subscription'    => 'Activity Date Registered',
                 'activity_date_expiry'          => 'Activity Date Expiry',
                 'fee'                           => 'Membership Fee',
-                'date_subscription'             => 'Date Registered'
+                'date_subscription'             => 'Date Registered',
+                'date_expiry'                   => 'Date Expiry'
             ],
 
             'customers' => [
