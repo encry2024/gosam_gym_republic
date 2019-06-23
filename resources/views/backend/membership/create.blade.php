@@ -76,7 +76,6 @@
 
 <!-- Register Activity Modal -->
 <div class="modal fade in" tabindex="-1" role="dialog" id="registerActivityModal">
-    {{ csrf_field() }}
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -109,8 +108,21 @@
 
                             <div class="col-md-8">
                                 <select name="coach_id" id="coach_id" class="form-control select2-single">
-
+                                    <option value=""></option>
                                 </select>
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
+                            ->class('col-md-4 form-control-label')->for('monthly_rate') }}
+
+                            <div class="col-md-8">
+                                {{ html()->text('monthly_rate')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                    ->attribute('maxlength', 191)
+                                    ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
 
@@ -119,11 +131,12 @@
                             ->class('col-md-4 form-control-label')->for('activity_date_subscription') }}
 
                             <div class="col-md-8">
-                                {{ html()->text('activity_date_subscription')
+                                {{ html()->date('activity_date_subscription')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.activity_date_subscription'))
                                     ->attribute('maxlength', 191)
-                                    ->required() }}
+                                    ->required()
+                                    ->value(date('Y-m-d')) }}
                             </div><!--col-->
                         </div><!--form-group-->
 
@@ -136,7 +149,8 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.activity_date_expiry'))
                                     ->attribute('maxlength', 191)
-                                    ->required() }}
+                                    ->required()
+                                     ->value(date('Y-m-d', strtotime("+1 month")))}}
                             </div><!--col-->
                         </div><!--form-group-->
 
@@ -162,7 +176,22 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.date_subscription'))
                                     ->attribute('maxlength', 191)
-                                    ->required() }}
+                                    ->required()
+                                     ->value(date('Y-m-d')) }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.date_expiry'))
+                            ->class('col-md-4 form-control-label')->for('date_expiry') }}
+
+                            <div class="col-md-8">
+                                {{ html()->date('date_expiry')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.date_expiry'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                     ->value(date('Y-m-d', strtotime("+1 year"))) }}
                             </div><!--col-->
                         </div><!--form-group-->
                     </div><!--col-->
@@ -176,13 +205,156 @@
         </div>
     </div>
 </div>
+
+<!-- Modify Selected Activity Modal -->
+<div class="modal fade in" tabindex="-1" role="dialog" id="modifySelectedActivityModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Selected Activity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row mt-4 mb-4">
+                    <div class="col">
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_id'))
+                            ->class('col-md-4 form-control-label')->for('activity_id') }}
+
+                            <div class="col-md-8">
+                                <select name="activity_id" id="update_activity_id" class="form-control select2-single">
+                                    <option value=""></option>
+                                    @foreach ($activities as $activity)
+                                        <option value="{{ $activity->id }}">{{ $activity->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.coach_id'))
+                            ->class('col-md-4 form-control-label')->for('coach_id') }}
+
+                            <div class="col-md-8">
+                                <select name="coach_id" id="update_coach_id" class="form-control select2-single">
+                                    <option value=""></option>
+                                </select>
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
+                            ->class('col-md-4 form-control-label')->for('monthly_rate') }}
+
+                            <div class="col-md-8">
+                                {{ html()->text('monthly_rate')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                    ->attribute('maxlength', 191)
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_subscription'))
+                            ->class('col-md-4 form-control-label')->for('activity_date_subscription') }}
+
+                            <div class="col-md-8">
+                                {{ html()->date('activity_date_subscription')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.activity_date_subscription'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                    ->value(date('Y-m-d')) }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.activity_date_expiry'))
+                            ->class('col-md-4 form-control-label')->for('activity_date_expiry') }}
+
+                            <div class="col-md-8">
+                                {{ html()->date('activity_date_expiry')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.activity_date_expiry'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                     ->value(date('Y-m-d', strtotime("+1 month")))}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.fee'))
+                            ->class('col-md-4 form-control-label')->for('fee') }}
+
+                            <div class="col-md-8">
+                                {{ html()->text('fee')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.fee'))
+                                    ->attribute('maxlength', 191)
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.date_subscription'))
+                            ->class('col-md-4 form-control-label')->for('date_subscription') }}
+
+                            <div class="col-md-8">
+                                {{ html()->date('date_subscription')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.date_subscription'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                     ->value(date('Y-m-d')) }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.memberships.date_expiry'))
+                            ->class('col-md-4 form-control-label')->for('date_expiry') }}
+
+                            <div class="col-md-8">
+                                {{ html()->date('date_expiry')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.memberships.date_expiry'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                     ->value(date('Y-m-d', strtotime("+1 year"))) }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">Remove</button>
+                <button type="button" class="btn btn-info" id="updateActivityBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('before-scripts')
     <script>
         (function ($) {
             $(function () {
-                let activityField = $("#activity_id");
+                const registerActivityBtn = $("#registerActivityBtn"),
+                activityField = $("#activity_id"),
+                registeredActivitiesField = $("#registeredActivities"),
+                coachField = $("#coach_id"),
+                activityDateSubscriptionField = $("#activity_date_subscription"),
+                activityDateExpiryField = $("#activity_date_expiry"),
+                membershipFeeField = $("#fee"),
+                dateSubscriptionField = $("#date_subscription"),
+                monthlyRateField = $("#monthly_rate"),
+                dateExpiryField = $("#date_expiry");
+
                 var activity = {
                     object: {},
                     getRelatedCoaches: function (activityId) {
@@ -194,33 +366,109 @@
                             url: url,
                             dataType: "JSON",
                             success: function (activityObject) {
-                                activity.object = activityObject
+                                coachField.html("");
+                                coachField.select2({
+                                    data: activityObject.coach,
+                                    placeholder: "Select Coaches...",
+                                    theme: "bootstrap",
+                                    dropdownParent: $("#registerActivityModal")
+                                });
 
-                                return;
+                                membershipFeeField.val(activityObject.membership_fee);
+                                monthlyRateField.val(activityObject.monthly_rate);
+                                console.log(activity);
                             }
                         });
-                    }
-                };
-                const registerActivityBtn = $("#registerActivityBtn");
+                    },
+                }
+                html = null;
+                let index = 0;
 
-                $("select").select2({
+                activityField.select2({
                     placeholder: 'Select Activities...',
                     width: '100%',
                     dropdownParent: $('#registerActivityModal'),
                     theme: 'bootstrap'
                 });
 
+                coachField.select2({
+                    placeholder: "Select Coaches...",
+                    theme: "bootstrap",
+                    dropdownParent: $("#registerActivityModal")
+                });
+
                 activityField.on('select2:select', function (e) {
+                    var selectedId = $(this).val();
+
+                    activity.getRelatedCoaches(selectedId);
+                    console.log($("tr").data('id'));
+                });
+
+                $("#update_activity_id").select2({
+                    placeholder: "Select Coaches...",
+                    theme: "bootstrap",
+                    dropdownParent: $("#registerActivityModal")
+                }).on('select2:select', function () {
                     var selectedId = $(this).val();
 
                     activity.getRelatedCoaches(selectedId);
                 });
 
-                registerActivityBtn.on('click', function () {
-                    for (let i=0; i<Object.keys(activity.object).length; i++) {
-
-                    }
+                $("#update_coach_id").select2({
+                    placeholder: "Select Coaches...",
+                    theme: "bootstrap",
+                    dropdownParent: $("#registerActivityModal")
                 });
+
+                registerActivityBtn.on('click', function () {
+                    if (!activity.object[activityField.val()+"-"+coachField.val()]) {
+                        html = "<tr data-id='"+activityField.val()+"-"+coachField.val()+"' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
+                        html += "<td>"+$("#activity_id option:selected").html()+"</td>";
+                        html += "<td>"+$("#coach_id option:selected").html()+"</td>";
+                        html += "<td>"+monthlyRateField.val()+"</td>";
+                        html += "<td>"+activityDateSubscriptionField.val()+"</td>";
+                        html += "<td>"+activityDateExpiryField.val()+"</td>";
+                        html += "<td>"+membershipFeeField.val()+"</td>";
+                        html += "<td>"+dateSubscriptionField.val()+"</td>";
+                        html += "<td>"+dateExpiryField.val()+"</td>";
+                        html += "</tr>";
+
+                        registeredActivitiesField.append(html);
+                    } else {
+                        Swal.fire({
+                            title: "You already have selected this Coach and Activity",
+                            type: 'warning'
+                        });
+                    }
+
+                    activity.object[activityField.val()+"-"+coachField.val()] = {
+                        activity_id: activityField.val(),
+                        coach_id: coachField.val(),
+                        activity_date_subscription: activityDateSubscriptionField.val(),
+                        activity_date_expiry: activityDateExpiryField.val(),
+                        fee: membershipFeeField.val(),
+                        date_subscription: dateSubscriptionField.val()
+                    };
+
+                    index++;
+
+                    console.log(activity.object);
+                });
+
+                $(document).on('click', 'tr', '.selectable_activity', function () {
+                    $("#modifySelectedActivityModal").find("#update_activity_id").val(activity.object[$(this).data('id')].activity_id);
+                    $("#modifySelectedActivityModal").find("#update_activity_id").select2({
+                        placeholder: "Select Activity...",
+                        theme: "bootstrap",
+                        dropdownParent: $("#modifySelectedActivityModal")
+                    }).trigger('change');
+                    $("#modifySelectedActivityModal").find("#update_coach_id").val(activity.object[$(this).data('id')].coach_id);
+                    $("#modifySelectedActivityModal").find("#update_coach_id").select2({
+                        placeholder: "Select Coach...",
+                        theme: "bootstrap",
+                        dropdownParent: $("#modifySelectedActivityModal")
+                    }).trigger('change');
+                })
             });
         }) ( jQuery );
     </script>

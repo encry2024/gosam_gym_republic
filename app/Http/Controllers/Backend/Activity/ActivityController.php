@@ -158,6 +158,15 @@ class ActivityController extends Controller
 
     public function getRelatedCoaches($activity)
     {
-        return json_encode($activity->activityCoach);
+        $activityCoaches = [];
+
+        foreach ($activity->activityCoach as $activityCoach) {
+            $activityCoaches[] = [
+                'id' => $activityCoach->id,
+                'text' => $activityCoach->name
+            ];
+        }
+
+        return json_encode(['coach' => $activityCoaches, 'membership_fee' => $activity->membership_rate, 'monthly_rate' => $activity->monthly_fee]);
     }
 }

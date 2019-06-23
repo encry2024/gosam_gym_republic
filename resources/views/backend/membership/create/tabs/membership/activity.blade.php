@@ -2,7 +2,6 @@
     <table class="table table-hover">
         <thead>
             <th>Activity</th>
-            <th>Subscription</th>
             <th>Coach</th>
             <th>Monthly Fee</th>
             <th>Date Registered</th>
