@@ -247,10 +247,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
-                            ->class('col-md-4 form-control-label')->for('monthly_rate') }}
+                            ->class('col-md-4 form-control-label')->for('update_monthly_rate') }}
 
                             <div class="col-md-8">
-                                {{ html()->text('monthly_rate')
+                                {{ html()->text('update_monthly_rate')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
                                     ->attribute('maxlength', 191)
@@ -260,10 +260,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.memberships.activity_date_subscription'))
-                            ->class('col-md-4 form-control-label')->for('activity_date_subscription') }}
+                            ->class('col-md-4 form-control-label')->for('update_activity_date_subscription') }}
 
                             <div class="col-md-8">
-                                {{ html()->date('activity_date_subscription')
+                                {{ html()->date('update_activity_date_subscription')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.activity_date_subscription'))
                                     ->attribute('maxlength', 191)
@@ -274,10 +274,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.memberships.activity_date_expiry'))
-                            ->class('col-md-4 form-control-label')->for('activity_date_expiry') }}
+                            ->class('col-md-4 form-control-label')->for('update_activity_date_expiry') }}
 
                             <div class="col-md-8">
-                                {{ html()->date('activity_date_expiry')
+                                {{ html()->date('update_activity_date_expiry')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.activity_date_expiry'))
                                     ->attribute('maxlength', 191)
@@ -288,10 +288,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.memberships.fee'))
-                            ->class('col-md-4 form-control-label')->for('fee') }}
+                            ->class('col-md-4 form-control-label')->for('update_fee') }}
 
                             <div class="col-md-8">
-                                {{ html()->text('fee')
+                                {{ html()->text('update_fee')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.fee'))
                                     ->attribute('maxlength', 191)
@@ -301,10 +301,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.memberships.date_subscription'))
-                            ->class('col-md-4 form-control-label')->for('date_subscription') }}
+                            ->class('col-md-4 form-control-label')->for('update_date_subscription') }}
 
                             <div class="col-md-8">
-                                {{ html()->date('date_subscription')
+                                {{ html()->date('update_date_subscription')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.date_subscription'))
                                     ->attribute('maxlength', 191)
@@ -315,10 +315,10 @@
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.memberships.date_expiry'))
-                            ->class('col-md-4 form-control-label')->for('date_expiry') }}
+                            ->class('col-md-4 form-control-label')->for('update_date_expiry') }}
 
                             <div class="col-md-8">
-                                {{ html()->date('date_expiry')
+                                {{ html()->date('update_date_expiry')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.memberships.date_expiry'))
                                     ->attribute('maxlength', 191)
@@ -372,6 +372,13 @@
                                     placeholder: "Select Coaches...",
                                     theme: "bootstrap",
                                     dropdownParent: $("#registerActivityModal")
+                                });
+
+                                $("#update_coach_id").select2({
+                                    data: activityObject.coach,
+                                    placeholder: "Select Coaches...",
+                                    theme: "bootstrap",
+                                    dropdownParent: $("#modifySelectedActivityModal")
                                 });
 
                                 membershipFeeField.val(activityObject.membership_fee);
@@ -468,7 +475,29 @@
                         theme: "bootstrap",
                         dropdownParent: $("#modifySelectedActivityModal")
                     }).trigger('change');
-                })
+                    // registeredActivitiesField = $("#registeredActivities"),
+                    //     coachField = $("#coach_id"),
+                    //     activityDateSubscriptionField = $("#activity_date_subscription"),
+                    //     activityDateExpiryField = $("#activity_date_expiry"),
+                    //     membershipFeeField = $("#fee"),
+                    //     dateSubscriptionField = $("#date_subscription"),
+                    //     monthlyRateField = $("#monthly_rate"),
+                    //     dateExpiryField = $("#date_expiry");
+                    $("#modifySelectedActivityModal").find("#update_monthly_fee")
+                        .val(activity.object[$(this).data('id')].coach_id);
+                    $("#modifySelectedActivityModal").find("#update_activity_date_subscription")
+                        .val(activity.object[$(this).data('id')].activity_date_subscription);
+                    $("#modifySelectedActivityModal").find("#update_activity_date_expiry")
+                        .val(activity.object[$(this).data('id')].activity_date_subscription);
+                    $("#modifySelectedActivityModal").find("#update_fee")
+                        .val(activity.object[$(this).data('id')].fee);
+                    $("#modifySelectedActivityModal").find("#update_date_subscription")
+                        .val(activity.object[$(this).data('id')].fee);
+                    $("#modifySelectedActivityModal").find("#update_monthly_rate")
+                        .val(activity.object[$(this).data('id')].monthly_rate);
+                    $("#modifySelectedActivityModal").find("#update_date_expiry")
+                        .val(activity.object[$(this).data('id')].date_expiry);
+                });
             });
         }) ( jQuery );
     </script>
