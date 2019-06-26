@@ -332,7 +332,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Remove</button>
+                <button type="button" class="btn btn-danger" id="removeActivityBtn">Remove</button>
                 <button type="button" class="btn btn-info" id="updateActivityBtn">Update</button>
             </div>
         </div>
@@ -354,7 +354,8 @@
                 dateSubscriptionField = $("#date_subscription"),
                 monthlyRateField = $("#monthly_rate"),
                 dateExpiryField = $("#date_expiry"),
-                updateActivityBtn = $("#updateActivityBtn");
+                updateActivityBtn = $("#updateActivityBtn"),
+                removeActivityBtn = $("#removeActivityBtn");
 
                 var activity = {
                     object: {},
@@ -368,7 +369,7 @@
                             dataType: "JSON",
                             success: function (activityObject) {
                                 coachField.html("");
-                                $("#update_coach_id").select2("destroy");
+                                $("#update_coach_id").html("");
                                 coachField.select2({
                                     data: activityObject.coach,
                                     placeholder: "Select Coaches...",
@@ -423,7 +424,6 @@
 
                     let index = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
 
-                    selectedIndex = index;
                     $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', index);
                 });
 
@@ -435,7 +435,6 @@
                     let index = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
 
                     $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', index);
-                    selectedIndex = index;
                 });
 
                 registerActivityBtn.on('click', function () {
@@ -502,45 +501,117 @@
                         .val(activity.object[$(this).data('id')].monthly_rate);
                     $("#modifySelectedActivityModal").find("#update_date_expiry")
                         .val(activity.object[$(this).data('id')].activity_date_expiry);
-
-                    updateActivityBtn.attr('data-activity-object-id', $(this).data('id'));
                 });
 
                 updateActivityBtn.on('click', function () {
-                    delete activity.object[$(this).data('activity-object-id')];
+                    let currentIndex = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
 
-                    let index = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
+                    if (!activity.object[currentIndex]) {
+                        delete activity.object[selectedIndex];
 
-                    activity.object[index] = {
-                        activity_id: $("#update_activity_id").val(),
-                        coach_id: $("#update_coach_id").val(),
-                        monthly_rate: $("#update_monthly_rate").val(),
-                        activity_date_subscription: $("#update_activity_date_subscription").val(),
-                        activity_date_expiry: $("#update_activity_date_expiry").val(),
-                        fee: $("#update_fee").val(),
-                        date_subscription: $("#update_date_subscription").val(),
-                        date_expiry: $("#update_date_expiry").val()
-                    };
+                        activity.object[currentIndex] = {
+                            activity_id: $("#update_activity_id").val(),
+                            coach_id: $("#update_coach_id").val(),
+                            monthly_rate: $("#update_monthly_rate").val(),
+                            activity_date_subscription: $("#update_activity_date_subscription").val(),
+                            activity_date_expiry: $("#update_activity_date_expiry").val(),
+                            fee: $("#update_fee").val(),
+                            date_subscription: $("#update_date_subscription").val(),
+                            date_expiry: $("#update_date_expiry").val()
+                        };
 
-                    html = "<td>"+$("#update_activity_id option:selected").html()+"</td>";
-                    html += "<td>"+$("#update_coach_id option:selected").html()+"</td>";
-                    html += "<td>"+$("#update_monthly_rate").val()+"</td>";
-                    html += "<td>"+$("#update_activity_date_subscription").val()+"</td>";
-                    html += "<td>"+$("#update_activity_date_expiry").val()+"</td>";
-                    html += "<td>"+$("#update_fee").val()+"</td>";
-                    html += "<td>"+$("#update_date_subscription").val()+"</td>";
-                    html += "<td>"+$("#update_date_expiry").val()+"</td>";
-                    html += "</tr>";
+                        html = "<td>"+$("#update_activity_id option:selected").html()+"</td>";
+                        html += "<td>"+$("#update_coach_id option:selected").html()+"</td>";
+                        html += "<td>"+$("#update_monthly_rate").val()+"</td>";
+                        html += "<td>"+$("#update_activity_date_subscription").val()+"</td>";
+                        html += "<td>"+$("#update_activity_date_expiry").val()+"</td>";
+                        html += "<td>"+$("#update_fee").val()+"</td>";
+                        html += "<td>"+$("#update_date_subscription").val()+"</td>";
+                        html += "<td>"+$("#update_date_expiry").val()+"</td>";
+                        html += "</tr>";
 
-                    registeredActivitiesField.find('[data-id="'+$(this).data('activity-object-id')+'"]')
-                        .attr('data-id', index)
-                        .html(html);
+                        registeredActivitiesField.find('[data-id="'+$(this).data('activity-object-id')+'"]')
+                            .attr('data-id', currentIndex)
+                            .html(html);
 
-                    $(this).data('activity-object-id', index)
-                        .attr('data-activity-object-id', index);
+                        selectedIndex = currentIndex;
+                    } else {
+                        Swal.fire({
+                            title: "Update failed",
+                            text: "The selected activity already exists. Would you like to update the existing activity information instead?",
+                            showCancelButton: true,
+                            confirmButtonText: 'Update',
+                            cancelButtonText: 'Cancel',
+                            type: 'info'
+                        }).then((result) => {
+                            if (result.value) {
+                                activity.object[currentIndex] = {
+                                    activity_id: $("#update_activity_id").val(),
+                                    coach_id: $("#update_coach_id").val(),
+                                    monthly_rate: $("#update_monthly_rate").val(),
+                                    activity_date_subscription: $("#update_activity_date_subscription").val(),
+                                    activity_date_expiry: $("#update_activity_date_expiry").val(),
+                                    fee: $("#update_fee").val(),
+                                    date_subscription: $("#update_date_subscription").val(),
+                                    date_expiry: $("#update_date_expiry").val()
+                                };
+
+                                html = "<td>"+$("#update_activity_id option:selected").html()+"</td>";
+                                html += "<td>"+$("#update_coach_id option:selected").html()+"</td>";
+                                html += "<td>"+$("#update_monthly_rate").val()+"</td>";
+                                html += "<td>"+$("#update_activity_date_subscription").val()+"</td>";
+                                html += "<td>"+$("#update_activity_date_expiry").val()+"</td>";
+                                html += "<td>"+$("#update_fee").val()+"</td>";
+                                html += "<td>"+$("#update_date_subscription").val()+"</td>";
+                                html += "<td>"+$("#update_date_expiry").val()+"</td>";
+                                html += "</tr>";
+
+                                registeredActivitiesField.find('[data-id="'+currentIndex+'"]').html(html);
+
+                                Swal.fire({
+                                    title: "Activity was updated successful!",
+                                    confirmButtonText: 'confirm',
+                                    type: 'success'
+                                })
+                            }
+                        });
+                    }
 
                     console.log(activity.object);
                 });
+
+                removeActivityBtn.on('click', function () {
+                    let currentIndex = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
+
+                    Swal.fire({
+                        title: "Delete Activity",
+                        text: "Are you sure you want to delete this activity and coach?",
+                        showCancelButton: true,
+                        confirmButtonText: 'Delete',
+                        cancelButtonText: 'Cancel',
+                        type: 'warning'
+                    }).then((result) => {
+                        if (result.value) {
+                            if (activity.object[currentIndex]) {
+                                delete activity.object[currentIndex];
+
+                                registeredActivitiesField.find('[data-id="'+currentIndex+'"]').remove();
+
+                                Swal.fire({
+                                    title: "Activity and coach was deleted successful!",
+                                    confirmButtonText: 'confirm',
+                                    type: 'success'
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "The selected activity and coach does not exists.",
+                                    confirmButtonText: 'error',
+                                    type: 'success'
+                                });
+                            }
+                        }
+                    });
+                })
             });
         }) ( jQuery );
     </script>
