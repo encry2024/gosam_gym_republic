@@ -131,6 +131,13 @@
 body {
     font-family: "Poppins", sans-serif !important;
     font-size: 0.9rem;
+    color: #555;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #555;
 }
 
 label {
@@ -141,7 +148,7 @@ th {
     font-weight: 600;
 }
 
-.table thead th {
+/*.table thead th {
     vertical-align: bottom;
     border: 1px solid #ccc !important;
 }
@@ -150,7 +157,7 @@ th {
     padding: 7px !important;
     vertical-align: top;
     border-top: 1px solid #ccc;
-}
+}*/
 
 .nav-item {
     padding: 0px 10px;
