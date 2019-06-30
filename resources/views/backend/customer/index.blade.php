@@ -16,7 +16,7 @@
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>@lang('labels.backend.customers.table.last_name')</th>
