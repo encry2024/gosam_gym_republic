@@ -16,7 +16,7 @@
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>@lang('labels.backend.activities.table.name')</th>
