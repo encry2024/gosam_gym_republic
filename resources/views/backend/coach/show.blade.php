@@ -22,14 +22,14 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <h4 class="card-title mb-0">
                             Coach Activities
                         </h4>
                     </div><!--col-->
 
-                    <div class="col-sm-2">
-                        <div class="btn-toolbar btn-group-sm float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
+                    <div class="col-sm-7">
+                        <div class="btn-toolbar float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
                             <a href="#" data-toggle="modal" data-target="#assignActivitiesModal" class="btn btn-success ml-1" rel="tooltip" data-original-title="Assign Activities"><i class="fas fa-plus-circle"></i></a>
                         </div><!--btn-toolbar-->
                     </div><!--col-->
