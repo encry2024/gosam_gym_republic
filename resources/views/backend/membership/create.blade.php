@@ -430,8 +430,8 @@
                     dropdownParent: $("#modifySelectedActivityModal")
                 }).on('select2:select', function () {
                     var selectedId = $(this).val();
-                    $("#update_coach_id").trigger("change");
-                    $("#update_coach_id").html("");
+                    updateCoachField.trigger("change");
+                    updateCoachField.html("");
                     activity.getRelatedCoaches(selectedId);
 
                     let index = updateActivityField.val()+"-"+updateCoachField.val();
@@ -444,7 +444,7 @@
                     theme: "bootstrap",
                     dropdownParent: $("#modifySelectedActivityModal")
                 }).on('select2:select', function () {
-                    let index = $("#update_activity_id").val()+"-"+$("#update_coach_id").val();
+                    let index = updateActivityField.val()+"-"+updateCoachField.val();
 
                     $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', index);
                 });
@@ -560,14 +560,14 @@
                         }).then((result) => {
                             if (result.value) {
                                 activity.object[currentIndex] = {
-                                    activity_id: $("#update_activity_id").val(),
-                                    coach_id: $("#update_coach_id").val(),
-                                    monthly_rate: $("#update_monthly_rate").val(),
-                                    activity_date_subscription: $("#update_activity_date_subscription").val(),
-                                    activity_date_expiry: $("#update_activity_date_expiry").val(),
-                                    fee: $("#update_fee").val(),
-                                    date_subscription: $("#update_date_subscription").val(),
-                                    date_expiry: $("#update_date_expiry").val()
+                                    activity_id: updateActivityField.val(),
+                                    coach_id: updateCoachField.val(),
+                                    monthly_rate: updateMonthlyRateField.val(),
+                                    activity_date_subscription: updateActivityDateSubscriptionField.val(),
+                                    activity_date_expiry: updateActivityDateExpiryField.val(),
+                                    fee: updateMembershipFeeField.val(),
+                                    date_subscription: updateDateSubscriptionField.val(),
+                                    date_expiry: updateDateExpiryField.val()
                                 };
 
                                 html = "<td>"+$("#update_activity_id option:selected").html()+"</td>";
