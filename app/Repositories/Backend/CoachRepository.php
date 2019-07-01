@@ -76,7 +76,7 @@ class CoachRepository extends BaseRepository
             ]);
 
             if ($coach) {
-                event(new CoachCreated(Auth::user()->full_name, $coach));
+                event(new CoachCreated(Auth::user()->full_name, $coach->name));
 
                 return $coach;
             }

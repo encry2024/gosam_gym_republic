@@ -13,6 +13,12 @@ return [
     */
 
     'backend' => [
+        'memberships' => [
+            'activate' => 'Renew Membership',
+            'deactivate' => 'Cancel Membership',
+            'delete_permanently' => 'Delete Permanently'
+        ],
+
         'access' => [
             'users' => [
                 'activate' => 'Activate',

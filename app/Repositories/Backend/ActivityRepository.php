@@ -11,6 +11,7 @@ use App\Events\Backend\Activity\ActivityUpdated;
 use App\Events\Backend\Activity\ActivityRestored;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Auth;
+use Psy\Util\Json;
 
 /**
  * Class ActivityRepository.

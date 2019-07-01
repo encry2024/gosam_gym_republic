@@ -155,4 +155,18 @@ class ActivityController extends Controller
 
         return $ifActivityExists;
     }
+
+    public function getRelatedCoaches($activity)
+    {
+        $activityCoaches = [];
+
+        foreach ($activity->activityCoach as $activityCoach) {
+            $activityCoaches[] = [
+                'id' => $activityCoach->id,
+                'text' => $activityCoach->name
+            ];
+        }
+
+        return json_encode(['coach' => $activityCoaches, 'membership_fee' => $activity->membership_rate, 'monthly_rate' => $activity->monthly_fee]);
+    }
 }

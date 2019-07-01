@@ -9,7 +9,8 @@ Route::group([
 ], function () {
 
     Route::get('activity/deleted', [ActivityStatusController::class, 'getDeleted'])->name('activity.deleted');
-    Route::post('check_existing_activity', [ActivityController::class, 'checkExistingActivity'])->name('activity.checkExistingActivity');
+    Route::post('check_existing_activity', [ActivityController::class, 'checkExistingActivity'])
+        ->name('activity.checkExistingActivity');
 
     Route::resource('activity', 'ActivityController');
 
@@ -19,6 +20,10 @@ Route::group([
         // Deleted
         Route::get('delete', [ActivityStatusController::class, 'delete'])->name('activity.delete-permanently');
         Route::get('restore', [ActivityStatusController::class, 'restore'])->name('activity.restore');
+
+        // Get Related Coaches
+        Route::get('get/related_coaches', [ActivityController::class, 'getRelatedCoaches'])
+            ->name('activity.getRelatedCoaches');
     });
 
 });
