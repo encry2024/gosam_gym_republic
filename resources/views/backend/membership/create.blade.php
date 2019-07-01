@@ -502,19 +502,19 @@
                     }).trigger('change');
 
                     modifySelectedActivityModal.find("#update_monthly_fee")
-                        .val(activity.object[$(this).data('id')].coach_id);
+                        .val(activity.object[selectedIndex].coach_id);
                     modifySelectedActivityModal.find("#update_activity_date_subscription")
-                        .val(activity.object[$(this).data('id')].activity_date_subscription);
+                        .val(activity.object[selectedIndex].activity_date_subscription);
                     modifySelectedActivityModal.find("#update_activity_date_expiry")
-                        .val(activity.object[$(this).data('id')].activity_date_subscription);
+                        .val(activity.object[selectedIndex].activity_date_subscription);
                     modifySelectedActivityModal.find("#update_fee")
-                        .val(activity.object[$(this).data('id')].fee);
+                        .val(activity.object[selectedIndex].fee);
                     modifySelectedActivityModal.find("#update_date_subscription")
-                        .val(activity.object[$(this).data('id')].date_subscription);
+                        .val(activity.object[selectedIndex].date_subscription);
                     modifySelectedActivityModal.find("#update_monthly_rate")
-                        .val(activity.object[$(this).data('id')].monthly_rate);
+                        .val(activity.object[selectedIndex].monthly_rate);
                     modifySelectedActivityModal.find("#update_date_expiry")
-                        .val(activity.object[$(this).data('id')].activity_date_expiry);
+                        .val(activity.object[selectedIndex].activity_date_expiry);
                 });
 
                 updateActivityBtn.on('click', function () {
