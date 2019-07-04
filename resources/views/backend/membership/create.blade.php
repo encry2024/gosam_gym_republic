@@ -367,7 +367,7 @@
 
         var activity = {
             object: {},
-            updateCoachVal: null
+            coach_id: 0
         },
         html = null;
 
@@ -416,12 +416,51 @@
             theme: "bootstrap",
             dropdownParent: $("#modifySelectedActivityModal")
         }).on('select2:select', function () {
-            const selectedId = $(this).val();
-            activity.getRelatedCoaches(selectedId);
+            const selectedId = $(this).val(),
+                coachId = activity.coach_id;
 
-            const index = updateActivityField.val()+"-"+updateCoachField.val();
+            var url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
+            url = url.replace(':activity', selectedId);
 
-            $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', index);
+            updateCoachField.html("");
+            updateCoachField.select();
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "JSON",
+                success: function (activityObject) {
+                    let coaches = [];
+
+                    for (let i=0; i<Object.keys(activityObject.coach).length; i++) {
+                        let data = activityObject.coach[i];
+
+                        if (data.id == coachId) {
+                            coaches.push({
+                                id: data.id,
+                                text: data.text,
+                                selected: true
+                            });
+                        } else {
+                            coaches.push({
+                                id: data.id,
+                                text: data.text
+                            });
+                        }
+                    }
+
+                    console.log(coaches);
+
+                    updateCoachField.select2({
+                        data: coaches,
+                        placeholder: "Select Coaches...",
+                        theme: "bootstrap",
+                        dropdownParent: modifySelectedActivityModal
+                    }).trigger('change');
+                }
+            });
+
+            $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', selectedId + "-" + updateCoachField.val());
         });
 
         updateCoachField.select2({
@@ -473,45 +512,46 @@
         $('body').on('click', 'tr', '.selectable_activity', function (e) {
             const selectedId = activity.object[$(this).data('id')].activity_id,
             coachId = activity.object[$(this).data('id')].coach_id;
+            activity.coach_id = coachId;
 
             var url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
             url = url.replace(':activity', selectedId);
+
+            updateCoachField.html("");
+            updateCoachField.select();
 
             $.ajax({
                 type: "GET",
                 url: url,
                 dataType: "JSON",
                 success: function (activityObject) {
+                    let coaches = [];
+
                     for (let i=0; i<Object.keys(activityObject.coach).length; i++) {
                         let data = activityObject.coach[i];
 
                         if (data.id == coachId) {
-                            data = {
+                            coaches.push({
                                 id: data.id,
                                 text: data.text,
                                 selected: true
-                            };
+                            });
+                        } else {
+                            coaches.push({
+                                id: data.id,
+                                text: data.text
+                            });
                         }
-
-                        console.log(data);
-
-                        updateCoachField.select2({
-                            data: data,
-                            placeholder: "Select Coaches...",
-                            theme: "bootstrap",
-                            dropdownParent: modifySelectedActivityModal
-                        }).trigger('change')
                     }
 
-                    /*coachField.select2({
-                        data: activityObject.coach,
+                    console.log(coaches);
+
+                    updateCoachField.select2({
+                        data: coaches,
                         placeholder: "Select Coaches...",
                         theme: "bootstrap",
-                        dropdownParent: $("#registerActivityModal")
+                        dropdownParent: modifySelectedActivityModal
                     }).trigger('change');
-
-                    membershipFeeField.val(activityObject.membership_fee);
-                    monthlyRateField.val(activityObject.monthly_rate);*/
                 }
             });
 
