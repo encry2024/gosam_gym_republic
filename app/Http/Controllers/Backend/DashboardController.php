@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
+use App\Models\Payment\Payment;
 use OwenIt\Auditing\Models\Audit;
 
 /**
@@ -16,8 +17,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $audits = Audit::all();
+        $payments = Payment::all();
 
-        return view('backend.dashboard')->withAudits($audits);
+        return view('backend.dashboard')->withPayments($payments);
     }
 }

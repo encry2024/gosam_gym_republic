@@ -43,6 +43,7 @@
                 </div>
             </div><!--col-->
         </div><!--row-->
+
         <div class="row">
             <div class="col-7">
                 <div class="float-left">

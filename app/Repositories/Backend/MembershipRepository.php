@@ -6,9 +6,11 @@ use App\Events\Backend\Membership\MembershipCreated;
 use App\Events\Backend\Membership\MembershipPermanentlyDeleted;
 use App\Events\Backend\Membership\MembershipRestored;
 use App\Events\Backend\Membership\MembershipUpdated;
+use App\Events\Backend\Payment\PaymentCreated;
 use App\Exceptions\GeneralException;
 use App\Models\Customer\Customer;
 use App\Models\Membership\Membership;
+use App\Models\Payment\Payment;
 use App\Repositories\BaseRepository;
 use Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -29,7 +31,7 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int $paged
+     * @param int    $paged
      * @param string $orderBy
      * @param string $sort
      *
@@ -43,7 +45,7 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int $paged
+     * @param int    $paged
      * @param string $orderBy
      * @param string $sort
      *
@@ -60,9 +62,9 @@ class MembershipRepository extends BaseRepository
     /**
      * @param array $data
      *
-     * @throws \Exception
-     * @throws \Throwable
      * @return Membership
+     * @throws \Throwable
+     * @throws \Exception
      */
     public function create(array $data): Customer
     {
@@ -98,6 +100,18 @@ class MembershipRepository extends BaseRepository
                         'date_registered' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_subscription'])),
                         'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry']))
                     ]);
+
+                    $payment = new Payment(['amount' => $membership->monthly_fee, 'customer_id' => $customer->id]);
+                    $membership->activity->payments()->save($payment);
+                    event(new PaymentCreated(Auth::user()->full_name, $membership->monthly_fee));
+
+                    $payment = new Payment(['amount' => $membership->fee, 'customer_id' => $customer->id]);
+                    $membership->payments()->save($payment);
+                    event(new PaymentCreated(Auth::user()->full_name, $membership->fee));
+
+                    $payment = new Payment(['amount' => $membership->activity->coach_fee, 'customer_id' => $customer->id]);
+                    $membership->coach->payments()->save($payment);
+                    event(new PaymentCreated(Auth::user()->full_name, $membership->activity->coach_fee));
                 }
 
                 event(new MembershipCreated(Auth::user()->full_name, $customer->name));
@@ -111,12 +125,12 @@ class MembershipRepository extends BaseRepository
 
     /**
      * @param Membership $membership
-     * @param array $data
+     * @param array      $data
      *
-     * @throws GeneralException
+     * @return Membership
      * @throws \Exception
      * @throws \Throwable
-     * @return Membership
+     * @throws GeneralException
      */
     public function update(Membership $membership, array $data): Membership
     {
@@ -146,10 +160,10 @@ class MembershipRepository extends BaseRepository
     /**
      * @param Membership $membership
      *
-     * @throws GeneralException
+     * @return Membership
      * @throws \Exception
      * @throws \Throwable
-     * @return Membership
+     * @throws GeneralException
      */
     public function forceDelete(Membership $membership): Membership
     {
@@ -171,8 +185,8 @@ class MembershipRepository extends BaseRepository
     /**
      * @param Membership $membership
      *
-     * @throws GeneralException
      * @return Membership
+     * @throws GeneralException
      */
     public function restore(Membership $membership): Membership
     {
