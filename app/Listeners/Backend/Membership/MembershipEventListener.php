@@ -12,7 +12,7 @@ class MembershipEventListener
      */
     public function onCreated($event)
     {
-        \Log::info('User "'.$event->doer.'" Created Membership "'.$event->object.'"');
+        \Log::info('User "'.$event->doer.'" created membership account for Customer "'.$event->object.'"');
     }
 
     /**

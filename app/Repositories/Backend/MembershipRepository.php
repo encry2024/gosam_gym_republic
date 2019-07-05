@@ -2,17 +2,18 @@
 
 namespace App\Repositories\Backend;
 
-use App\Models\Membership\Membership;
-use Illuminate\Support\Facades\DB;
-use App\Exceptions\GeneralException;
-use App\Repositories\BaseRepository;
 use App\Events\Backend\Membership\MembershipCreated;
-use App\Events\Backend\Membership\MembershipUpdated;
-use App\Events\Backend\Membership\MembershipRestored;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Events\Backend\Membership\MembershipPermanentlyDeleted;
-use Illuminate\Support\Carbon;
+use App\Events\Backend\Membership\MembershipRestored;
+use App\Events\Backend\Membership\MembershipUpdated;
+use App\Exceptions\GeneralException;
+use App\Models\Customer\Customer;
+use App\Models\Membership\Membership;
+use App\Repositories\BaseRepository;
 use Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class MembershipRepository.
@@ -28,13 +29,13 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int    $paged
+     * @param int $paged
      * @param string $orderBy
      * @param string $sort
      *
      * @return mixed
      */
-    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)
@@ -42,13 +43,13 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int    $paged
+     * @param int $paged
      * @param string $orderBy
      * @param string $sort
      *
      * @return LengthAwarePaginator
      */
-    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->onlyTrashed()
@@ -63,27 +64,45 @@ class MembershipRepository extends BaseRepository
      * @throws \Throwable
      * @return Membership
      */
-    public function create(array $data) : Membership
+    public function create(array $data): Customer
     {
         return DB::transaction(function () use ($data) {
             $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
             $age = Carbon::parse($dateOfBirth)->age;
 
-            $membership = parent::create([
-                'customer_id' => $data['customer'],
-                'activity_id' => $data['activity'],
-                'coach_id' => $data['coach'],
-                'activity_date_subscription' => date('Y-m-d h:i:s', strtotime($data['activity_date_subscription'])),
-                'activity_date_expiry' => date('Y-m-d h:i:s', strtotime($data['activity_date_expiry'])),
-                'fee' => $data['fee'],
-                'date_registered' => date('Y-m-d h:i:s', strtotime($data['date_registered'])),
-                'date_expiry' => date('Y-m-d h:i:s', strtotime($data['date_expiry']))
-            ]);
+            $customer = new Customer();
+            $customer->first_name = $data['first_name'];
+            $customer->last_name = $data['last_name'];
+            $customer->email = $data['email'];
+            $customer->date_of_birth = $dateOfBirth;
+            $customer->age = $age;
+            $customer->address = $data['address'];
+            $customer->contact_number = $data['contact_number'];
+            $customer->emergency_number = $data['emergency_number'];
 
-            if ($membership) {
-                event(new MembershipCreated(Auth::user()->full_name, $membership->name));
+            if ($customer->save()) {
+                $registeredActivities = json_decode($data['registered_activities'], true);
 
-                return $membership;
+                foreach ($registeredActivities as $registeredActivity) {
+                    $fee = str_replace(array("PHP ", ","), "", $registeredActivity['fee']);
+                    $monthlyFee = str_replace(array("PHP ", ","), "", $registeredActivity['monthly_rate']);
+
+                    $membership = parent::create([
+                        'customer_id' => $customer->id,
+                        'activity_id' => $registeredActivity['activity_id'],
+                        'coach_id' => $registeredActivity['coach_id'],
+                        'monthly_fee' => $monthlyFee,
+                        'activity_date_subscription' => date('Y-m-d h:i:s', strtotime($registeredActivity['activity_date_subscription'])),
+                        'activity_date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['activity_date_expiry'])),
+                        'fee' => $fee,
+                        'date_registered' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_subscription'])),
+                        'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry']))
+                    ]);
+                }
+
+                event(new MembershipCreated(Auth::user()->full_name, $customer->name));
+
+                return $customer;
             }
 
             throw new GeneralException(__('exceptions.backend.memberships.create_error'));
@@ -91,7 +110,7 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param Membership  $membership
+     * @param Membership $membership
      * @param array $data
      *
      * @throws GeneralException
@@ -99,7 +118,7 @@ class MembershipRepository extends BaseRepository
      * @throws \Throwable
      * @return Membership
      */
-    public function update(Membership $membership, array $data) : Membership
+    public function update(Membership $membership, array $data): Membership
     {
         return DB::transaction(function () use ($membership, $data) {
             $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
@@ -132,7 +151,7 @@ class MembershipRepository extends BaseRepository
      * @throws \Throwable
      * @return Membership
      */
-    public function forceDelete(Membership $membership) : Membership
+    public function forceDelete(Membership $membership): Membership
     {
         if ($membership->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.memberships.delete_first'));
@@ -155,7 +174,7 @@ class MembershipRepository extends BaseRepository
      * @throws GeneralException
      * @return Membership
      */
-    public function restore(Membership $membership) : Membership
+    public function restore(Membership $membership): Membership
     {
         if ($membership->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.memberships.cant_restore'));
