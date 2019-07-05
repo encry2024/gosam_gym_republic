@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Membership;
 
-use App\Models\Membership\Membership;
-use App\Http\Controllers\Controller;
 use App\Events\Backend\Membership\MembershipDeleted;
-use App\Repositories\Backend\MembershipRepository;
-use App\Http\Requests\Backend\Membership\StoreMembershipRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Membership\ManageMembershipRequest;
+use App\Http\Requests\Backend\Membership\StoreMembershipRequest;
 use App\Http\Requests\Backend\Membership\UpdateMembershipRequest;
-use Auth;
 use App\Models\Activity\Activity;
+use App\Models\Membership\Membership;
+use App\Repositories\Backend\MembershipRepository;
+use Auth;
 
 /**
  * Class MembershipController.
@@ -44,8 +44,8 @@ class MembershipController extends Controller
     }
 
     /**
-     * @param ManageMembershipRequest    $request
-     * @param RoleRepository       $roleRepository
+     * @param ManageMembershipRequest $request
+     * @param RoleRepository $roleRepository
      * @param PermissionRepository $permissionRepository
      *
      * @return mixed
@@ -70,7 +70,10 @@ class MembershipController extends Controller
             'last_name',
             'address',
             'contact_number',
-            'employment_type'
+            'emergency_number',
+            'date_of_birth',
+            'email',
+            'registered_activities'
         ));
 
         return redirect()->route('admin.membership.index')->withFlashSuccess(__('alerts.backend.memberships.created', ['membership' => $membership->name]));
@@ -78,7 +81,7 @@ class MembershipController extends Controller
 
     /**
      * @param ManageMembershipRequest $request
-     * @param Membership              $membership
+     * @param Membership $membership
      *
      * @return mixed
      */
@@ -88,7 +91,6 @@ class MembershipController extends Controller
         $existingActivities = [];
 
         $existingActivities = $membership->activityMemberships->pluck('name')->toArray();
-        // dd($existingActivities);
 
         return view('backend.membership.show')
             ->withMembership($membership)
@@ -97,9 +99,9 @@ class MembershipController extends Controller
     }
 
     /**
-     * @param ManageMembershipRequest    $request
+     * @param ManageMembershipRequest $request
      * @param PermissionRepository $permissionRepository
-     * @param Membership                 $membership
+     * @param Membership $membership
      *
      * @return mixed
      */
@@ -110,7 +112,7 @@ class MembershipController extends Controller
 
     /**
      * @param UpdateMembershipRequest $request
-     * @param Membership              $membership
+     * @param Membership $membership
      *
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
@@ -131,7 +133,7 @@ class MembershipController extends Controller
 
     /**
      * @param ManageMembershipRequest $request
-     * @param Membership              $membership
+     * @param Membership $membership
      *
      * @throws \Exception
      * @return mixed

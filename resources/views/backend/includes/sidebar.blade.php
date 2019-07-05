@@ -23,24 +23,24 @@
                 </a>
 
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/activity'))
                             }}" href="{{ route('admin.activity.index') }}">
                             List
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/activity/create'))
                             }}" href="{{ route('admin.activity.create') }}">
                             Create
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/activity/deleted'))
                             }}" href="{{ route('admin.activity.deleted') }}">
                             Deleted
@@ -59,24 +59,24 @@
                 </a>
 
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/coach'))
                             }}" href="{{ route('admin.coach.index') }}">
                             List
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/coach/create'))
                             }}" href="{{ route('admin.coach.create') }}">
                             Create
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/coach/deleted'))
                             }}" href="{{ route('admin.coach.deleted') }}">
                             Deleted
@@ -95,8 +95,8 @@
                 </a>
 
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/customer'))
                             }}" href="{{ route('admin.customer.index') }}">
                             List
@@ -111,8 +111,8 @@
                         </a>
                     </li> --}}
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/customer/deleted'))
                             }}" href="{{ route('admin.customer.deleted') }}">
                             Deleted
@@ -131,24 +131,24 @@
                 </a>
 
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/membership'))
                             }}" href="{{ route('admin.membership.index') }}">
                             List
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/membership'))
                             }}" href="{{ route('admin.membership.create') }}">
                             Create
                         </a>
                     </li>
 
-                    <li class="nav-item sidebar-padding">
-                        <a class="nav-link sidebar-padding-child {{
+                    <li class="nav-item">
+                        <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/membership/deleted'))
                             }}" href="{{ route('admin.membership.deleted') }}">
                             Deleted

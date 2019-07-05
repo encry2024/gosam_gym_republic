@@ -2,9 +2,18 @@
 
 namespace App\Models\Customer\Traits\Relationship;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Membership\Membership;
 
-class CustomerRelationship extends Model
+/**
+ * Class CustomerRelationship.
+ */
+trait CustomerRelationship
 {
-    //
+    /**
+     * @return mixed
+     */
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
 }

@@ -4,6 +4,7 @@
 
 @section('content')
     {{ html()->form('POST', route('admin.membership.store'))->class('form-horizontal')->open() }}
+    <input type="hidden" name="registered_activities" id="registered_activities">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -413,12 +414,12 @@
         });
 
         updateActivityField.select2({
-            placeholder: "Select Coaches...",
+            placeholder: "Select Activities...",
             theme: "bootstrap",
             dropdownParent: $("#modifySelectedActivityModal")
         }).on('select2:select', function () {
             const selectedId = $(this).val(),
-                coachId = activity.coach_id;
+            coachId = activity.coach_id;
 
             let url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
             url = url.replace(':activity', selectedId);
@@ -505,12 +506,15 @@
                 date_subscription: dateSubscriptionField.val(),
                 date_expiry: dateExpiryField.val()
             };
+
+            $("#registered_activities").val(JSON.stringify(activity.object));
         });
 
         // tr open modify
         $('body').on('click', 'tr', '.selectable_activity', function (e) {
             const selectedId = activity.object[$(this).data('id')].activity_id,
                 coachId = activity.object[$(this).data('id')].coach_id;
+
             activity.coach_id = coachId;
 
             let url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
@@ -589,37 +593,49 @@
             const currentIndex = updateActivityField.val() + "-" + updateCoachField.val();
 
             if (!activity.object[currentIndex]) {
-                delete activity.object[selectedIndex];
+                Swal.fire({
+                    title: "Update selected activity?",
+                    showCancelButton: true,
+                    confirmButtonText: 'Update',
+                    cancelButtonText: 'Cancel',
+                    type: 'info'
+                }).then((result) => {
+                    if (result.value) {
+                        delete activity.object[selectedIndex];
 
-                activity.object[currentIndex] = {
-                    activity_id: updateActivityField.val(),
-                    coach_id: updateCoachField.val(),
-                    monthly_rate: updateMonthlyRateField.val(),
-                    activity_date_subscription: updateActivityDateSubscriptionField.val(),
-                    activity_date_expiry: updateActivityDateExpiryField.val(),
-                    fee: updateMembershipFeeField.val(),
-                    date_subscription: updateDateSubscriptionField.val(),
-                    date_expiry: updateDateExpiryField.val()
-                };
+                        activity.object[currentIndex] = {
+                            activity_id: updateActivityField.val(),
+                            coach_id: updateCoachField.val(),
+                            monthly_rate: updateMonthlyRateField.val(),
+                            activity_date_subscription: updateActivityDateSubscriptionField.val(),
+                            activity_date_expiry: updateActivityDateExpiryField.val(),
+                            fee: updateMembershipFeeField.val(),
+                            date_subscription: updateDateSubscriptionField.val(),
+                            date_expiry: updateDateExpiryField.val()
+                        };
 
-                html = "<td>" + $("#update_activity_id option:selected").html() + "</td>";
-                html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
-                html += "<td>" + $("#update_monthly_rate").val() + "</td>";
-                html += "<td>" + $("#update_activity_date_subscription").val() + "</td>";
-                html += "<td>" + $("#update_activity_date_expiry").val() + "</td>";
-                html += "<td>" + $("#update_fee").val() + "</td>";
-                html += "<td>" + $("#update_date_subscription").val() + "</td>";
-                html += "<td>" + $("#update_date_expiry").val() + "</td>";
-                html += "</tr>";
+                        html = "<td>" + $("#update_activity_id option:selected").html() + "</td>";
+                        html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
+                        html += "<td>" + $("#update_monthly_rate").val() + "</td>";
+                        html += "<td>" + $("#update_activity_date_subscription").val() + "</td>";
+                        html += "<td>" + $("#update_activity_date_expiry").val() + "</td>";
+                        html += "<td>" + $("#update_fee").val() + "</td>";
+                        html += "<td>" + $("#update_date_subscription").val() + "</td>";
+                        html += "<td>" + $("#update_date_expiry").val() + "</td>";
+                        html += "</tr>";
 
-                registeredActivitiesField.find('[data-id="' + $(this).data('activity-object-id') + '"]')
-                    .attr('data-id', currentIndex)
-                    .html(html);
+                        registeredActivitiesField.find('[data-id="' + $(this).data('activity-object-id') + '"]')
+                            .attr('data-id', currentIndex)
+                            .html(html);
 
-                selectedIndex = currentIndex;
+                        selectedIndex = currentIndex;
+
+                        $("#registered_activities").val(activity.object);
+                    }
+                });
             } else {
                 Swal.fire({
-                    title: "Update failed",
+                    title: "Update",
                     text: "The selected activity already exists. Would you like to update the existing activity information instead?",
                     showCancelButton: true,
                     confirmButtonText: 'Update',
@@ -659,7 +675,7 @@
                 });
             }
 
-            console.log(activity.object);
+            $("#registered_activities").val(activity.object);
         });
 
         removeActivityBtn.on('click', function () {
