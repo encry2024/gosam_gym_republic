@@ -2,10 +2,10 @@
 
 namespace App\Models\Activity;
 
+use App\Models\Activity\Traits\Relationship\ActivityRelationship;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Activity\Traits\Attribute\ActivityAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Activity\Traits\Relationship\ActivityRelationship;
 
 class Activity extends Model
 {
@@ -31,4 +31,6 @@ class Activity extends Model
         'monthly_fee',
         'membership_rate'
     ];
+
+    protected $with = ['memberships'];
 }

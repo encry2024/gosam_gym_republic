@@ -226,6 +226,34 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item nav-dropdown {{
+                active_class(Active::checkUriPattern('admin/payment*'), 'open')
+                }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                    active_class(Active::checkUriPattern('admin/payment*'))
+                }}" href="#">
+                        <i class="nav-icon fas fa-money-bill"></i> Payments
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/payment'))
+                            }}" href="{{ route('admin.payment.index') }}">
+                                List
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/payment/deleted'))
+                            }}" href="{{ route('admin.payment.deleted') }}">
+                                Deleted
+                            </a>
+                        </li>
+                    </ul>
+                </li> <!-- customer -->
             @endif
         </ul>
     </nav>

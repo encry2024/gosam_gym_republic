@@ -35,25 +35,17 @@ return [
     ],
 
     'backend' => [
-        'memberships' => [
-            'management'    => 'Membership Management',
-            'list'          => 'Membership List',
-            'create'        => 'Create Membership',
-            'deleted'       => 'Deleted Memberships',
+        'payments' => [
+            'management' => 'Payment Management',
+            'list' => 'Payment List',
+            'deleted' => 'Deleted Memberships',
 
             'table' => [
-                'customer_name'             => 'Customer Name',
-                'activity_name'             => 'Last Name',
-                'coach_name'                => 'Coach Name',
-                'activity_date_registered'  => 'Date Activity Registered',
-                'activity_date_expiry'      => 'Activity Membership Expiry',
-                'fee'                       => 'Monthly Membership Fee',
-                'date_registered'           => 'Membership Date Registered',
-                'date_expiry'               => 'Membership Expiration Date',
-                'created_at'                => 'Date Created',
-                'updated_at'                => 'Last Updated',
-                'deleted_at'                => 'Date Deleted',
-                'total'                     => 'membership total|memberships total'
+                'amount' => 'Amount Paid',
+                'created_at' => 'Date Created',
+                'updated_at' => 'Last Updated',
+                'deleted_at' => 'Date Deleted',
+                'total' => 'payment total|payments total'
             ],
 
             'tabs' => [
@@ -64,17 +56,57 @@ return [
 
                 'content' => [
                     'overview' => [
-                        'customer_name'             => 'Customer Name',
-                        'activity_name'             => 'Last Name',
-                        'coach_name'                => 'Coach Name',
-                        'activity_date_registered'  => 'Date Activity Registered',
-                        'activity_date_expiry'      => 'Activity Membership Expiry',
-                        'fee'                       => 'Monthly Membership Fee',
-                        'date_registered'           => 'Membership Date Registered',
-                        'date_expiry'               => 'Membership Expiration Date',
-                        'created_at'                => 'Date Created',
-                        'updated_at'                => 'Last Updated',
-                        'deleted_at'                => 'Date Deleted',
+                        'amount' => 'Amount Paid',
+                        'created_at' => 'Date Created',
+                        'updated_at' => 'Last Updated',
+                        'deleted_at' => 'Date Deleted',
+                    ],
+                ],
+            ],
+
+            'view' => 'View Payment',
+        ],
+
+        'memberships' => [
+            'management' => 'Membership Management',
+            'list' => 'Membership List',
+            'create' => 'Create Membership',
+            'deleted' => 'Deleted Memberships',
+
+            'table' => [
+                'customer_name' => 'Customer Name',
+                'activity_name' => 'Last Name',
+                'coach_name' => 'Coach Name',
+                'activity_date_registered' => 'Date Activity Registered',
+                'activity_date_expiry' => 'Activity Membership Expiry',
+                'fee' => 'Monthly Membership Fee',
+                'date_registered' => 'Membership Date Registered',
+                'date_expiry' => 'Membership Expiration Date',
+                'created_at' => 'Date Created',
+                'updated_at' => 'Last Updated',
+                'deleted_at' => 'Date Deleted',
+                'total' => 'membership total|memberships total'
+            ],
+
+            'tabs' => [
+                'titles' => [
+                    'overview' => 'Overview',
+                    'history' => 'History',
+                ],
+
+                'content' => [
+                    'overview' => [
+                        'customer_name' => 'Customer Name',
+                        'activity_name' => 'Last Name',
+                        'coach_name' => 'Coach Name',
+                        'activity_date_registered' => 'Date Activity Registered',
+                        'activity_date_expiry' => 'Activity Membership Expiry',
+                        'fee' => 'Monthly Membership Fee',
+                        'date_registered' => 'Membership Date Registered',
+                        'date_expiry' => 'Membership Expiration Date',
+                        'created_at' => 'Date Created',
+                        'updated_at' => 'Last Updated',
+                        'deleted_at' => 'Date Deleted',
                     ],
                 ],
             ],
@@ -83,24 +115,24 @@ return [
         ],
 
         'customers' => [
-            'management'    => 'Customer Management',
-            'list'          => 'Customer List',
-            'create'        => 'Create Customer',
-            'deleted'       => 'Deleted Customers',
+            'management' => 'Customer Management',
+            'list' => 'Customer List',
+            'create' => 'Create Customer',
+            'deleted' => 'Deleted Customers',
 
             'table' => [
-                'first_name'        => 'First Name',
-                'last_name'         => 'Last Name',
-                'email'             => 'E-mail',
-                'address'           => 'Address',
-                'contact_number'    => 'Contact Number',
-                'emergency_number'  => 'Emergency Contact Number',
-                'date_of_birth'     => 'Date of Birth',
-                'age'               => 'Age',
-                'created_at'        => 'Date Created',
-                'updated_at'        => 'Last Updated',
-                'deleted_at'        => 'Date Deleted',
-                'total'             => 'customer total|customers total'
+                'first_name' => 'First Name',
+                'last_name' => 'Last Name',
+                'email' => 'E-mail',
+                'address' => 'Address',
+                'contact_number' => 'Contact Number',
+                'emergency_number' => 'Emergency Contact Number',
+                'date_of_birth' => 'Date of Birth',
+                'age' => 'Age',
+                'created_at' => 'Date Created',
+                'updated_at' => 'Last Updated',
+                'deleted_at' => 'Date Deleted',
+                'total' => 'customer total|customers total'
             ],
 
             'tabs' => [
@@ -111,17 +143,17 @@ return [
 
                 'content' => [
                     'overview' => [
-                        'first_name'        => 'First Name',
-                        'last_name'         => 'Last Name',
-                        'email'             => 'E-mail',
-                        'address'           => 'Address',
-                        'contact_number'    => 'Contact Number',
-                        'emergency_number'  => 'Emergency Contact Number',
-                        'date_of_birth'     => 'Date of Birth',
-                        'age'               => 'Age',
-                        'created_at'        => 'Date Created',
-                        'updated_at'        => 'Last Updated',
-                        'deleted_at'        => 'Date Deleted',
+                        'first_name' => 'First Name',
+                        'last_name' => 'Last Name',
+                        'email' => 'E-mail',
+                        'address' => 'Address',
+                        'contact_number' => 'Contact Number',
+                        'emergency_number' => 'Emergency Contact Number',
+                        'date_of_birth' => 'Date of Birth',
+                        'age' => 'Age',
+                        'created_at' => 'Date Created',
+                        'updated_at' => 'Last Updated',
+                        'deleted_at' => 'Date Deleted',
                     ],
                 ],
             ],
@@ -136,18 +168,18 @@ return [
             'deleted' => 'Deleted Activityes',
 
             'table' => [
-                'name'              => 'Name',
-                'member_rate'       => 'Member Rate',
-                'non_member_rate'   => 'Non-Member Rate',
-                'coach_fee'         => 'Coach Fee',
-                'monthly_rate'      => 'Monthly Rate',
-                'membership_fee'    => 'Membership Fee',
-                'session'           => 'Session',
-                'quota'             => 'Quota',
-                'created_at'        => 'Date Created',
-                'updated_at'        => 'Last Updated',
-                'deleted_at'        => 'Date Deleted',
-                'total'             => 'activity total|activities total'
+                'name' => 'Name',
+                'member_rate' => 'Member Rate',
+                'non_member_rate' => 'Non-Member Rate',
+                'coach_fee' => 'Coach Fee',
+                'monthly_rate' => 'Monthly Rate',
+                'membership_fee' => 'Membership Fee',
+                'session' => 'Session',
+                'quota' => 'Quota',
+                'created_at' => 'Date Created',
+                'updated_at' => 'Last Updated',
+                'deleted_at' => 'Date Deleted',
+                'total' => 'activity total|activities total'
             ],
 
             'tabs' => [
@@ -158,17 +190,17 @@ return [
 
                 'content' => [
                     'overview' => [
-                        'name'              => 'Name',
-                        'member_rate'       => 'Member Rate',
-                        'non_member_rate'   => 'Non-Member Rate',
-                        'coach_fee'         => 'Coach Fee',
-                        'monthly_rate'       => 'Monthly Rate',
-                        'membership_fee'    => 'Membership Fee',
-                        'sessions'           => 'Sessions',
-                        'quota'             => 'Quota',
-                        'created_at'        => 'Date Created',
-                        'updated_at'        => 'Last Updated',
-                        'deleted_at'        => 'Date Deleted',
+                        'name' => 'Name',
+                        'member_rate' => 'Member Rate',
+                        'non_member_rate' => 'Non-Member Rate',
+                        'coach_fee' => 'Coach Fee',
+                        'monthly_rate' => 'Monthly Rate',
+                        'membership_fee' => 'Membership Fee',
+                        'sessions' => 'Sessions',
+                        'quota' => 'Quota',
+                        'created_at' => 'Date Created',
+                        'updated_at' => 'Last Updated',
+                        'deleted_at' => 'Date Deleted',
                     ],
                 ],
             ],
@@ -183,15 +215,15 @@ return [
             'deleted' => 'Deleted Coaches',
 
             'table' => [
-                'avatar'            => 'Avatar',
-                'first_name'        => 'First Name',
-                'last_name'         => 'Last Name',
-                'contact_number'    => 'Contact Number',
-                'address'           => 'Address',
-                'created_at'        => 'Date Created',
-                'updated_at'        => 'Last Updated',
-                'deleted_at'        => 'Date Deleted',
-                'total'             => 'coach total|coaches total'
+                'avatar' => 'Avatar',
+                'first_name' => 'First Name',
+                'last_name' => 'Last Name',
+                'contact_number' => 'Contact Number',
+                'address' => 'Address',
+                'created_at' => 'Date Created',
+                'updated_at' => 'Last Updated',
+                'deleted_at' => 'Date Deleted',
+                'total' => 'coach total|coaches total'
             ],
 
             'tabs' => [
@@ -202,14 +234,14 @@ return [
 
                 'content' => [
                     'overview' => [
-                        'avatar'            => 'Avatar',
-                        'first_name'        => 'First Name',
-                        'last_name'         => 'Last Name',
-                        'contact_number'    => 'Contact Number',
-                        'address'           => 'Address',
-                        'created_at'        => 'Date Created',
-                        'updated_at'        => 'Last Updated',
-                        'deleted_at'        => 'Date Deleted'
+                        'avatar' => 'Avatar',
+                        'first_name' => 'First Name',
+                        'last_name' => 'Last Name',
+                        'contact_number' => 'Contact Number',
+                        'address' => 'Address',
+                        'created_at' => 'Date Created',
+                        'updated_at' => 'Last Updated',
+                        'deleted_at' => 'Date Deleted'
                     ],
                 ],
             ],

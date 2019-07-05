@@ -20,7 +20,7 @@ class ActivityTableSeeder extends Seeder
             'monthly_rate'      => '1000',
             'membership_fee'    => '500',
             'sessions'          => '12',
-            'quota'             => '12'
+            'quota'             => '2'
         ]);
 
         \App\Models\Activity\Activity::create([
@@ -31,7 +31,7 @@ class ActivityTableSeeder extends Seeder
             'monthly_rate'      => '1000',
             'membership_fee'    => '500',
             'sessions'          => '12',
-            'quota'             => '12'
+            'quota'             => '2'
         ]);
 
         \App\Models\Activity\Activity::create([
@@ -42,7 +42,7 @@ class ActivityTableSeeder extends Seeder
             'monthly_rate'      => '1000',
             'membership_fee'    => '500',
             'sessions'          => '12',
-            'quota'             => '12'
+            'quota'             => '2'
         ]);
 
         \App\Models\Activity\Activity::create([
@@ -53,7 +53,7 @@ class ActivityTableSeeder extends Seeder
             'monthly_rate'      => '1000',
             'membership_fee'    => '500',
             'sessions'          => '12',
-            'quota'             => '12'
+            'quota'             => '2'
         ]);
 
         \App\Models\Activity\Activity::create([
@@ -64,7 +64,7 @@ class ActivityTableSeeder extends Seeder
             'monthly_rate'      => '1000',
             'membership_fee'    => '500',
             'sessions'          => '12',
-            'quota'             => '12'
+            'quota'             => '2'
         ]);
     }
 }
