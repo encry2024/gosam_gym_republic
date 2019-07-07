@@ -101,17 +101,10 @@ class MembershipRepository extends BaseRepository
                         'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry']))
                     ]);
 
-                    $payment = new Payment(['amount' => $membership->monthly_fee, 'customer_id' => $customer->id]);
+                    $payment = new Payment(['customer_id' => $customer->id]);
                     $membership->activity->payments()->save($payment);
-                    event(new PaymentCreated(Auth::user()->full_name, $membership->monthly_fee));
-
-                    $payment = new Payment(['amount' => $membership->fee, 'customer_id' => $customer->id]);
-                    $membership->payments()->save($payment);
-                    event(new PaymentCreated(Auth::user()->full_name, $membership->fee));
-
-                    $payment = new Payment(['amount' => $membership->activity->coach_fee, 'customer_id' => $customer->id]);
-                    $membership->coach->payments()->save($payment);
-                    event(new PaymentCreated(Auth::user()->full_name, $membership->activity->coach_fee));
+                    $totalPaid = $membership->activity->membership_fee + $membership->activity->monthly_fee + $membership->activity->coach_fee;
+                    event(new PaymentCreated(Auth::user()->full_name), $totalPaid);
                 }
 
                 event(new MembershipCreated(Auth::user()->full_name, $customer->name));

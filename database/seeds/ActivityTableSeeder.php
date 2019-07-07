@@ -11,7 +11,6 @@ class ActivityTableSeeder extends Seeder
      */
     public function run()
     {
-        // Add the master administrator, user id of 1
         \App\Models\Activity\Activity::create([
             'name'              => 'Muay Thai',
             'member_rate'       => '200',

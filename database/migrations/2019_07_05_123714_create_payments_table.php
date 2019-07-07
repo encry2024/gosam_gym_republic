@@ -16,7 +16,6 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('customer_id')->unsigned();
-            $table->float('amount', 12, 2)->default(0.00);
             $table->string('paymentable_type');
             $table->string('paymentable_id');
             $table->timestamps();
