@@ -17,7 +17,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::with(['customer.transactions'])->get();
 
         return view('backend.dashboard')->withPayments($payments);
     }

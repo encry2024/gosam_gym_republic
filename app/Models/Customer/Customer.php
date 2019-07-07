@@ -24,7 +24,5 @@ class Customer extends Model
         'emergency_number'
     ];
 
-    protected $with = ['memberships'];
-
     protected $appends = ['name'];
 }

@@ -22,4 +22,9 @@ trait CustomerRelationship
     {
         return $this->morphMany(Payment::class, 'paymentable');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

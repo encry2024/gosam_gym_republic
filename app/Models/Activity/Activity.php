@@ -31,6 +31,4 @@ class Activity extends Model
         'monthly_fee',
         'membership_rate'
     ];
-
-    protected $with = ['memberships'];
 }
