@@ -17,8 +17,9 @@ class CreateMembershipsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('customer_id')->unsigned();
             $table->integer('activity_id')->unsigned();
-            $table->integer('coach_id')->unsigned();
             $table->float('monthly_fee', 12, 2);
+            $table->integer('coach_id')->unsigned();
+            $table->float('coach_fee', 12, 2);
             $table->date('activity_date_subscription');
             $table->date('activity_date_expiry');
             $table->float('fee', 12, 2);

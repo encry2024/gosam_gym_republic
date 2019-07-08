@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Activity;
 
-use App\Models\Activity\Activity;
-use App\Http\Controllers\Controller;
 use App\Events\Backend\Activity\ActivityDeleted;
-use App\Repositories\Backend\ActivityRepository;
-use App\Http\Requests\Backend\Activity\StoreActivityRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Activity\ManageActivityRequest;
+use App\Http\Requests\Backend\Activity\StoreActivityRequest;
 use App\Http\Requests\Backend\Activity\UpdateActivityRequest;
-use Illuminate\Http\Request;
+use App\Models\Activity\Activity;
+use App\Repositories\Backend\ActivityRepository;
 use Auth;
 
 /**
@@ -44,8 +43,8 @@ class ActivityController extends Controller
     }
 
     /**
-     * @param ManageActivityRequest    $request
-     * @param RoleRepository       $roleRepository
+     * @param ManageActivityRequest $request
+     * @param RoleRepository $roleRepository
      * @param PermissionRepository $permissionRepository
      *
      * @return mixed
@@ -79,7 +78,7 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param Activity              $activity
+     * @param Activity $activity
      *
      * @return mixed
      */
@@ -90,9 +89,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * @param ManageActivityRequest    $request
+     * @param ManageActivityRequest $request
      * @param PermissionRepository $permissionRepository
-     * @param Activity                 $activity
+     * @param Activity $activity
      *
      * @return mixed
      */
@@ -103,7 +102,7 @@ class ActivityController extends Controller
 
     /**
      * @param UpdateActivityRequest $request
-     * @param Activity              $activity
+     * @param Activity $activity
      *
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
@@ -133,7 +132,7 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param Activity              $activity
+     * @param Activity $activity
      *
      * @throws \Exception
      * @return mixed
@@ -167,6 +166,6 @@ class ActivityController extends Controller
             ];
         }
 
-        return json_encode(['coach' => $activityCoaches, 'membership_fee' => $activity->membership_rate, 'monthly_rate' => $activity->monthly_fee]);
+        return json_encode(['coach' => $activityCoaches, 'membership_fee' => $activity->membership_rate, 'monthly_rate' => $activity->monthly_fee, 'coach_fee' => $activity->coach_rate]);
     }
 }

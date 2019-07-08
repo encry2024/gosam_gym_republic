@@ -31,7 +31,7 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int    $paged
+     * @param int $paged
      * @param string $orderBy
      * @param string $sort
      *
@@ -45,7 +45,7 @@ class MembershipRepository extends BaseRepository
     }
 
     /**
-     * @param int    $paged
+     * @param int $paged
      * @param string $orderBy
      * @param string $sort
      *
@@ -88,12 +88,14 @@ class MembershipRepository extends BaseRepository
                 foreach ($registeredActivities as $registeredActivity) {
                     $fee = str_replace(array("PHP ", ","), "", $registeredActivity['fee']);
                     $monthlyFee = str_replace(array("PHP ", ","), "", $registeredActivity['monthly_rate']);
+                    $coachFee = str_replace(array("PHP", ","), "", $registeredActivity['coach_fee']);
 
                     $membership = parent::create([
                         'customer_id' => $customer->id,
                         'activity_id' => $registeredActivity['activity_id'],
-                        'coach_id' => $registeredActivity['coach_id'],
                         'monthly_fee' => $monthlyFee,
+                        'coach_id' => $registeredActivity['coach_id'],
+                        'coach_fee' => $coachFee,
                         'activity_date_subscription' => date('Y-m-d h:i:s', strtotime($registeredActivity['activity_date_subscription'])),
                         'activity_date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['activity_date_expiry'])),
                         'fee' => $fee,
@@ -102,9 +104,9 @@ class MembershipRepository extends BaseRepository
                     ]);
 
                     $payment = new Payment(['customer_id' => $customer->id]);
-                    $membership->activity->payments()->save($payment);
-                    $totalPaid = $membership->activity->membership_fee + $membership->activity->monthly_fee + $membership->activity->coach_fee;
-                    event(new PaymentCreated(Auth::user()->full_name), $totalPaid);
+                    $membership->payments()->save($payment);
+                    $totalPaid = $membership->fee + $membership->monthly_fee + $membership->coach_fee;
+                    event(new PaymentCreated(Auth::user()->full_name, $totalPaid));
                 }
 
                 event(new MembershipCreated(Auth::user()->full_name, $customer->name));
@@ -118,7 +120,7 @@ class MembershipRepository extends BaseRepository
 
     /**
      * @param Membership $membership
-     * @param array      $data
+     * @param array $data
      *
      * @return Membership
      * @throws \Exception

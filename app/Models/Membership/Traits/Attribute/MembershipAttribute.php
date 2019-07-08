@@ -8,6 +8,21 @@ namespace App\Models\Membership\Traits\Attribute;
 trait MembershipAttribute
 {
 
+    public function getFeeStringAttribute()
+    {
+        return "PHP " . number_format($this->fee, 2);
+    }
+
+    public function getMonthlyFeeStringAttribute()
+    {
+        return "PHP " . number_format($this->monthly_fee, 2);
+    }
+
+    public function getCoachFeeStringAttribute()
+    {
+        return "PHP " . number_format($this->coach_fee, 2);
+    }
+
     /**
      * @return string
      */

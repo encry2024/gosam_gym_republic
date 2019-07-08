@@ -9,12 +9,9 @@ trait PaymentAttribute
 {
     public function getIncomeAttribute()
     {
-        return "PHP " . number_format($this->amount, "2");
-    }
+        $totalPaid = $this->paymentable->monthly_fee + $this->paymentable->coach_fee + $this->paymentable->fee;
 
-    public function getStripIncomeAttribute($income)
-    {
-        return str_replace(array("PHP ", ","), "", $income);
+        return "PHP " . number_format($totalPaid, "2");
     }
 
     /**

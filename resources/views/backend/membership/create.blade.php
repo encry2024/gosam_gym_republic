@@ -104,6 +104,19 @@
                             </div><!--form-group-->
 
                             <div class="form-group row">
+                                {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
+                                ->class('col-md-4 form-control-label')->for('monthly_rate') }}
+
+                                <div class="col-md-8">
+                                    {{ html()->text('monthly_rate')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                        ->attribute('maxlength', 191)
+                                        ->required() }}
+                                </div><!--col-->
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
                                 {{ html()->label(__('validation.attributes.backend.memberships.coach_id'))
                                 ->class('col-md-4 form-control-label')->for('coach_id') }}
 
@@ -115,13 +128,13 @@
                             </div><!--form-group-->
 
                             <div class="form-group row">
-                                {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
-                                ->class('col-md-4 form-control-label')->for('monthly_rate') }}
+                                {{ html()->label(__('validation.attributes.backend.activities.coach_fee'))
+                                ->class('col-md-4 form-control-label')->for('coach_fee') }}
 
                                 <div class="col-md-8">
-                                    {{ html()->text('monthly_rate')
+                                    {{ html()->text('coach_fee')
                                         ->class('form-control')
-                                        ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                        ->placeholder(__('validation.attributes.backend.activities.coach_fee'))
                                         ->attribute('maxlength', 191)
                                         ->required() }}
                                 </div><!--col-->
@@ -237,6 +250,19 @@
                             </div><!--form-group-->
 
                             <div class="form-group row">
+                                {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
+                                ->class('col-md-4 form-control-label')->for('update_monthly_rate') }}
+
+                                <div class="col-md-8">
+                                    {{ html()->text('update_monthly_rate')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
+                                        ->attribute('maxlength', 191)
+                                        ->required() }}
+                                </div><!--col-->
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
                                 {{ html()->label(__('validation.attributes.backend.memberships.coach_id'))
                                 ->class('col-md-4 form-control-label')->for('coach_id') }}
 
@@ -248,11 +274,11 @@
                             </div><!--form-group-->
 
                             <div class="form-group row">
-                                {{ html()->label(__('validation.attributes.backend.activities.monthly_rate'))
-                                ->class('col-md-4 form-control-label')->for('update_monthly_rate') }}
+                                {{ html()->label(__('validation.attributes.backend.activities.coach_fee'))
+                                ->class('col-md-4 form-control-label')->for('update_coach_fee') }}
 
                                 <div class="col-md-8">
-                                    {{ html()->text('update_monthly_rate')
+                                    {{ html()->text('update_coach_fee')
                                         ->class('form-control')
                                         ->placeholder(__('validation.attributes.backend.activities.monthly_rate'))
                                         ->attribute('maxlength', 191)
@@ -354,6 +380,7 @@
             dateSubscriptionField = $("#date_subscription"),
             monthlyRateField = $("#monthly_rate"),
             dateExpiryField = $("#date_expiry"),
+            coachFeeField = $("#coach_fee"),
             updateActivityBtn = $("#updateActivityBtn"),
             removeActivityBtn = $("#removeActivityBtn"),
             modifySelectedActivityModal = $("#modifySelectedActivityModal"),
@@ -365,6 +392,7 @@
             updateMembershipFeeField = $("#update_fee"),
             updateDateSubscriptionField = $("#update_date_subscription"),
             updateMonthlyRateField = $("#update_monthly_rate"),
+            updateCoachFeeField = $("#update_coach_fee"),
             updateDateExpiryField = $("#update_date_expiry");
 
         var activity = {
@@ -409,6 +437,7 @@
 
                     membershipFeeField.val(activityObject.membership_fee);
                     monthlyRateField.val(activityObject.monthly_rate);
+                    coachFeeField.val(activityObject.coach_fee);
                 }
             });
         });
@@ -479,8 +508,9 @@
             if (!activity.object[index]) {
                 html = "<tr data-id='" + activityField.val() + "-" + coachField.val() + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
                 html += "<td>" + $("#activity_id option:selected").html() + "</td>";
-                html += "<td>" + $("#coach_id option:selected").html() + "</td>";
                 html += "<td>" + monthlyRateField.val() + "</td>";
+                html += "<td>" + $("#coach_id option:selected").html() + "</td>";
+                html += "<td>" + coachFeeField.val() + "</td>";
                 html += "<td>" + activityDateSubscriptionField.val() + "</td>";
                 html += "<td>" + activityDateExpiryField.val() + "</td>";
                 html += "<td>" + membershipFeeField.val() + "</td>";
@@ -498,8 +528,9 @@
 
             activity.object[activityField.val() + "-" + coachField.val()] = {
                 activity_id: activityField.val(),
-                coach_id: coachField.val(),
                 monthly_rate: monthlyRateField.val(),
+                coach_id: coachField.val(),
+                coach_fee: coachFeeField.val(),
                 activity_date_subscription: activityDateSubscriptionField.val(),
                 activity_date_expiry: activityDateExpiryField.val(),
                 fee: membershipFeeField.val(),
@@ -575,6 +606,8 @@
 
             modifySelectedActivityModal.find("#update_monthly_fee")
                 .val(activity.object[selectedIndex].coach_id);
+            modifySelectedActivityModal.find("#update_monthly_fee")
+                .val(activity.object[selectedIndex].coach_fee);
             modifySelectedActivityModal.find("#update_activity_date_subscription")
                 .val(activity.object[selectedIndex].activity_date_subscription);
             modifySelectedActivityModal.find("#update_activity_date_expiry")
@@ -605,8 +638,9 @@
 
                         activity.object[currentIndex] = {
                             activity_id: updateActivityField.val(),
-                            coach_id: updateCoachField.val(),
                             monthly_rate: updateMonthlyRateField.val(),
+                            coach_id: updateCoachField.val(),
+                            coach_fee: updateCoachFeeField.val(),
                             activity_date_subscription: updateActivityDateSubscriptionField.val(),
                             activity_date_expiry: updateActivityDateExpiryField.val(),
                             fee: updateMembershipFeeField.val(),
@@ -615,8 +649,9 @@
                         };
 
                         html = "<td>" + $("#update_activity_id option:selected").html() + "</td>";
-                        html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
                         html += "<td>" + $("#update_monthly_rate").val() + "</td>";
+                        html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
+                        html += "<td>" + $("#update_coach_fee").val() + "</td>";
                         html += "<td>" + $("#update_activity_date_subscription").val() + "</td>";
                         html += "<td>" + $("#update_activity_date_expiry").val() + "</td>";
                         html += "<td>" + $("#update_fee").val() + "</td>";

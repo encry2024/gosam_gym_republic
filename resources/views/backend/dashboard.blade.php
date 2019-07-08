@@ -15,25 +15,18 @@
                         $procureLabel = array();
                         $coachName = "";
                     @endphp
-                    <div class="col-7">
+                    <div class="col-12">
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Transaction #</th>
                                     <th>Customer</th>
-                                    <th>Total Amount</th>
-                                    @foreach($payments as $payment)
-                                        @if(class_basename($payment->paymentable_type) != "Membership")
-                                            @if(!in_array(class_basename($payment->paymentable_type), $procureLabel))
-                                                <th>{{ class_basename($payment->paymentable_type) }}</th>
-
-                                                @php
-                                                    array_push($procureLabel, class_basename($payment->paymentable_type));
-                                                @endphp
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Activity</th>
+                                    <th>Coach</th>
+                                    <th>Log Date</th>
                                 </tr>
                                 </thead>
 
@@ -42,11 +35,16 @@
                                     <tr>
                                         <td>{{ $payment->id }}</td>
                                         <td>{{ $payment->customer->name }}</td>
-                                        <td>PHP {{ number_format($payment->customer->transactions->sum('amount'), 2) }}</td>
-                                        <td>{{ $payment->paymentable->name }}</td>
-                                        <td>
-                                            {{ $coachName }}
-                                        </td>
+                                        <td>{{ $payment->income }}</td>
+                                        <td>{{ class_basename($payment->paymentable_type) }}</td>
+                                        @if(class_basename($payment->paymentable_type) == "Membership")
+                                            <td>{{ $payment->paymentable->activity->name }}</td>
+                                            <td>{{ $payment->paymentable->coach->name }}</td>
+                                        @else
+                                            <td>N/A</td>
+                                            <td>N/A</td>
+                                        @endif
+                                        <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
