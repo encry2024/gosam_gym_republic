@@ -17,7 +17,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with(['customer.transactions'])->get();
+        $payments = Payment::with(['customer'])->whereDate('created_at', '=', date('Y-m-d'))->get();
 
         return view('backend.dashboard')->withPayments($payments);
     }

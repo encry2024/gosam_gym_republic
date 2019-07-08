@@ -34,7 +34,6 @@
                                     <td>{{ $payment->income }}</td>
                                     <td>{{ $payment->customer->name }}</td>
                                     <td>{{ class_basename($payment->paymentable_type) }}</td>
-                                    {{--<td>{{ $payment->paymentable->name ? $payment->paymentable->name : 'Membership Fee' }}</td>--}}
                                     <td>
                                         @if(class_basename($payment->paymentable_type) == "Membership")
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Coach</a>
