@@ -20,6 +20,8 @@ class CreatePaymentsTable extends Migration
             $table->string('paymentable_id');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['paymentable_id', 'paymentable_type']);
         });
     }
 

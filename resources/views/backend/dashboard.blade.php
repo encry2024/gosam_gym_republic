@@ -10,11 +10,6 @@
                     <strong>Daily Transactions</strong>
                 </div><!--card-header-->
                 <div class="card-body">
-                    @php
-                        $customerName = "";
-                        $procureLabel = array();
-                        $coachName = "";
-                    @endphp
                     <div class="col-12">
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -34,7 +29,7 @@
                                 @foreach($payments as $payment)
                                     <tr>
                                         <td>{{ $payment->id }}</td>
-                                        <td>{{ $payment->customer->name }}</td>
+                                        <td>{{ $payment->customer->first_name }} {{ $payment->customer->last_name }}</td>
                                         <td>{{ $payment->income }}</td>
                                         <td>{{ class_basename($payment->paymentable_type) }}</td>
                                         @if(class_basename($payment->paymentable_type) == "Membership")

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Auth\User;
+use App\Models\Membership\Membership;
 use App\Models\Payment\Payment;
-use OwenIt\Auditing\Models\Audit;
 
 /**
  * Class DashboardController.
@@ -17,7 +16,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with(['customer'])->whereDate('created_at', '=', date('Y-m-d'))->get();
+        $payments = Payment::with(['paymentable.coach', 'paymentable.activity', 'customer:id,first_name,last_name'])
+            ->whereDate('created_at', '=', date('Y-m-d'))
+            ->get();
 
         return view('backend.dashboard')->withPayments($payments);
     }
