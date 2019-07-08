@@ -71,6 +71,17 @@
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.coaches.employment_type'))->class('col-md-2 form-control-label')->for('employment_type') }}
+
+                            <div class="col-md-10">
+                                <select name="employment_type" id="employment_type" class="form-control">
+                                    <option value="employed">Employed</option>
+                                    <option value="freelance">Freelance</option>
+                                </select>
+                            </div><!--col-->
+                        </div><!--form-group-->
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-body-->
