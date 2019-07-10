@@ -39,7 +39,7 @@
                                             <td>N/A</td>
                                             <td>N/A</td>
                                         @endif
-                                        <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
+                                        <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

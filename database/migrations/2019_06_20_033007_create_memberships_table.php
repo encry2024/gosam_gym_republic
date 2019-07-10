@@ -25,6 +25,7 @@ class CreateMembershipsTable extends Migration
             $table->float('fee', 12, 2);
             $table->date('date_registered');
             $table->date('date_expiry');
+            $table->boolean('status');
             $table->timestamps();
             $table->softDeletes();
         });
