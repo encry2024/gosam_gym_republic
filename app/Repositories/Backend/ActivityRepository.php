@@ -33,7 +33,7 @@ class ActivityRepository extends BaseRepository
      *
      * @return mixed
      */
-    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)
@@ -47,7 +47,7 @@ class ActivityRepository extends BaseRepository
      *
      * @return LengthAwarePaginator
      */
-    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->onlyTrashed()
@@ -58,11 +58,11 @@ class ActivityRepository extends BaseRepository
     /**
      * @param array $data
      *
-     * @throws \Exception
-     * @throws \Throwable
      * @return Activity
+     * @throws \Throwable
+     * @throws \Exception
      */
-    public function create(array $data) : Activity
+    public function create(array $data): Activity
     {
         return DB::transaction(function () use ($data) {
             $activity = new Activity();
@@ -80,15 +80,15 @@ class ActivityRepository extends BaseRepository
     }
 
     /**
-     * @param Activity  $activity
-     * @param array $data
+     * @param Activity $activity
+     * @param array    $data
      *
-     * @throws GeneralException
+     * @return Activity
      * @throws \Exception
      * @throws \Throwable
-     * @return Activity
+     * @throws GeneralException
      */
-    public function update(Activity $activity, array $data) : Activity
+    public function update(Activity $activity, array $data): Activity
     {
         return DB::transaction(function () use ($activity, $data) {
             if ($activity->update($data)) {
@@ -106,12 +106,12 @@ class ActivityRepository extends BaseRepository
     /**
      * @param Activity $activity
      *
-     * @throws GeneralException
+     * @return Activity
      * @throws \Exception
      * @throws \Throwable
-     * @return Activity
+     * @throws GeneralException
      */
-    public function forceDelete(Activity $activity) : Activity
+    public function forceDelete(Activity $activity): Activity
     {
         $activityName = $activity->name;
 
@@ -133,10 +133,10 @@ class ActivityRepository extends BaseRepository
     /**
      * @param Activity $activity
      *
-     * @throws GeneralException
      * @return Activity
+     * @throws GeneralException
      */
-    public function restore(Activity $activity) : Activity
+    public function restore(Activity $activity): Activity
     {
         $activityName = $activity->name;
 
