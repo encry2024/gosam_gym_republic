@@ -132,16 +132,16 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param Activity $activity
+     * @param Activity              $activity
      *
-     * @throws \Exception
      * @return mixed
+     * @throws \Exception
      */
     public function destroy(ManageActivityRequest $request, Activity $activity)
     {
         $activityName = $activity->name;
 
-        $activity = $this->activityRepository->deleteById($activity->id);
+        $this->activityRepository->deleteById($activity->id);
 
         event(new ActivityDeleted(Auth::user()->full_name, $activityName));
 
