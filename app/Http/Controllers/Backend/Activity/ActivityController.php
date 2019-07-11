@@ -44,8 +44,8 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param RoleRepository $roleRepository
-     * @param PermissionRepository $permissionRepository
+     * @param RoleRepository        $roleRepository
+     * @param PermissionRepository  $permissionRepository
      *
      * @return mixed
      */
@@ -57,8 +57,8 @@ class ActivityController extends Controller
     /**
      * @param StoreActivityRequest $request
      *
-     * @throws \Throwable
      * @return mixed
+     * @throws \Throwable
      */
     public function store(StoreActivityRequest $request)
     {
@@ -78,7 +78,7 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param Activity $activity
+     * @param Activity              $activity
      *
      * @return mixed
      */
@@ -90,8 +90,8 @@ class ActivityController extends Controller
 
     /**
      * @param ManageActivityRequest $request
-     * @param PermissionRepository $permissionRepository
-     * @param Activity $activity
+     * @param PermissionRepository  $permissionRepository
+     * @param Activity              $activity
      *
      * @return mixed
      */
@@ -102,16 +102,14 @@ class ActivityController extends Controller
 
     /**
      * @param UpdateActivityRequest $request
-     * @param Activity $activity
+     * @param Activity              $activity
      *
-     * @throws \App\Exceptions\GeneralException
-     * @throws \Throwable
      * @return mixed
+     * @throws \Throwable
+     * @throws \App\Exceptions\GeneralException
      */
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
-        // return json_encode($request->all());
-
         $activity = $this->activityRepository->update($activity, $request->only(
             'name',
             'member_rate',
@@ -148,6 +146,14 @@ class ActivityController extends Controller
         return redirect()->route('admin.activity.deleted')->withFlashSuccess(__('alerts.backend.activities.deleted', ['activity' => $activityName]));
     }
 
+    /**
+     * Check if the activity assigned to the coach exists.
+     *
+     * @param ManageActivityRequest $request
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function checkExistingActivity(ManageActivityRequest $request)
     {
         $ifActivityExists = $this->activityRepository->checkExistingActivity($request->only('name'));
