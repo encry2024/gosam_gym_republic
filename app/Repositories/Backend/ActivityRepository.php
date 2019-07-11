@@ -153,7 +153,12 @@ class ActivityRepository extends BaseRepository
         throw new GeneralException(__('exceptions.backend.activities.restore_error'));
     }
 
-    public function checkExistingActivity(array $data)
+    /**
+     * @param array $data
+     *
+     * @return Json
+     */
+    public function checkExistingActivity(array $data): Json
     {
         $activity = Activity::whereName($data['name'])->first();
 
