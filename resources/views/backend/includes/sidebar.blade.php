@@ -13,6 +13,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/logs')) }}"
+                   href="{{ route('admin.logs.index') }}">
+                    <i class="nav-icon fas fa-book-open"></i> Log Book
+                </a>
+            </li>
+
             <li class="nav-item nav-dropdown {{
                 active_class(Active::checkUriPattern('admin/activity*'), 'open')
                 }}">
@@ -133,7 +140,7 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/membership'))
+                            active_class(Active::checkUriPattern('admin/membership/'))
                             }}" href="{{ route('admin.membership.index') }}">
                             List
                         </a>
@@ -141,7 +148,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/membership'))
+                            active_class(Active::checkUriPattern('admin/membership/create'))
                             }}" href="{{ route('admin.membership.create') }}">
                             Create
                         </a>
@@ -162,12 +169,13 @@
             </li>
 
             @if ($logged_in_user->isAdmin())
+
                 <li class="nav-item nav-dropdown {{
-                active_class(Active::checkUriPattern('admin/payment*'), 'open')
-                }}">
+                    active_class(Active::checkUriPattern('admin/payment*'), 'open')
+                    }}">
                     <a class="nav-link nav-dropdown-toggle {{
-                    active_class(Active::checkUriPattern('admin/payment*'))
-                }}" href="#">
+                        active_class(Active::checkUriPattern('admin/payment*'))
+                    }}" href="#">
                         <i class="nav-icon fas fa-money-bill"></i> Payments
                     </a>
 

@@ -3,6 +3,8 @@
 @section('title', app_name() . ' | ' . __('strings.backend.dashboard.title'))
 
 @section('content')
+    @include('backend.dashboard.daily_reports')
+
     <div class="row">
         <div class="col">
             <div class="card">
