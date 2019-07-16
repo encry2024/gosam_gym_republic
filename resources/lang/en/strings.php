@@ -13,6 +13,13 @@ return [
     */
 
     'backend' => [
+        'logs' => [
+            'title' => 'Logs',
+            'delete_log_confirm' => 'Are you sure you want to delete this log permanently? Anywhere in the application that references this log\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
+            'no_deleted' => 'There are no deleted logs.',
+            'restore_log_confirm' => 'Restore this log to its original state?',
+        ],
+
         'memberships' => [
             'delete_membership_confirm' => 'Are you sure you want to delete this membership permanently? Anywhere in the application that references this membership\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
             'no_deleted' => 'There are no deleted memberships.',

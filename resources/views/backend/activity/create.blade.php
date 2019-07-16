@@ -2,10 +2,6 @@
 
 @section('title', __('labels.backend.activities.management') . ' | ' . __('labels.backend.activities.create'))
 
-@section('breadcrumb-links')
-    @include('backend.auth.user.includes.breadcrumb-links')
-@endsection
-
 @section('content')
     {{ html()->form('POST', route('admin.activity.store'))->class('form-horizontal')->open() }}
         <div class="card">

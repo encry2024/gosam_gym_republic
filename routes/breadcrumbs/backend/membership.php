@@ -1,7 +1,6 @@
 <?php
 
 Breadcrumbs::for('admin.membership.index', function ($trail) {
-    $trail->parent('admin.dashboard');
     $trail->push(__('labels.backend.memberships.management'), route('admin.membership.index'));
 });
 

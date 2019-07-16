@@ -35,6 +35,11 @@ return [
     ],
 
     'backend' => [
+        'logs' => [
+            'management' => 'Customer Logs Management',
+            'list' => 'Log Book'
+        ],
+
         'payments' => [
             'management' => 'Payment Management',
             'list' => 'Payment List',

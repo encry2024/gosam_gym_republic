@@ -1,7 +1,6 @@
 <?php
 
 Breadcrumbs::for('admin.payment.index', function ($trail) {
-    $trail->parent('admin.dashboard');
     $trail->push(__('labels.backend.payments.management'), route('admin.payment.index'));
 });
 

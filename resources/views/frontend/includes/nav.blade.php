@@ -13,7 +13,7 @@
 
             @guest
                 <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
-                <li class="nav-item"><a href="{{ route('frontend.log.index') }}" class="nav-link {{ active_class(Active::checkRoute('frontend.log.index')) }}">Log Book</a></li>
+                <li class="nav-item"><a href="{{ route('frontend.logs.index') }}" class="nav-link {{ active_class(Active::checkRoute('frontend.logs.index')) }}">Log Book</a></li>
             @else
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
