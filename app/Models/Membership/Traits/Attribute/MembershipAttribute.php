@@ -23,6 +23,15 @@ trait MembershipAttribute
         return "PHP " . number_format($this->coach_fee, 2);
     }
 
+    public function getStatusLabelAttribute()
+    {
+        if ($this->isActive()) {
+            return "<span class='badge badge-success'>".__('labels.general.active').'</span>';
+        }
+
+        return "<span class='badge badge-danger'>".__('labels.general.inactive').'</span>';
+    }
+
     /**
      * @return string
      */

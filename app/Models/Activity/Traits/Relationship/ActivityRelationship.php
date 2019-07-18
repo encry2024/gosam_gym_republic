@@ -14,7 +14,7 @@ trait ActivityRelationship
     /**
      * @return mixed
      */
-    public function activityCoach()
+    public function activityCoaches()
     {
         return $this->belongsToMany(Coach::class);
     }

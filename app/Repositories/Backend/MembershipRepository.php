@@ -99,7 +99,8 @@ class MembershipRepository extends BaseRepository
                         'activity_date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['activity_date_expiry'])),
                         'fee' => $fee,
                         'date_registered' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_subscription'])),
-                        'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry']))
+                        'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry'])),
+                        'status' => 1
                     ]);
 
                     $payment = new Payment(['customer_id' => $customer->id]);

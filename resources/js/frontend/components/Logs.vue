@@ -4,7 +4,7 @@
             <i class="fas fa-code"></i> Log Page
         </div>
         <div class="card-body">
-            <input type="text" id="input">
+            <input type="text" id="input" class="form-control" value="Test">
         </div>
     </div>
 </template>

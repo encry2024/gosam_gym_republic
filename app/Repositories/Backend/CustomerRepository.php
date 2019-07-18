@@ -2,17 +2,20 @@
 
 namespace App\Repositories\Backend;
 
-use App\Models\Customer\Customer;
-use Illuminate\Support\Facades\DB;
-use App\Exceptions\GeneralException;
-use App\Repositories\BaseRepository;
 use App\Events\Backend\Customer\CustomerCreated;
-use App\Events\Backend\Customer\CustomerUpdated;
-use App\Events\Backend\Customer\CustomerRestored;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Events\Backend\Customer\CustomerPermanentlyDeleted;
-use Illuminate\Support\Carbon;
+use App\Events\Backend\Customer\CustomerRestored;
+use App\Events\Backend\Customer\CustomerUpdated;
+use App\Exceptions\GeneralException;
+use App\Models\Customer\Customer;
+use App\Repositories\BaseRepository;
 use Auth;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
  * Class CustomerRepository.
@@ -34,7 +37,7 @@ class CustomerRepository extends BaseRepository
      *
      * @return mixed
      */
-    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)
@@ -48,7 +51,7 @@ class CustomerRepository extends BaseRepository
      *
      * @return LengthAwarePaginator
      */
-    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    public function getDeletedPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->onlyTrashed()
@@ -59,11 +62,11 @@ class CustomerRepository extends BaseRepository
     /**
      * @param array $data
      *
-     * @throws \Exception
-     * @throws \Throwable
      * @return Customer
+     * @throws Throwable
+     * @throws Exception
      */
-    public function create(array $data) : Customer
+    public function create(array $data): Customer
     {
         return DB::transaction(function () use ($data) {
             $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
@@ -91,15 +94,15 @@ class CustomerRepository extends BaseRepository
     }
 
     /**
-     * @param Customer  $customer
-     * @param array $data
+     * @param Customer $customer
+     * @param array    $data
      *
-     * @throws GeneralException
-     * @throws \Exception
-     * @throws \Throwable
      * @return Customer
+     * @throws Exception
+     * @throws Throwable
+     * @throws GeneralException
      */
-    public function update(Customer $customer, array $data) : Customer
+    public function update(Customer $customer, array $data): Customer
     {
         return DB::transaction(function () use ($customer, $data) {
             $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
@@ -127,12 +130,12 @@ class CustomerRepository extends BaseRepository
     /**
      * @param Customer $customer
      *
-     * @throws GeneralException
-     * @throws \Exception
-     * @throws \Throwable
      * @return Customer
+     * @throws Exception
+     * @throws Throwable
+     * @throws GeneralException
      */
-    public function forceDelete(Customer $customer) : Customer
+    public function forceDelete(Customer $customer): Customer
     {
         if ($customer->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.customers.delete_first'));
@@ -152,10 +155,10 @@ class CustomerRepository extends BaseRepository
     /**
      * @param Customer $customer
      *
-     * @throws GeneralException
      * @return Customer
+     * @throws GeneralException
      */
-    public function restore(Customer $customer) : Customer
+    public function restore(Customer $customer): Customer
     {
         if ($customer->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.customers.cant_restore'));
@@ -168,5 +171,19 @@ class CustomerRepository extends BaseRepository
         }
 
         throw new GeneralException(__('exceptions.backend.customers.restore_error'));
+    }
+
+    /**
+     * @param Array $data
+     *
+     * @return Customer
+     * @throws GeneralException
+     */
+    public function search($customerName)
+    {
+        $customers = Customer::where('first_name', 'LIKE', '%' . $customerName . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $customerName . '%')->paginate(1);
+
+        return $customers;
     }
 }

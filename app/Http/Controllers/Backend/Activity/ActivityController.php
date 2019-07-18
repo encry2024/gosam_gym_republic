@@ -164,9 +164,8 @@ class ActivityController extends Controller
     public function getRelatedCoaches($activity)
     {
         $activityCoaches = [];
-        $activities = $activity->with(['activityCoach']);
 
-        foreach ($activities as $activityCoach) {
+        foreach ($activity->activityCoaches as $activityCoach) {
             $activityCoaches[] = [
                 'id' => $activityCoach->id,
                 'text' => $activityCoach->name

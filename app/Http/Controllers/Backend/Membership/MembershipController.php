@@ -40,7 +40,7 @@ class MembershipController extends Controller
     public function index(ManageMembershipRequest $request)
     {
         return view('backend.membership.index')
-            ->withMemberships($this->membershipRepository->getActivePaginated(25, 'id', 'asc'));
+            ->withMemberships($this->membershipRepository->getActivePaginated(1, 'id', 'asc'));
     }
 
     /**
@@ -87,15 +87,7 @@ class MembershipController extends Controller
      */
     public function show(ManageMembershipRequest $request, Membership $membership)
     {
-        $activities = Activity::all();
-        $existingActivities = [];
-
-        $existingActivities = $membership->activityMemberships->pluck('name')->toArray();
-
-        return view('backend.membership.show')
-            ->withMembership($membership)
-            ->withActivities($activities)
-            ->withExistingActivities($existingActivities);
+        return view('backend.membership.show');
     }
 
     /**

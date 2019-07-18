@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Log;
 
+use App\Models\Customer\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class LogController extends Controller
      */
     public function index()
     {
-        return view('backend.log.index');
+        $customers = Customer::paginate(1);
+
+        return view('backend.log.index')->withCustomers($customers);
     }
 
     /**

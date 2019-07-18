@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-body">
+        <div class="card-body h-100">
             <div class="row">
                 <div class="col-sm-10">
                     <h4 class="card-title mb-0">
@@ -15,41 +15,60 @@
             <br>
             <div class="row mt-4 mb-4">
                 <div class="col">
-                    <div class="form-group">
-                        <label for="search">Search Customer</label>
+                    <div class="form-group row">
+                        <label for="search" class="col-2">Search Customer</label>
 
-                        <input id="search" name="search" type="text" class="form-control">
+                        <div class="col-10">
+                            <input id="search" name="search" type="text" class="form-control">
+                        </div>
                     </div>
                 </div>
-
-                <div style="
-                top:10%;
-                bottom:10%;
-                border-left:1px solid #ccc;"></div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <label for="customerList">List</label>
-
-                        <table class="table table-bordered" id="customerList">
-                            <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
+            </div>
+            <hr>
+            <div class="col-5">
+                <div class="row">
+                    <div id="resultContainer" class="col-12 p-0 mb-1">
+                        @include('backend.log.customer.paginate')
                     </div>
                 </div>
+            </div>
 
-                <div style="
-                top:10%;
-                bottom:10%;
-                border-left:1px solid #ccc;"></div>
-
-                <div class="col">
-                    <label for="">Information</label>
-                </div>
+            <div class="col-7">
+                <div class="row"></div>
             </div>
         </div><!--card-body-->
     </div><!--card-->
 @endsection
+
+@push('before-scripts')
+    <script>
+        const search = $("#search"),
+            resultContainer = $("#resultContainer");
+
+        $(function () {
+            let html = "",
+                invalidKeys = [18, 17, 16, 27, 37, 38, 39];
+
+            search.on('keyup', function (e) {
+                const customerName = $(this).val();
+
+                if ($.inArray(e.keyCode, invalidKeys) !== -1) {
+
+                } else {
+                    let route = "{{ route('admin.customer.search', ['customerName' => ':customerName']) }}";
+                    route = route.replace(':customerName', customerName);
+
+                    $.ajax({
+                        type: "GET",
+                        url: route,
+                        dataType: "html"
+                    }).done(function (data) {
+                        resultContainer.empty();
+
+                        resultContainer.html(data);
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

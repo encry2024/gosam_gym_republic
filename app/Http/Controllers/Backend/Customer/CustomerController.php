@@ -10,6 +10,8 @@ use App\Http\Requests\Backend\Customer\StoreCustomerRequest;
 use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 use App\Http\Requests\Backend\Customer\UpdateCustomerRequest;
 use Auth;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class CustomerController.
@@ -140,5 +142,19 @@ class CustomerController extends Controller
         event(new CustomerDeleted(Auth::user()->full_name, $customerName));
 
         return redirect()->route('admin.customer.deleted')->withFlashSuccess(__('alerts.backend.customers.deleted', ['customer' => $customerName]));
+    }
+
+    /**
+     * @param ManageCustomerRequest $request
+     * @param Customer              $customer
+     *
+     * @throws \Exception
+     * @return mixed
+     */
+    public function search($customerName)
+    {
+        $filteredCustomers = $this->customerRepository->search($customerName);
+
+        return view('backend.log.customer.paginate', array('customers' => $filteredCustomers));
     }
 }

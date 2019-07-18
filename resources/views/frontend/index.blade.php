@@ -18,7 +18,7 @@
 
     <div class="row mb-4">
         <div class="col">
-            <example-component></example-component>
+            <logs-field></logs-field>
         </div><!--col-->
     </div><!--row-->
 

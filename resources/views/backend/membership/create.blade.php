@@ -3,6 +3,7 @@
 @section('title', __('labels.backend.memberships.management') . ' | ' . __('labels.backend.memberships.create'))
 
 @section('content')
+
     {{ html()->form('POST', route('admin.membership.store'))->class('form-horizontal')->open() }}
     <input type="hidden" name="registered_activities" id="registered_activities">
     <div class="row">
@@ -77,6 +78,9 @@
 
     <!-- Register Activity Modal -->
     <div class="modal fade in" tabindex="-1" role="dialog" id="registerActivityModal">
+        <div id="ajaxSpinnerContainer" style="display: none;">
+            <div id="ajaxSpinner"></div>
+        </div>
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -395,7 +399,7 @@
             updateCoachFeeField = $("#update_coach_fee"),
             updateDateExpiryField = $("#update_date_expiry");
 
-        var activity = {
+        let activity = {
                 object: {},
                 coach_id: 0
             },
@@ -448,7 +452,7 @@
             dropdownParent: $("#modifySelectedActivityModal")
         }).on('select2:select', function () {
             const selectedId = $(this).val(),
-            coachId = activity.coach_id;
+                coachId = activity.coach_id;
 
             let url = "{{ route('admin.activity.getRelatedCoaches', ':activity') }}";
             url = url.replace(':activity', selectedId);
@@ -506,19 +510,29 @@
             const index = activityField.val() + "-" + coachField.val();
 
             if (!activity.object[index]) {
-                html = "<tr data-id='" + activityField.val() + "-" + coachField.val() + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
-                html += "<td>" + $("#activity_id option:selected").html() + "</td>";
-                html += "<td>" + monthlyRateField.val() + "</td>";
-                html += "<td>" + $("#coach_id option:selected").html() + "</td>";
-                html += "<td>" + coachFeeField.val() + "</td>";
-                html += "<td>" + activityDateSubscriptionField.val() + "</td>";
-                html += "<td>" + activityDateExpiryField.val() + "</td>";
-                html += "<td>" + membershipFeeField.val() + "</td>";
-                html += "<td>" + dateSubscriptionField.val() + "</td>";
-                html += "<td>" + dateExpiryField.val() + "</td>";
-                html += "</tr>";
+                Swal.fire({
+                    title: "Register selected activity?",
+                    showCancelButton: true,
+                    confirmButtonText: 'Register',
+                    cancelButtonText: 'Cancel',
+                    type: 'info'
+                }).then((result) => {
+                    if (result.value) {
+                        html = "<tr data-id='" + activityField.val() + "-" + coachField.val() + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
+                        html += "<td>" + $("#activity_id option:selected").html() + "</td>";
+                        html += "<td>" + monthlyRateField.val() + "</td>";
+                        html += "<td>" + $("#coach_id option:selected").html() + "</td>";
+                        html += "<td>" + coachFeeField.val() + "</td>";
+                        html += "<td>" + activityDateSubscriptionField.val() + "</td>";
+                        html += "<td>" + activityDateExpiryField.val() + "</td>";
+                        html += "<td>" + membershipFeeField.val() + "</td>";
+                        html += "<td>" + dateSubscriptionField.val() + "</td>";
+                        html += "<td>" + dateExpiryField.val() + "</td>";
+                        html += "</tr>";
 
-                registeredActivitiesField.append(html);
+                        registeredActivitiesField.append(html);
+                    }
+                });
             } else {
                 Swal.fire({
                     title: "You already have selected this Coach and Activity",

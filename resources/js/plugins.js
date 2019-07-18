@@ -22,10 +22,19 @@ function addDeleteForms() {
         .attr('onclick', '$(this).find("form").submit();');
 }
 
+$(document).ajaxStart(function () {
+    $("#ajaxSpinnerContainer").show();
+}).ajaxError(function (event, jqxhr, settings, thrownError) {
+    $("#ajaxSpinnerContainer").hide();
+}).ajaxStop(function () {
+    $("#ajaxSpinnerContainer").hide();
+});
+
 /**
  * Place any jQuery/helper plugins in here.
  */
 $(function () {
+
     /**
      * Add the data-method="delete" forms to all delete links
      */

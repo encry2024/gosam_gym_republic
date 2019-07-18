@@ -21,14 +21,14 @@
                             <tr>
                                 <th>Customer Name</th>
                                 <th>Coach Name</th>
-                                <th>Activity Name</th>
+                                <th>Activity</th>
                                 <th>Monthly Fee</th>
-                                <th>Activity Date Subscription</th>
-                                <th>Activity Date Expiry</th>
-                                <th>Membership Fee</th>
-                                <th>Date Registered</th>
+                                <th>Subs. Date</th>
+                                <th>Subs. Expiry</th>
+                                <th>Mem. Fee</th>
+                                <th>Date Rgst.</th>
                                 <th>Date Expiry</th>
-                                <th>Date Created</th>
+                                <th>Status</th>
                                 <th>@lang('labels.general.actions')</th>
                             </tr>
                             </thead>
@@ -45,7 +45,7 @@
                                         <td>PHP {{ number_format($membership->fee, 2) }}</td>
                                         <td>{{ $membership->date_registered }}</td>
                                         <td>{{ $membership->date_expiry }}</td>
-                                        <td>{{ $membership->created_at->diffForHumans() }}</td>
+                                        <td>{!! $membership->status_label !!}</td>
                                         <td>{!! $membership->action_buttons !!}</td>
                                     </tr>
                                 @endforeach

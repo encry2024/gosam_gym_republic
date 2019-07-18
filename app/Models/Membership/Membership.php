@@ -3,7 +3,9 @@
 namespace App\Models\Membership;
 
 use App\Models\Membership\Traits\Attribute\MembershipAttribute;
+use App\Models\Membership\Traits\Method\MembershipMethod;
 use App\Models\Membership\Traits\Relationship\MembershipRelationship;
+use App\Models\Membership\Traits\Scope\MembershipScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,6 +14,8 @@ class Membership extends Model
     //
     use MembershipAttribute,
         MembershipRelationship,
+        MembershipScope,
+        MembershipMethod,
         SoftDeletes;
 
     protected $fillable = [
@@ -24,12 +28,17 @@ class Membership extends Model
         'activity_date_expiry',
         'fee',
         'date_registered',
-        'date_expiry'
+        'date_expiry',
+        'status'
     ];
 
     protected $appends = [
         'fee_string',
         'monthly_fee_string',
         'coach_fee_string'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean'
     ];
 }
