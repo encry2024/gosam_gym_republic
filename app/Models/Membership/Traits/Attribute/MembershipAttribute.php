@@ -26,7 +26,7 @@ trait MembershipAttribute
     public function getStatusLabelAttribute()
     {
         if ($this->isActive()) {
-            return "<span class='badge badge-success'>".__('labels.general.active').'</span>';
+            return "<span class='badge badge-success' style='font-weight: 400; font-size: 13px;'>".__('labels.general.active').'</span>';
         }
 
         return "<span class='badge badge-danger'>".__('labels.general.inactive').'</span>';

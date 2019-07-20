@@ -86,6 +86,10 @@ class CustomerController extends Controller
      */
     public function show(ManageCustomerRequest $request, Customer $customer)
     {
+        if ($request->ajax()) {
+            return Response::json($customer->load(['memberships.activity', 'memberships.coach']));
+        }
+
         return view('backend.customer.show')
             ->withCustomer($customer);
     }
@@ -137,24 +141,10 @@ class CustomerController extends Controller
     {
         $customerName = $customer->name;
 
-        $customer = $this->customerRepository->deleteById($customer->id);
+        $this->customerRepository->deleteById($customer->id);
 
         event(new CustomerDeleted(Auth::user()->full_name, $customerName));
 
         return redirect()->route('admin.customer.deleted')->withFlashSuccess(__('alerts.backend.customers.deleted', ['customer' => $customerName]));
-    }
-
-    /**
-     * @param ManageCustomerRequest $request
-     * @param Customer              $customer
-     *
-     * @throws \Exception
-     * @return mixed
-     */
-    public function search($customerName)
-    {
-        $filteredCustomers = $this->customerRepository->search($customerName);
-
-        return view('backend.log.customer.paginate', array('customers' => $filteredCustomers));
     }
 }

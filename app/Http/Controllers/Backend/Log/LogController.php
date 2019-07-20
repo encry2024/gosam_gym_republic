@@ -3,19 +3,41 @@
 namespace App\Http\Controllers\Backend\Log;
 
 use App\Models\Customer\Customer;
+use App\Repositories\Backend\CustomerRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class LogController extends Controller
 {
     /**
+     * @var CustomerRepository
+     */
+    protected $customerRepository;
+
+    /**
+     * CustomerController constructor.
+     *
+     * @param CustomerRepository $customerRepository
+     */
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::paginate(1);
+        $customers = Customer::paginate(20);
+
+        if ($request->has('search')) {
+            $filteredCustomers = $this->customerRepository->search($request->only('search'));
+
+            $customers = $filteredCustomers;
+        }
+
 
         return view('backend.log.index')->withCustomers($customers);
     }

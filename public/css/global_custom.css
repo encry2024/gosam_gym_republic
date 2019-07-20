@@ -176,3 +176,20 @@ th {
     width: 100%;
     height: 100%;
 }
+
+tr.active {
+    background-color: #20a8d8;
+    color: white;
+}
+
+tr.active>td:hover {
+    background-color: #1b8eb7;
+    border-color: #1985ac;
+    color: white;
+}
+
+tr.active > td > .badge.badge-primary {
+    background-color: white;
+    color: #20a8d8;
+    font-weight: 500;
+}

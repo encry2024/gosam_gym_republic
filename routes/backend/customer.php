@@ -12,7 +12,7 @@ Route::group([
 
     Route::resource('customer', 'CustomerController');
 
-    Route::get('customers/{customerName}', [CustomerController::class, 'search'])->name('customer.search');
+    Route::get('customers/search/{customerName?}', [CustomerController::class, 'search'])->name('customer.search');
 
     Route::group([
         'prefix' => 'customer/{customer}'

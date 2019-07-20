@@ -35,7 +35,8 @@ class Membership extends Model
     protected $appends = [
         'fee_string',
         'monthly_fee_string',
-        'coach_fee_string'
+        'coach_fee_string',
+        'status_label'
     ];
 
     protected $casts = [

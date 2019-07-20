@@ -34,13 +34,13 @@
 
     <div class="app-body">
         @include('backend.includes.sidebar')
-
         <main class="main">
             @include('includes.partials.demo')
             @include('includes.partials.logged-in-as')
             {!! Breadcrumbs::render() !!}
 
             <div class="container-fluid">
+
                 <div class="animated fadeIn">
                     <div class="content-header">
                         @yield('page-header')

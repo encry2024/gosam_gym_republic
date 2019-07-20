@@ -179,10 +179,10 @@ class CustomerRepository extends BaseRepository
      * @return Customer
      * @throws GeneralException
      */
-    public function search($customerName)
+    public function search(array $data): LengthAwarePaginator
     {
-        $customers = Customer::where('first_name', 'LIKE', '%' . $customerName . '%')
-            ->orWhere('last_name', 'LIKE', '%' . $customerName . '%')->paginate(1);
+        $customers = Customer::where('first_name', 'LIKE', '%' . $data['search'] . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $data['search'] . '%')->paginate(20);
 
         return $customers;
     }

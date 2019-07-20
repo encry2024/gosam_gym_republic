@@ -40,7 +40,7 @@ class MembershipController extends Controller
     public function index(ManageMembershipRequest $request)
     {
         return view('backend.membership.index')
-            ->withMemberships($this->membershipRepository->getActivePaginated(1, 'id', 'asc'));
+            ->withMemberships($this->membershipRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
     /**

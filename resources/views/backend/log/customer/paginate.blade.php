@@ -1,50 +1,15 @@
-<div class='animated fadeInUp'>
-    <table class='table table-bordered table-hover'>
-        <tbody>
-        @foreach($customers as $customer)
-            <tr>
-                <td>{{ $customer->name }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
+<table class='table table-bordered table-hover'>
+    <tbody>
+    @foreach($customers as $customer)
+        <tr class="customer_links" data-customer-id="{{ $customer->id }}">
+            <td>{{ $customer->name }}
+            @if (count($customer->memberships) > 0)
+                    <span class="badge badge-primary float-right rounded-0" style="font-size: 13px; font-weight: 400;">Member</span>
+            @endif
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 
-{!! $customers->render() !!}
-
-@push('before-scripts')
-    <script>
-        $(window).on('hashchange', function() {
-            if (window.location.hash) {
-                var page = window.location.hash.replace('#', '');
-                if (page == Number.NaN || page <= 0) {
-                    return false;
-                }else{
-                    getData(page);
-                }
-            }
-        });
-
-        $(function () {
-            $(document).on('click', '.pagination a', function (event) {
-                event.preventDefault();
-
-                var page = $(this).attr('href').split('page=')[1];
-
-                getData(page);
-            });
-        });
-
-        function getData(page) {
-            $.ajax({
-                url: '?page=' + page,
-                dataType: "html"
-            }).done(function (data) {
-                location.hash = page;
-                resultContainer.html(data);
-            }).fail(function (jqXHR, ajaxOptions, thrownError) {
-                alert('No response from server');
-            });
-        }
-    </script>
-@endpush
+{!! $customers->appends(['search' => Request::get('search')])->render() !!}
