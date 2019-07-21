@@ -29,8 +29,9 @@ class PaymentRepository extends BaseRepository
      */
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
-        return $this->model->query()->with(['paymentable.coach', 'paymentable.activity', 'customer:id,first_name,last_name'])
-            ->whereDate('created_at', '=', date('Y-m-d'))->orderBy($orderBy, $sort)
+        return $this->model->query()
+            ->with(['paymentable.coach', 'paymentable.activity', 'customer:id,first_name,last_name'])
+            ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
 
