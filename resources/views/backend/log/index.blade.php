@@ -68,7 +68,7 @@
     <script>
         const customer_information_container = $("#customer_information_container");
 
-        $(document).on('click', 'tr', '.customer_links', function (e) {
+        $(document).on('click', 'tr.customer_links', function (e) {
             const customer_id = $(this).data('customer-id');
             let route = "{{ route('admin.customer.show', ':customer_id') }}";
             route = route.replace(':customer_id', customer_id);
@@ -132,7 +132,7 @@
                 html += "<h5>Memberships</h5>";
                 html += "<hr>";
 
-                html += "<table class='table table-bordered'>";
+                html += "<table class='table table-bordered' id='customer_activities'>";
                 html += "<thead>";
                 html += "<tr>";
                 html += "<th>Membership Status</th>";
@@ -146,7 +146,7 @@
                 for (let i = 0; i < Object.keys(customer.memberships).length; i++) {
                     let membership = customer.memberships[i];
 
-                    html += "<tr>";
+                    html += "<tr class='customer_activity' data-membership_id='" + membership.activity.id + "'>";
                     html += "<td>" + membership.status_label + "</td>";
                     html += "<td>" + membership.activity.name + "</td>";
                     html += "<td>" + membership.coach.name + "</td>";
@@ -162,7 +162,17 @@
                 html += "</div>";
 
                 customer_information_container.html(html);
-            })
+            });
+        });
+
+        $(document).on('click', 'tr.customer_activity', function (e) {
+            const customerActivity = $(this);
+
+            if (customerActivity.hasClass('selected_activity')) {
+                customerActivity.removeClass('selected_activity');
+            } else {
+                customerActivity.addClass('selected_activity');
+            }
         });
     </script>
 @endpush
