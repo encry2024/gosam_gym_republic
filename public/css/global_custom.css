@@ -193,3 +193,25 @@ tr.active > td > .badge.badge-primary {
     color: #20a8d8;
     font-weight: 500;
 }
+
+.bg-indigo {
+    background-color: #7460ee;
+    border-color: #7460ee;
+}
+
+.selected_activity {
+    background-color: #7460ee;
+    border-color: #7460ee;
+    color: white;
+}
+
+.selected_activity>td:hover {
+    background-color: #7460ee;
+    color: white;
+}
+
+.selected_activity > td > .badge.badge-success {
+    background-color: white;
+    color: #7460ee;
+    font-weight: 500;
+}
