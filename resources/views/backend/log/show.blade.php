@@ -8,14 +8,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card-title">
-                                <h5>Log Customer
-                                    <small>{{ $customer->name }}</small>
-                                </h5>
-                            </div>
+                        <div class="col-12 mb-0">
+                            <h4 class="card-title">Log Customer
+                                <small>{{ $customer->name }}</small>
+                            </h4>
                         </div>
                     </div>
+
                     <hr>
 
                     <div class="row">
