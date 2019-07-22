@@ -154,8 +154,8 @@
                     html += "</tr>";
                 }
                 html += "</tbody>";
-                html += "</table>";
 
+                html += "</table>";
                 html += "<hr>";
                 html += "<a type='button' class='btn btn-primary btn-lg btn-block' href='" + showLogRoute + "'>LOG CUSTOMER</a>";
                 html += "</div>";
