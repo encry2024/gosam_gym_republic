@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Log;
 
+use App\Models\Activity\Activity;
 use App\Models\Customer\Customer;
 use App\Repositories\Backend\CustomerRepository;
 use Illuminate\Http\Request;
@@ -106,5 +107,20 @@ class LogController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showCustomerLog(Customer $customer)
+    {
+        $existingActivities = [];
+        $activities = Activity::all();
+
+        foreach ($customer->memberships as $customerMembership) {
+            $existingActivities[] = $customerMembership->activity->id;
+        }
+
+        return view('backend.log.show')
+            ->withCustomer($customer->load('memberships'))
+            ->withActivities($activities)
+            ->withExistingActivities($existingActivities);
     }
 }

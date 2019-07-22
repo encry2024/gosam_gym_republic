@@ -26,7 +26,7 @@
         @stack('after-styles')
 
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-        <script src="{{ asset('select2-4.0.7/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+
     </head>
 
     <body class="{{ config('backend.body_classes') }}">
@@ -62,6 +62,7 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    <script src="{{ asset('select2-4.0.7/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
     @stack('after-scripts')
     </body>
 </html>

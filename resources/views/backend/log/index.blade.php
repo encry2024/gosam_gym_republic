@@ -38,8 +38,7 @@
             @if (Request::has('search'))
                 <div class="row">
                     <div class="col-12">
-                        <label>Filtered Results: <span class="badge badge-info"
-                                                       style="font-weight: 400; font-size: 15px;">{{ Request::get('search') }}</span></label>
+                        <label>Filtered Results: <span class="badge badge-info" style="font-weight: 400; font-size: 15px;">{{ Request::get('search') }}</span></label>
                     </div>
                 </div>
             @endif
@@ -75,7 +74,7 @@
 
             $(".customer_links").each(function () {
                 if ($(this).hasClass('active')) {
-                    $(this).removeClass('active')
+                    $(this).removeClass('active');
                 }
             });
 
@@ -87,7 +86,8 @@
                 url: route,
                 dataType: "JSON"
             }).done(function (customer) {
-                console.log(customer);
+                let showLogRoute = "{{ route('admin.logs.customer.show', ':customer_id') }}";
+                showLogRoute = showLogRoute.replace(':customer_id', customer.id);
 
                 html = "<div class='card animated fadeInRight'>";
                 html += "<div class='card-body'>";
@@ -157,22 +157,12 @@
                 html += "</table>";
 
                 html += "<hr>";
-                html += "<button type='button' class='btn btn-primary btn-lg btn-block'>LOG CUSTOMER</button>";
+                html += "<a type='button' class='btn btn-primary btn-lg btn-block' href='" + showLogRoute + "'>LOG CUSTOMER</a>";
                 html += "</div>";
                 html += "</div>";
 
                 customer_information_container.html(html);
             });
-        });
-
-        $(document).on('click', 'tr.customer_activity', function (e) {
-            const customerActivity = $(this);
-
-            if (customerActivity.hasClass('selected_activity')) {
-                customerActivity.removeClass('selected_activity');
-            } else {
-                customerActivity.addClass('selected_activity');
-            }
         });
     </script>
 @endpush

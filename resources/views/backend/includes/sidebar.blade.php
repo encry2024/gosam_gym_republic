@@ -14,7 +14,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/logs')) }}"
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/logs*')) }}"
                    href="{{ route('admin.logs.index') }}">
                     <i class="nav-icon fas fa-book-open"></i> Log Book
                 </a>

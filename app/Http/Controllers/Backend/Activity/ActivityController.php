@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Activity\UpdateActivityRequest;
 use App\Models\Activity\Activity;
 use App\Repositories\Backend\ActivityRepository;
 use Auth;
+use Illuminate\Http\Response;
 
 /**
  * Class ActivityController.
@@ -84,6 +85,10 @@ class ActivityController extends Controller
      */
     public function show(ManageActivityRequest $request, Activity $activity)
     {
+        if ($request->ajax()) {
+            return \Response::json($activity->load('activityCoaches'));
+        }
+
         return view('backend.activity.show')
             ->withActivity($activity);
     }

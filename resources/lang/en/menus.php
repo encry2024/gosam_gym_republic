@@ -13,6 +13,10 @@ return [
     */
 
     'backend' => [
+        'logs' => [
+            'view' => ':customer'
+        ],
+
         'memberships' => [
             'view'      => ':membership',
             'deleted'   => 'Deleted Memberships',
