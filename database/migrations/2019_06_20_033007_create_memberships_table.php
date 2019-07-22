@@ -27,6 +27,7 @@ class CreateMembershipsTable extends Migration
             $table->date('date_expiry');
             $table->boolean('status');
             $table->integer('sessions')->default('12');
+            $table->date('date_session_renewed');
             $table->timestamps();
             $table->softDeletes();
         });
