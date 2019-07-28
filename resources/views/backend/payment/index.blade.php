@@ -31,11 +31,17 @@
                             <tbody>
                             @foreach($payments as $payment)
                                 <tr>
-                                    <td>{{ $payment->income }}</td>
+                                    <td>{{ $payment->income}}</td>
                                     <td>{{ $payment->customer->name }}</td>
-                                    <td>{{ class_basename($payment->paymentable_type) }}</td>
                                     <td>
-                                        @if(class_basename($payment->paymentable_type) == "Membership")
+                                        @if (class_basename($payment->paymentable_type) == "Log")
+                                            Daily {{ class_basename($payment->paymentable_type) }}
+                                        @else
+                                            {{ class_basename($payment->paymentable_type) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (class_basename($payment->paymentable_type) == "Membership")
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Coach</a>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->coach->name }}</a>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">{{ $payment->paymentable->coach_fee_string }}</a>
@@ -46,7 +52,23 @@
                                             <br>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Membership Fee</a>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">{{ $payment->paymentable->fee_string }}</a>
+                                        @endif
+                                        <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->name }}</a>
+                                        @if (class_basename($payment->paymentable_type) == "Log")
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Payment Type</a>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->payment_type }}</a>
                                             <br>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Coach</a>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->coach->name }}</a>
+                                            @if ($payment->paymentable->payment_type == "Member Rate" || $payment->paymentable->payment_type == "Non-Member Rate")
+                                                <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">PHP {{ number_format($payment->amount_received / 2, 2) }}</a>
+                                            @endif
+                                            <br>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Activity</a>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->activity->name }}</a>
+                                            @if ($payment->paymentable->payment_type == "Member Rate" || $payment->paymentable->payment_type == "Non-Member Rate")
+                                                <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">PHP {{ number_format($payment->amount_received / 2, 2) }}</a>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>

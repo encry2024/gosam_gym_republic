@@ -100,13 +100,16 @@ class MembershipRepository extends BaseRepository
                         'fee' => $fee,
                         'date_registered' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_subscription'])),
                         'date_expiry' => date('Y-m-d h:i:s', strtotime($registeredActivity['date_expiry'])),
-                        'status' => 1
+                        'status' => 1,
+                        'date_session_renewed' => date('Y-m-d h:i:s')
                     ]);
 
-                    $payment = new Payment(['customer_id' => $customer->id]);
+                    $amountReceived = $membership->fee + $membership->monthly_fee;
+
+                    $payment = new Payment(['customer_id' => $customer->id, 'amount_received' => $amountReceived]);
                     $membership->payments()->save($payment);
-                    $totalPaid = $membership->fee + $membership->monthly_fee + $membership->coach_fee;
-                    event(new PaymentCreated(Auth::user()->full_name, $totalPaid));
+
+                    event(new PaymentCreated(Auth::user()->full_name, $amountReceived));
                 }
 
                 event(new MembershipCreated(Auth::user()->full_name, $customer->name));

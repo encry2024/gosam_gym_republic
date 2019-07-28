@@ -372,7 +372,7 @@
     </div>
 @endsection
 
-@push('before-scripts')
+@push('after-scripts')
     <script>
         const registerActivityBtn = $("#registerActivityBtn"),
             activityField = $("#activity_id"),
@@ -415,7 +415,7 @@
         });
 
         coachField.select2({
-            placeholder: "Select Coaches...",
+            placeholder: "Select Coache s...",
             theme: "bootstrap",
             dropdownParent: $("#registerActivityModal")
         });

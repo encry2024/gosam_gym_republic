@@ -7,6 +7,10 @@ namespace App\Models\Membership\Traits\Attribute;
  */
 trait MembershipAttribute
 {
+    public function getIncomeAttribute()
+    {
+        return $this->monthly_fee + $this->fee - $this->coach_fee;
+    }
 
     public function getFeeStringAttribute()
     {

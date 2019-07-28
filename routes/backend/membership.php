@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Backend\Membership\MembershipStatusController;
 use App\Http\Controllers\Backend\Membership\MembershipController;
 
@@ -9,7 +10,6 @@ Route::group([
 ], function () {
 
     Route::get('membership/deleted', [MembershipStatusController::class, 'getDeleted'])->name('membership.deleted');
-    Route::post('check_existing_membership', [MembershipController::class, 'checkExistingMembership'])->name('membership.checkExistingMembership');
 
     Route::resource('membership', 'MembershipController');
 

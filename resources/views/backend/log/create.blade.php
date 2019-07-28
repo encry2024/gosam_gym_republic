@@ -105,7 +105,7 @@
                 html += '{{ csrf_field() }}';
                 html += '<input type="hidden" value="' + data.activity.id + '" name="activity_id" id="activity_id" />';
                 html += '<input type="hidden" value="{{ $customer->id }}" name="customer_id" id="customer_id" />';
-                html += '<input type="hidden" value="' + data.membership_id + '" name="membership_id" id="membership_id" />';
+                html += '<input type="hidden" value="' + data.membership.id + '" name="membership_id" id="membership_id" />';
                 html += "<div class='form-group row'>";
                 html += "<label id='coaches' class='col-3'>Coaches</label>";
 
@@ -131,7 +131,7 @@
                     html += "<label id='remaining_session' class='col-3'>Remaining Sessions</label>";
 
                     html += "<div class='col-9'>" +
-                        "<input class='form-control' name='remaning_session' id='remaining_session' value='" + data.activity.sessions + "' disabled> " +
+                        "<input class='form-control' name='remaning_session' id='remaining_session' value='" + data.membership.sessions + "' disabled> " +
                         "</div>";
                     html += "</div> <!-- form-group -->";
                 } else {

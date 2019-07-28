@@ -223,7 +223,7 @@
 </div>
 @endsection
 
-@push('before-scripts')
+@push('after-scripts')
 <script>
     var activitiesDropdown = $('.activities'),
         activityName = "",

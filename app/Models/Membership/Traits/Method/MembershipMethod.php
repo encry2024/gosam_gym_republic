@@ -14,4 +14,13 @@ trait MembershipMethod
     {
         return $this->active;
     }
+
+    public function hasSessions()
+    {
+        if ($this->sessions > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }

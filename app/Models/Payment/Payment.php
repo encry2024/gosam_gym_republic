@@ -17,7 +17,7 @@ class Payment extends Model
     ];
 
     protected $fillable = [
-        'amount',
+        'amount_received',
         'customer_id'
     ];
 }

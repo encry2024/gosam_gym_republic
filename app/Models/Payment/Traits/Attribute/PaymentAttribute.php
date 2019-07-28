@@ -9,7 +9,7 @@ trait PaymentAttribute
 {
     public function getIncomeAttribute()
     {
-        $totalPaid = $this->paymentable->monthly_fee + $this->paymentable->coach_fee + $this->paymentable->fee;
+        $totalPaid = $this->amount_received;
 
         return "PHP " . number_format($totalPaid, "2");
     }

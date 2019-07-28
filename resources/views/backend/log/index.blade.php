@@ -150,7 +150,7 @@
                     html += "<td>" + membership.status_label + "</td>";
                     html += "<td>" + membership.activity.name + "</td>";
                     html += "<td>" + membership.coach.name + "</td>";
-                    html += "<td>" + membership.activity.sessions + "</td>";
+                    html += "<td>" + membership.sessions + "</td>";
                     html += "</tr>";
                 }
                 html += "</tbody>";

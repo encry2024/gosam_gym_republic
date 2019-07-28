@@ -3,8 +3,13 @@
 namespace App\Repositories\Backend;
 
 use App\Events\Backend\Payment\PaymentUpdated;
+use App\Models\Activity\Activity;
+use App\Models\Coach\Coach;
+use App\Models\Log\Log;
+use App\Models\Membership\Membership;
 use App\Models\Payment\Payment;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -30,7 +35,12 @@ class PaymentRepository extends BaseRepository
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model->query()
-            ->with(['paymentable.coach', 'paymentable.activity', 'customer:id,first_name,last_name'])
+            ->with(['paymentable' => function (MorphTo $morphTo) {
+                $morphTo->morphWith([
+                    Membership::class => ['coach:id,first_name,last_name', 'activity'],
+                    Log::class => ['coach:id,first_name,last_name', 'activity', 'customer'],
+                ]);
+            }, 'customer:id,first_name,last_name'])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
