@@ -65,7 +65,15 @@ class LogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $log = $this->logRepository->create($request->only(
+            'activity_id',
+            'membership_id',
+            'customer_id',
+            'coach'
+        ));
+
+        return redirect()->route('admin.dashboard')
+            ->withFlashSuccess("Customer {$log->customer->name} was successfully logged.");
     }
 
     /**
