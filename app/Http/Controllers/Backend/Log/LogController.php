@@ -130,7 +130,7 @@ class LogController extends Controller
             $existingActivities[] = $customerMembership->activity->id;
         }
 
-        return view('backend.log.show')
+        return view('backend.log.create')
             ->withCustomer($customer->load('memberships'))
             ->withActivities($activities)
             ->withExistingActivities($existingActivities);
