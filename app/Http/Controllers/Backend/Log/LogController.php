@@ -15,16 +15,19 @@ class LogController extends Controller
      * @var CustomerRepository
      */
     protected $customerRepository;
+    protected $logRepository;
 
     /**
      * CustomerController constructor.
      *
      * @param CustomerRepository $customerRepository
      */
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct(CustomerRepository $customerRepository, LogRepository $logRepository)
     {
         $this->customerRepository = $customerRepository;
+        $this->logRepository = $logRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
