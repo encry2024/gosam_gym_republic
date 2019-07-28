@@ -121,7 +121,8 @@ class MembershipController extends Controller
             'employment_type'
         ));
 
-        return redirect()->route('admin.membership.index')->withFlashSuccess(__('alerts.backend.memberships.updated', ['membership' => $membership->name]));
+        return redirect()->route('admin.membership.index')
+            ->withFlashSuccess(__('alerts.backend.memberships.updated', ['membership' => $membership->name]));
     }
 
     /**
