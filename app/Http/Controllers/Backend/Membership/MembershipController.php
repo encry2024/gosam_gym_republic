@@ -76,7 +76,8 @@ class MembershipController extends Controller
             'registered_activities'
         ));
 
-        return redirect()->route('admin.membership.index')->withFlashSuccess(__('alerts.backend.memberships.created', ['membership' => $membership->name]));
+        return redirect()->route('admin.membership.index')
+            ->withFlashSuccess(__('alerts.backend.memberships.created', ['membership' => $membership->name]));
     }
 
     /**
