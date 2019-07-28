@@ -140,19 +140,9 @@ class MembershipController extends Controller
 
         event(new MembershipDeleted(Auth::user()->full_name, $membership));
 
-        return redirect()->route('admin.membership.deleted')->withFlashSuccess(__('alerts.backend.memberships.deleted', ['membership' => $membershipName]));
+        return redirect()->route('admin.membership.deleted')
+            ->withFlashSuccess(__('alerts.backend.memberships.deleted', ['membership' => $membershipName]));
     }
 
-    public function assignActivities(ManageMembershipRequest $request, Membership $membership)
-    {
-        $checkRelationship = count($membership->activityMemberships);
 
-        $membership = $this->membershipRepository->assignActivities($membership, $request->only('activities'));
-
-        if (!$request->has('activities')) {
-            return redirect()->back()->withFlashSuccess(__('alerts.backend.memberships.removed_activities', ['membership' => $membership->name]));
-        }
-
-        return redirect()->back()->withFlashSuccess(__('alerts.backend.memberships.assigned_activities', ['membership' => $membership['membership']['name'], 'activities' => trim($membership['activities'], ", ")]));
-    }
 }
