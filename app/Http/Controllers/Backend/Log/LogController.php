@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Backend\Log;
 
 use App\Models\Activity\Activity;
 use App\Models\Customer\Customer;
-use App\Repositories\Backend\CustomerRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Backend\CustomerRepository;
+use App\Repositories\Backend\LogRepository;
 
 class LogController extends Controller
 {
