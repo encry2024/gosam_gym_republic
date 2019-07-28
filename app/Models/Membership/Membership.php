@@ -29,7 +29,9 @@ class Membership extends Model
         'fee',
         'date_registered',
         'date_expiry',
-        'status'
+        'status',
+        'sessions',
+        'date_session_renewed'
     ];
 
     protected $appends = [
