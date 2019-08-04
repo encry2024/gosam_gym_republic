@@ -93,7 +93,7 @@ class LogRepository extends BaseRepository
             $log->activity_id = $data['activity_id'];
             $log->coach_id = $data['coach'];
 
-            if ($activity->quota == 0) {
+            /*if ($activity->hasQuota()) {
                 // Check if the membership_id field value is 0...
                 if ($data['membership_id'] == 0) {
                     $amount = $activity->non_member_rate;
@@ -147,9 +147,9 @@ class LogRepository extends BaseRepository
 
                     throw new GeneralException("Something went wrong when saving the log for Customer \"{$customer->name}\"");
                 }
-            }
+            }*/
 
-            //
+            // Current code...
             if ($data['membership_id'] != 0) {
                 $membership = Membership::find($data['membership_id']);
 
