@@ -22,11 +22,12 @@
         <link rel="stylesheet" href="{{ asset('css/global_custom.css') }}">
         <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2-bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('Highcharts.css') }}">
 
         @stack('after-styles')
 
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-
+        <script src="{{ asset('Highcharts-7.1.2/code/highcharts.js') }}" type="text/javascript"></script>
     </head>
 
     <body class="{{ config('backend.body_classes') }}">
@@ -63,6 +64,7 @@
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
     <script src="{{ asset('select2-4.0.7/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+
     @stack('after-scripts')
     </body>
 </html>

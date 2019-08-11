@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Backend\Coach;
 use App\Models\Coach\Coach;
 use App\Http\Controllers\Controller;
 use App\Events\Backend\Coach\CoachDeleted;
+use App\Models\Log\Log;
+use App\Models\Membership\Membership;
+use App\Models\Payment\Payment;
 use App\Repositories\Backend\CoachRepository;
 use App\Http\Requests\Backend\Coach\StoreCoachRequest;
 use App\Http\Requests\Backend\Coach\ManageCoachRequest;
 use App\Http\Requests\Backend\Coach\UpdateCoachRequest;
 use Auth;
 use App\Models\Activity\Activity;
+use DB;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class CoachController.
@@ -84,14 +89,39 @@ class CoachController extends Controller
     {
         $activities = Activity::all();
         $existingActivities = [];
+        $dailyIncomes = [];
+        $sortedDailyIncome = [];
 
         $existingActivities = $coach->activityCoaches->pluck('name')->toArray();
-        // dd($existingActivities);
+
+        // Get daily logs with coach_id == $coach->id to Array
+        $coachLogs = Log::with(['customer', 'activity', 'payments'])
+            ->whereCoachId($coach->id)
+            ->whereDate('created_at', date('Y-m-d'))
+            ->get()
+            ->toArray();
+
+        // Get all membership with coach_id == $coach->id to Array
+        $memberships = Membership::with('customer', 'activity')
+            ->whereDate('created_at', date('Y-m-d'))
+            ->where('coach_id', $coach->id)
+            ->get()
+            ->toArray();
+
+        // Merge coachLogs and memberships
+        $dailyIncomes = array_merge($coachLogs, $memberships);
+
+        foreach ($dailyIncomes as $dailyIncome) {
+            $sortedDailyIncome[$dailyIncome['created_at']] = $dailyIncome;
+        }
+
+        ksort($sortedDailyIncome);
 
         return view('backend.coach.show')
             ->withCoach($coach)
             ->withActivities($activities)
-            ->withExistingActivities($existingActivities);
+            ->withExistingActivities($existingActivities)
+            ->withCoachLogs($sortedDailyIncome);
     }
 
     /**

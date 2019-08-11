@@ -27,6 +27,33 @@ class DashboardController extends Controller
             ->whereDate('created_at', '=', date('Y-m-d'))
             ->get();
 
-        return view('backend.dashboard')->withPayments($payments);
+        /**
+         * Get total number of daily customers
+         */
+        $totalNumberOfDailyCustomers = Log::whereDate('created_at', date('Y-m-d'))->get();
+
+        /**
+         * Get total number of expiring clients for the next 2 weeks
+         */
+        $totalNumberOfExpiringCustomers = Membership::where(
+            'activity_date_expiry', '<', date('Y-m-d', strtotime("+2 weeks"))
+        )->get();
+
+        /**
+         * Get Gym Income
+         */
+        $totalGymIncome = Payment::whereDate('created_at', date('Y-m-d'))->get();
+
+        /**
+         * Get Total of Active Members
+         */
+        $totalNumberOfActiveMembers = Membership::whereStatus(1)->get();
+
+        return view('backend.dashboard')
+            ->withPayments($payments)
+            ->withTotalNumberOfDailyCustomers($totalNumberOfDailyCustomers)
+            ->withTotalNumberOfExpiringCustomers($totalNumberOfExpiringCustomers)
+            ->withTotalGymIncome($totalGymIncome->sum('amount_received'))
+            ->withTotalNumberOfActiveMembers($totalNumberOfActiveMembers);
     }
 }

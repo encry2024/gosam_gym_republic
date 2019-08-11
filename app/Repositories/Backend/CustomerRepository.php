@@ -69,18 +69,22 @@ class CustomerRepository extends BaseRepository
     public function create(array $data): Customer
     {
         return DB::transaction(function () use ($data) {
-            $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
-            $age = Carbon::parse($dateOfBirth)->age;
+            $dateOfBirth = null;
+
+            if (isset($data['date_of_birth'])) {
+                $dateOfBirth = date('Y-m-d', strtotime($data['date_of_birth']));
+                $age = Carbon::parse($dateOfBirth)->age;
+            }
 
             $customer = parent::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
+                'first_name' => $data['first_name'] ?? "N/A",
+                'last_name' => $data['last_name'] ?? "N/A",
+                'email' => $data['email'] ?? "N/A",
                 'date_of_birth' => $dateOfBirth,
-                'age' => $age,
-                'address' => $data['address'],
-                'contact_number' => $data['contact_number'],
-                'emergency_number' => $data['emergency_number']
+                'age' => $age ?? 0,
+                'address' => $data['address'] ?? "N/A",
+                'contact_number' => $data['contact_number'] ?? "N/A",
+                'emergency_number' => $data['emergency_number'] ?? "N/A"
             ]);
 
             if ($customer) {

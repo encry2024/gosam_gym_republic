@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Backend\CustomerActivity;
 
+use App\Exceptions\GeneralException;
 use App\Models\Activity\Activity;
 use App\Models\Customer\Customer;
+use App\Models\Log\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response;
@@ -49,6 +51,19 @@ class CustomerActivityController extends Controller
      */
     public function show(Request $request, Customer $customer, Activity $activity)
     {
+        $latestLog = Log::all()->last();
+        $latestLogDate = null;
+
+        if ($latestLog) {
+            $latestLogDate = date('Y-m-d', strtotime($latestLog->created_at));
+        }
+
+        if ($latestLogDate != date('Y-m-d')) {
+            if (!$activity->update(['quota' => 2])) {
+                throw new GeneralException('The system failed to update the Activity "' . $activity->name . '" quota.');
+            }
+        }
+
         if ($request->ajax()) {
             $activityCoaches = [];
             $customerMemberships = $customer->load(['memberships' => function ($query) use ($activity, $customer) {

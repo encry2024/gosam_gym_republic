@@ -14,18 +14,14 @@
                 @include('backend.coach.show.tabs.overview')
             </div><!--card-body-->
         </div><!--card-->
-    </div> <!--col-4-->
-</div> <!-- row -->
 
-<div class="row">
-    <div class="col-4">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-10">
-                        <h4 class="card-title mb-0">
+                        <h5 class="card-title mb-0">
                             Coach Activities
-                        </h4>
+                        </h5>
                     </div><!--col-->
 
                     <div class="col-sm-2">
@@ -36,17 +32,86 @@
                 </div>
                 <!--  -->
                 <hr>
-                    <div class="row">
-                        <div class="col">
-                            @include('backend.coach.show.tabs.activities')
-                        </div>
+                <div class="row">
+                    <div class="col">
+                        @include('backend.coach.show.tabs.activities')
                     </div>
                 </div>
-            </div><!--card-body-->
-        </div><!--card-->
-    </div> <!--col-8-->
-</div>
+            </div> <!--card-body-->
+        </div> <!--card-->
+    </div> <!--col-4-->
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h5 class="card-title mb-0">
+                            Coach Daily Income
+                        </h5>
+                    </div><!--col-->
+
+                    <div class="col-sm-4">
+                        <h5 class=" float-right">Date Today: <small>{{ date('F d, Y') }}</small></h5>
+                    </div><!--col-->
+                </div><!-- row -->
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>Customer</td>
+                                        <td>Activity</td>
+                                        <td>Description</td>
+                                        <td>Amount</td>
+                                        <td>Paid At</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @php $totalIncome = 0; @endphp
+                                    @foreach($coachLogs as $coachLog)
+                                        <?php
+                                            if (array_key_exists('payment_type', $coachLog)) {
+                                                if ($coachLog['payment_type'] != "Quota") {
+                                                    $totalIncome += $coachLog['payments'][0]['amount_received'] / 2;
+                                                }
+                                            }
+
+                                            if (array_key_exists('coach_fee', $coachLog)) {
+                                                $totalIncome += $coachLog['coach_fee'];
+                                            }
+                                        ?>
+                                        <tr>
+                                            <td>{{ $coachLog['customer']['name'] }}</td>
+                                            <td>{{ $coachLog['activity']['name'] }}</td>
+                                            <td>{{ array_key_exists('payment_type', $coachLog) ?
+                                            $coachLog['payment_type'] : "Membership" }}</td>
+                                            <td>{{ array_key_exists('payment_type', $coachLog) ?
+                                                (
+                                                    $coachLog['payment_type'] == "Quota" ?
+                                                    "PHP " . "0.00" :
+                                                    "PHP " . number_format(($coachLog['payments'][0]['amount_received'] / 2), 2)
+                                                ) : $coachLog['coach_fee_string']
+                                             }}</td>
+                                            <td>{{ date('h:i A', strtotime($coachLog['created_at'])) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div>
+                            <h4 class="card-text float-left">Number Clients: <small>{{ count($coachLogs) }}</small></h4>
+                            <h4 class="card-text float-right">Total Income: <small>PHP {{ number_format($totalIncome, 2) }}</small></h4>
+                        </div>
+                    </div> <!-- col -->
+                </div> <!-- row mt-3 -->
+            </div> <!-- card-body -->
+        </div> <!-- card -->
+    </div> <!-- col -->
+</div> <!-- row -->
 <!-- Add Activities Modal -->
 <form action="{{ route('admin.coach.assignActivities', ['coach' => $coach->id]) }}" method="POST" class="modal fade in" tabindex="-1" role="dialog" id="assignActivitiesModal">
     {{ csrf_field() }}

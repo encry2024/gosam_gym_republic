@@ -518,10 +518,16 @@
                     type: 'info'
                 }).then((result) => {
                     if (result.value) {
+                        let coachName = $("#coach_id option:selected").html();
+                        console.log(coachName);
                         html = "<tr data-id='" + activityField.val() + "-" + coachField.val() + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
                         html += "<td>" + $("#activity_id option:selected").html() + "</td>";
                         html += "<td>" + monthlyRateField.val() + "</td>";
-                        html += "<td>" + $("#coach_id option:selected").html() + "</td>";
+                        if ( typeof coachName === "undefined" ) {
+                            html += "<td>N/A</td>";
+                        } else {
+                            html += "<td>" + $("#coach_id option:selected").html() + "</td>";
+                        }
                         html += "<td>" + coachFeeField.val() + "</td>";
                         html += "<td>" + activityDateSubscriptionField.val() + "</td>";
                         html += "<td>" + activityDateExpiryField.val() + "</td>";

@@ -21,13 +21,14 @@
                         <div class="form-group row">
                             <label for="search" class="col-2">Search Customer</label>
 
-                            <div class="col-8">
+                            <div class="col-7">
                                 <input id="search" name="search" type="text" class="form-control"
                                        value="{{ Request::get('search') }}">
                             </div>
 
-                            <button class="btn btn-primary" type="submit">SEARCH</button>
+                            <button class="btn btn-indigo" type="submit">SEARCH</button>
                             <a class="btn btn-secondary ml-1" href="{{ route('admin.logs.index') }}">CLEAR FILTER</a>
+                            <button class="btn btn-dark ml-1" type="button" data-toggle="modal" data-target="#walkInModal">WALK-IN</button>
                         </div>
                     </form>
                 </div>
@@ -61,6 +62,71 @@
             </div>
         </div><!--card-body-->
     </div><!--card-->
+
+    <!-- Register Walk-in Customer Modal -->
+    <form class="modal fade in" tabindex="-1" role="dialog" id="walkInModal" action="{{ route('admin.customer.store') }}"
+        method="POST">
+        {{ csrf_field() }}
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Walk-in Customer Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row mt-4 mb-4">
+                        <div class="col">
+                            <div class="form-group row">
+                                {{ html()->label(__('validation.attributes.backend.customers.first_name'))->class('col-md-4 form-control-label')->for('first_name') }}
+
+                                <div class="col-md-8">
+                                    {{ html()->text('first_name')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.backend.customers.first_name'))
+                                        ->attribute('maxlength', 191)
+                                        ->required()
+                                        ->autofocus() }}
+                                </div><!--col-->
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
+                                {{ html()->label(__('validation.attributes.backend.customers.last_name'))->class('col-md-4 form-control-label')->for('last_name') }}
+
+                                <div class="col-md-8">
+                                    {{ html()->text('last_name')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.backend.customers.last_name'))
+                                        ->attribute('maxlength', 191)
+                                        ->required() }}
+                                </div><!--col-->
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
+                                {{ html()->label(__('validation.attributes.backend.customers.contact_number'))->class('col-md-4 form-control-label')->for('contact_number') }}
+
+                                <div class="col-md-8">
+                                    {{ html()->text('contact_number')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.backend.customers.contact_number'))
+                                        ->attribute('maxlength', 191)
+                                        ->required() }}
+                                </div><!--col-->
+                            </div><!--form-group-->
+                        </div><!--col-->
+                    </div><!--row-->
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="registerActivityBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 
 @push('before-scripts')

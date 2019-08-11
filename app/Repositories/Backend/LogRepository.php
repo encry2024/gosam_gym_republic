@@ -81,76 +81,34 @@ class LogRepository extends BaseRepository
     public function create(array $data): Log
     {
         return DB::transaction(function () use ($data) {
+            $coachId = is_null($data['coach']) ? 0 : $data['coach'];
+
+            if ($data['membership_id'] != 'undefined') {
+                $membershipId = $data['membership_id'];
+            } else {
+                $membershipId = 0;
+            }
+
+            $latestLog = Log::all()->last();
+
             $customer = Customer::find($data['customer_id']);
             $activity = Activity::find($data['activity_id']);
-            $coach = Coach::find($data['coach']);
             $amount = 0.00;
             $payment_type = "";
 
+            /**
+             * Check the date of recent log
+             * if day is increased, reset activity quota
+             */
+
             $log = new Log;
             $log->customer_id = $data['customer_id'];
-            $log->membership_id = $data['membership_id'];
+            $log->membership_id = $membershipId;
             $log->activity_id = $data['activity_id'];
-            $log->coach_id = $data['coach'];
-
-            /*if ($activity->hasQuota()) {
-                // Check if the membership_id field value is 0...
-                if ($data['membership_id'] == 0) {
-                    $amount = $activity->non_member_rate;
-                    $log->payment_type = 'Non-Member Rate';
-
-                    if ($log->save()) {
-                        $payment = new Payment(['customer_id' => $customer->id, 'amount_received' => $amount]);
-
-                        if ($log->payments()->save($payment)) {
-                            return $log;
-                        }
-
-                        throw new GeneralException("Something went wrong when logging the non-member rate payment.");
-                    }
-
-                    throw new GeneralException("Something went wrong when saving the log for Customer \"{$customer->name}\"");
-                }
-
-                // Find membership data through ID.
-                $membership = Membership::find($data['membership_id']);
-
-                if ($membership->isActive()) {
-                    if ($membership->hasSessions()) {
-                        $amount = 0.00;
-                        $log->payment_type = 'Session';
-
-                        if ($log->save()) {
-                            $payment = new Payment(['customer_id' => $customer->id, 'amount_received' => $amount]);
-
-                            if ($log->payments()->save($payment)) {
-                                return $log;
-                            }
-
-                            throw new GeneralException("Something went wrong when logging the member rate payment.");
-                        }
-                    }
-
-                    // Non Sessions
-                    $amount = $activity->non_member_rate;
-                    $log->payment_type = 'Non-Member Rate';
-
-                    if ($log->save()) {
-                        $payment = new Payment(['customer_id' => $customer->id, 'amount_received' => $amount]);
-
-                        if ($log->payments()->save($payment)) {
-                            return $log;
-                        }
-
-                        throw new GeneralException("Something went wrong when logging the non-member rate payment.");
-                    }
-
-                    throw new GeneralException("Something went wrong when saving the log for Customer \"{$customer->name}\"");
-                }
-            }*/
+            $log->coach_id = $coachId;
 
             // Current code...
-            if ($data['membership_id'] != 0) {
+            if ($membershipId != 0) {
                 $membership = Membership::find($data['membership_id']);
 
                 if ($membership->isActive()) {
