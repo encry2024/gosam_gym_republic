@@ -5005,9 +5005,9 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/gosam_gym_republic/resources/js/backend/before.js */"./resources/js/backend/before.js");
-__webpack_require__(/*! /var/www/gosam_gym_republic/resources/js/backend/app.js */"./resources/js/backend/app.js");
-module.exports = __webpack_require__(/*! /var/www/gosam_gym_republic/resources/js/backend/after.js */"./resources/js/backend/after.js");
+__webpack_require__(/*! /var/www/gosam/resources/js/backend/before.js */"./resources/js/backend/before.js");
+__webpack_require__(/*! /var/www/gosam/resources/js/backend/app.js */"./resources/js/backend/app.js");
+module.exports = __webpack_require__(/*! /var/www/gosam/resources/js/backend/after.js */"./resources/js/backend/after.js");
 
 
 /***/ })

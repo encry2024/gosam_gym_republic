@@ -20,9 +20,13 @@ class ReportController extends Controller
         $incomePerActivities = DB::table('payments')
             ->select('activities.name',
                 'activities.id',
-                'payments.amount_received',
-                'payments.paymentable_type',
-                'logs.payment_type')
+                DB::raw('SUM(IF(payments.amount_received != "null", (payments.amount_received), "0.00")) AS total_income'),
+                DB::raw('SUM(
+                    IF(logs.payment_type != "Quota", 
+                        (payments.amount_received / 2), 0.00
+                    )
+                ) + SUM(memberships.coach_fee) AS coaches_income')
+            )
             ->leftJoin('memberships', function ($join) {
                 $join->on('memberships.id', '=', 'payments.paymentable_id')
                     ->where('payments.paymentable_type', '=', 'App\\Models\\Membership\\Membership');
@@ -36,13 +40,13 @@ class ReportController extends Controller
                     ->orOn('activities.id', '=', 'logs.activity_id')
                     ->where('logs.payment_type', '!=', 'Session');
             })
+            ->groupBy('activities.name')
             ->orderBy('activities.id')
             ->get();
 
         /*foreach ($incomePerActivities as $incomePerActivity) {
-
+            dd($incomePerActivity);
         }*/
-
 
         /*$incomePerActivity = DB::table('payments')
             ->select('activities.name', 'activities.id', 'activities.monthly_rate', 'activities.membership_fee',
