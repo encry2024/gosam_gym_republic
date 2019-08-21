@@ -168,6 +168,14 @@
                 @lang('menus.backend.sidebar.system')
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/reports'))
+                }}" href="{{ route('admin.reports') }}">
+                    <i class="nav-icon fas fa-chart-line"></i> Reports
+                </a>
+            </li>
+
             @if ($logged_in_user->isAdmin())
 
                 <li class="nav-item nav-dropdown {{

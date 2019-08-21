@@ -3,6 +3,7 @@
 namespace App\Models\Activity\Traits\Relationship;
 
 use App\Models\Coach\Coach;
+use App\Models\Log\Log;
 use App\Models\Membership\Membership;
 use App\Models\Payment\Payment;
 
@@ -27,5 +28,10 @@ trait ActivityRelationship
     public function memberships()
     {
         return $this->hasMany(Membership::class);
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
     }
 }
