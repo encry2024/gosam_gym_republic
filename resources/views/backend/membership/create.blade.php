@@ -218,7 +218,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="registerActivityBtn">Save Activities</button>
+                    <button type="button" class="btn btn-success" id="saveActivityBtn">Save Activities</button>
                 </div>
             </div>
         </div>
@@ -374,7 +374,7 @@
 
 @push('after-scripts')
     <script>
-        const registerActivityBtn = $("#registerActivityBtn"),
+        const saveActivityBtn = $("#saveActivityBtn"),
             activityField = $("#activity_id"),
             registeredActivitiesField = $("#registeredActivities"),
             coachField = $("#coach_id"),
@@ -484,6 +484,9 @@
                         }
                     }
 
+                    updateMonthlyRateField.val(activityObject.monthly_rate);
+                    updateCoachFeeField.val(activityObject.coach_fee);
+
                     updateCoachField.select2({
                         data: coaches,
                         placeholder: "Select Coaches...",
@@ -501,13 +504,15 @@
             theme: "bootstrap",
             dropdownParent: $("#modifySelectedActivityModal")
         }).on('select2:select', function () {
-            const index = updateActivityField.val() + "-" + updateCoachField.val();
+            let coachId = coachField.val() == null ? 0 : updateCoachField.val();
+            const index = updateActivityField.val() + "-" + coachId;
 
             $("#updateActivityBtn").data('activity-object-id', selectedIndex).attr('data-activity-object-id', index);
         });
 
-        registerActivityBtn.on('click', function () {
-            const index = activityField.val() + "-" + coachField.val();
+        saveActivityBtn.on('click', function () {
+            let coachId = coachField.val() == null ? 0 : coachField.val();
+            const index = activityField.val() + "-" + coachId;
 
             if (!activity.object[index]) {
                 Swal.fire({
@@ -519,8 +524,8 @@
                 }).then((result) => {
                     if (result.value) {
                         let coachName = $("#coach_id option:selected").html();
-                        console.log(coachName);
-                        html = "<tr data-id='" + activityField.val() + "-" + coachField.val() + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
+
+                        html = "<tr data-id='" + activityField.val() + "-" + coachId + "' data-toggle='modal' data-target='#modifySelectedActivityModal'>";
                         html += "<td>" + $("#activity_id option:selected").html() + "</td>";
                         html += "<td>" + monthlyRateField.val() + "</td>";
                         if ( typeof coachName === "undefined" ) {
@@ -537,6 +542,20 @@
                         html += "</tr>";
 
                         registeredActivitiesField.append(html);
+
+                        activity.object[activityField.val() + "-" + coachId] = {
+                            activity_id: activityField.val(),
+                            monthly_rate: monthlyRateField.val(),
+                            coach_id: coachId,
+                            coach_fee: coachFeeField.val(),
+                            activity_date_subscription: activityDateSubscriptionField.val(),
+                            activity_date_expiry: activityDateExpiryField.val(),
+                            fee: membershipFeeField.val(),
+                            date_subscription: dateSubscriptionField.val(),
+                            date_expiry: dateExpiryField.val()
+                        };
+
+                        $("#registered_activities").val(JSON.stringify(activity.object));
                     }
                 });
             } else {
@@ -545,20 +564,6 @@
                     type: 'warning'
                 });
             }
-
-            activity.object[activityField.val() + "-" + coachField.val()] = {
-                activity_id: activityField.val(),
-                monthly_rate: monthlyRateField.val(),
-                coach_id: coachField.val(),
-                coach_fee: coachFeeField.val(),
-                activity_date_subscription: activityDateSubscriptionField.val(),
-                activity_date_expiry: activityDateExpiryField.val(),
-                fee: membershipFeeField.val(),
-                date_subscription: dateSubscriptionField.val(),
-                date_expiry: dateExpiryField.val()
-            };
-
-            $("#registered_activities").val(JSON.stringify(activity.object));
         });
 
         // tr open modify
@@ -597,8 +602,6 @@
                             });
                         }
                     }
-
-                    console.log(coaches);
 
                     updateCoachField.select2({
                         data: coaches,
@@ -643,7 +646,8 @@
         });
 
         updateActivityBtn.on('click', function () {
-            const currentIndex = updateActivityField.val() + "-" + updateCoachField.val();
+            let coachId = updateCoachField.val() == null ? 0 : updateCoachField.val();
+            const currentIndex = updateActivityField.val() + "-" + coachId;
 
             if (!activity.object[currentIndex]) {
                 Swal.fire({
@@ -659,7 +663,7 @@
                         activity.object[currentIndex] = {
                             activity_id: updateActivityField.val(),
                             monthly_rate: updateMonthlyRateField.val(),
-                            coach_id: updateCoachField.val(),
+                            coach_id: coachId,
                             coach_fee: updateCoachFeeField.val(),
                             activity_date_subscription: updateActivityDateSubscriptionField.val(),
                             activity_date_expiry: updateActivityDateExpiryField.val(),
@@ -670,14 +674,17 @@
 
                         html = "<td>" + $("#update_activity_id option:selected").html() + "</td>";
                         html += "<td>" + $("#update_monthly_rate").val() + "</td>";
-                        html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
+                        if ($("#update_coach_id option:selected").html() == null) {
+                            html += "<td>N/A</td>";
+                        } else {
+                            html += "<td>" + $("#update_coach_id option:selected").html() + "</td>";
+                        }
                         html += "<td>" + $("#update_coach_fee").val() + "</td>";
                         html += "<td>" + $("#update_activity_date_subscription").val() + "</td>";
                         html += "<td>" + $("#update_activity_date_expiry").val() + "</td>";
                         html += "<td>" + $("#update_fee").val() + "</td>";
                         html += "<td>" + $("#update_date_subscription").val() + "</td>";
                         html += "<td>" + $("#update_date_expiry").val() + "</td>";
-                        html += "</tr>";
 
                         registeredActivitiesField.find('[data-id="' + $(this).data('activity-object-id') + '"]')
                             .attr('data-id', currentIndex)
@@ -685,7 +692,7 @@
 
                         selectedIndex = currentIndex;
 
-                        $("#registered_activities").val(activity.object);
+                        $("#registered_activities").val(JSON.stringify(activity.object));
                     }
                 });
             } else {
@@ -721,16 +728,16 @@
 
                         registeredActivitiesField.find('[data-id="' + currentIndex + '"]').html(html);
 
+                        $("#registered_activities").val(JSON.stringify(activity.object));
+
                         Swal.fire({
                             title: "Activity was updated successful!",
                             confirmButtonText: 'confirm',
                             type: 'success'
-                        })
+                        });
                     }
                 });
             }
-
-            $("#registered_activities").val(activity.object);
         });
 
         removeActivityBtn.on('click', function () {

@@ -65,6 +65,7 @@ class MembershipController extends Controller
      */
     public function store(StoreMembershipRequest $request)
     {
+        /*dd($request->all());*/
         $membership = $this->membershipRepository->create($request->only(
             'first_name',
             'last_name',

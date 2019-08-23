@@ -37,7 +37,7 @@
                                 @foreach($memberships as $membership)
                                     <tr>
                                         <td>{{ $membership->customer->name }}</td>
-                                        <td>{{ $membership->coach->name}}</td>
+                                        <td>{{ $membership->coach != null ? $membership->coach->name : "N/A" }}</td>
                                         <td>{{ $membership->activity->name }}</td>
                                         <td>PHP {{ number_format($membership->monthly_fee, 2) }}</td>
                                         <td>{{ $membership->activity_date_subscription }}</td>

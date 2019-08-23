@@ -84,6 +84,8 @@ class MembershipRepository extends BaseRepository
             if ($customer->save()) {
                 $registeredActivities = json_decode($data['registered_activities'], true);
 
+//                dd($registeredActivities);
+
                 foreach ($registeredActivities as $registeredActivity) {
                     $fee = str_replace(array("PHP ", ","), "", $registeredActivity['fee']);
                     $monthlyFee = str_replace(array("PHP ", ","), "", $registeredActivity['monthly_rate']);

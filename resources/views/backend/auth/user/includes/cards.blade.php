@@ -3,10 +3,13 @@
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-4 bg-indigo">
-                    <i class="fas fa-users float-right" style="
-                    font-size: 4.5rem;
-                    margin-top: 2.5rem;
-                    margin-right: 0.2rem;
+                    <i class="fas fa-users text-center" style="
+                        font-size: 70px;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 70%;
+                        margin-top: 2rem;
                     "></i>
                 </div>
                 <div class="col-md-8">
@@ -26,10 +29,13 @@
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-4 bg-info">
-                    <i class="fas fa-calendar float-right" style="
-                    font-size: 4.5rem;
-                    margin-top: 2.5rem;
-                    margin-right: 1rem;
+                    <i class="fas fa-calendar text-center" style="
+                    font-size: 70px;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 70%;
+                        margin-top: 2rem;
                     "></i>
                 </div>
                 <div class="col-md-8">
