@@ -211,11 +211,18 @@
                 html += "<tbody>";
                 for (let i = 0; i < Object.keys(customer.memberships).length; i++) {
                     let membership = customer.memberships[i];
+                    let coachName = null;
+
+                    if (membership.coach_id == 0) {
+                        coachName = "N/A"
+                    } else {
+                        coachName = membership.coach.name;
+                    }
 
                     html += "<tr class='customer_activity' data-membership_id='" + membership.activity.id + "'>";
                     html += "<td>" + membership.status_label + "</td>";
                     html += "<td>" + membership.activity.name + "</td>";
-                    html += "<td>" + membership.coach.name + "</td>";
+                    html += "<td>" + coachName + "</td>";
                     html += "<td>" + membership.sessions + "</td>";
                     html += "</tr>";
                 }

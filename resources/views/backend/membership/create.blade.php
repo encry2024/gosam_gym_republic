@@ -556,6 +556,11 @@
                         };
 
                         $("#registered_activities").val(JSON.stringify(activity.object));
+
+                        Swal.fire({
+                            title: "Activity successfully added.",
+                            type: 'success'
+                        });
                     }
                 });
             } else {
@@ -693,6 +698,11 @@
                         selectedIndex = currentIndex;
 
                         $("#registered_activities").val(JSON.stringify(activity.object));
+
+                        Swal.fire({
+                            title: "Activity successfully updated.",
+                            type: 'success'
+                        });
                     }
                 });
             } else {

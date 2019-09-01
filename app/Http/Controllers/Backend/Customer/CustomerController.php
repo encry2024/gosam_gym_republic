@@ -75,7 +75,7 @@ class CustomerController extends Controller
             'emergency_number'
         ));
 
-        return redirect()->route('admin.customer.index')->withFlashSuccess(__('alerts.backend.customers.created', ['customer' => $customer->name]));
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.customers.created', ['customer' => $customer->name]));
     }
 
     /**

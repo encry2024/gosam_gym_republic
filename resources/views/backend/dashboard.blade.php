@@ -42,7 +42,8 @@
                                         </td>
                                         @if(class_basename($payment->paymentable_type) == "Membership")
                                             <td>{{ $payment->paymentable->activity->name }}</td>
-                                            <td>{{ $payment->paymentable->coach->name }}</td>
+                                            <td>{{ is_null($payment->paymentable->coach) ?
+                                            "N/A" : $payment->paymentable->coach->name }}</td>
                                         @elseif(class_basename($payment->paymentable_type) == "Log")
                                             <td>{{ $payment->paymentable->activity->name }}</td>
                                             <td>{{ $payment->paymentable->coach_id == 0 ? "N/A" : $payment->paymentable->coach->name }}</td>

@@ -27,7 +27,10 @@
         @stack('after-styles')
 
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+        <script src="{{ asset('js/moment.js') }}"></script>
         <script src="{{ asset('Highcharts-7.1.2/code/highcharts.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('Highcharts-7.1.2/code/modules/exporting.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('Highcharts-7.1.2/code/modules/export-data.js') }}" type="text/javascript"></script>
     </head>
 
     <body class="{{ config('backend.body_classes') }}">

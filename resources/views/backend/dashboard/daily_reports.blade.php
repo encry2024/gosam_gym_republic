@@ -6,9 +6,6 @@
                     <i class="fas fa-users text-center" style="
                         font-size: 70px;
                         display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 70%;
                         margin-top: 2rem;
                     "></i>
                 </div>
@@ -36,9 +33,6 @@
                     <i class="text-center fas fa-calendar" style="
                         font-size: 70px;
                         display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 70%;
                         margin-top: 2rem;
                     "></i>
                 </div>
@@ -64,9 +58,6 @@
                     <i class="text-center fas fa-money-check-alt" style="
                         font-size: 70px;
                         display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 70%;
                         margin-top: 2rem;
                     "></i>
                 </div>
@@ -89,9 +80,6 @@
                     <i class="text-center fas fa-user-check" style="
                         font-size: 70px;
                         display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 70%;
                         margin-top: 2rem;
                     "></i>
                 </div>
