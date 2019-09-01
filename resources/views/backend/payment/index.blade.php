@@ -43,7 +43,9 @@
                                     <td>
                                         @if (class_basename($payment->paymentable_type) == "Membership")
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Coach</a>
-                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->coach->name }}</a>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">
+                                                {{ is_null($payment->paymentable->coach) ?
+                                                        "N/A" : $payment->paymentable->coach->name }}</a>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">{{ $payment->paymentable->coach_fee_string }}</a>
                                             <br>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Activity</a>
@@ -59,7 +61,8 @@
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->payment_type }}</a>
                                             <br>
                                             <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-dark rounded-0">Coach</a>
-                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">{{ $payment->paymentable->coach->name }}</a>
+                                            <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-info rounded-0">
+                                                {{ $payment->paymentable->coach_id == 0 ? "N/A" : $payment->paymentable->coach->name }}</a>
                                             @if ($payment->paymentable->payment_type == "Member Rate" || $payment->paymentable->payment_type == "Non-Member Rate")
                                                 <a href="javascript:exit(0)" style="font-size: 11px; font-weight: 600;" class="badge badge-success rounded-0">PHP {{ number_format($payment->amount_received / 2, 2) }}</a>
                                             @endif

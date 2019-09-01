@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity\Activity;
 use App\Models\Log\Log;
 use App\Models\Membership\Membership;
 use App\Models\Payment\Payment;
@@ -26,6 +27,37 @@ class DashboardController extends Controller
             }, 'customer:id,first_name,last_name'])
             ->whereDate('created_at', '=', date('Y-m-d'))
             ->get();
+
+        $dailyIncomeActivityArr = [];
+        $dailyIncomePerActivities = Activity::with(['memberships.payments' => function ($query) {
+            $query->whereDate('created_at', date('Y-m-d'));
+        }, 'logs.payments' => function ($query) {
+            $query->whereDate('created_at', date('Y-m-d'));
+        }])->get();
+
+        foreach($dailyIncomePerActivities as $dailyIncomePerActivity) {
+            // Foreach loop for logs
+            $logIncome = 0;
+            $membershipIncome = 0;
+
+            foreach($dailyIncomePerActivity->logs as $log) {
+                foreach ($log->payments as $payment) {
+                    $logIncome += $payment->amount_received;
+                }
+            }
+
+            // Foreach loop for memberships
+            foreach($dailyIncomePerActivity->memberships as $membership) {
+                foreach ($membership->payments as $membership) {
+                    $membershipIncome += $membership->amount_received;
+                }
+            }
+
+            $dailyIncomeActivityArr[] = [
+                'name' => $dailyIncomePerActivity->name,
+                'y' => $logIncome + $membershipIncome
+            ];
+        }
 
         /**
          * Get total number of daily customers
@@ -54,6 +86,7 @@ class DashboardController extends Controller
             ->withTotalNumberOfDailyCustomers($totalNumberOfDailyCustomers)
             ->withTotalNumberOfExpiringCustomers($totalNumberOfExpiringCustomers)
             ->withTotalGymIncome($totalGymIncome->sum('amount_received'))
-            ->withTotalNumberOfActiveMembers($totalNumberOfActiveMembers);
+            ->withTotalNumberOfActiveMembers($totalNumberOfActiveMembers)
+            ->withDailyIncomeActivityArr(json_encode($dailyIncomeActivityArr));
     }
 }

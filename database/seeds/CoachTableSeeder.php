@@ -12,10 +12,10 @@ class CoachTableSeeder extends Seeder
     public function run()
     {
         $coach = \App\Models\Coach\Coach::create([
-            'first_name' => 'Christan Jake',
-            'last_name' => 'Gatchalian',
+            'first_name' => 'Jean Claude',
+            'last_name' => 'Van Damme',
             'address' => '#8 Roxas Street, Happy Glen Loop Subdivision, Brngy. 168, Deparo, Caloocan City',
-            'contact_number' => '09667036547',
+            'contact_number' => '09776037546',
             'employment_type' => 'Employed'
         ]);
 
