@@ -76,7 +76,7 @@ class CoachRepository extends BaseRepository
             ]);
 
             if ($coach) {
-                event(new CoachCreated(Auth::user()->full_name, $coach));
+                event(new CoachCreated(Auth::user()->full_name, $coach->name));
 
                 return $coach;
             }
@@ -104,7 +104,7 @@ class CoachRepository extends BaseRepository
                 'contact_number' => $data['contact_number'],
                 'employment_type' => $data['employment_type']
             ])) {
-                event(new CoachUpdated(Auth::user()->full_name, $coach));
+                event(new CoachUpdated(Auth::user()->full_name, $coach->name));
 
                 return $coach;
             }

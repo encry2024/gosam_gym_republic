@@ -47,6 +47,13 @@ class PermissionRoleTableSeeder extends Seeder
             'delete customer',
             'restore customer',
             'permanently delete customer',
+
+            'view payment',
+            'store payment',
+            'edit payment',
+            'delete payment',
+            'restore payment',
+            'permanently delete payment',
         ];
 
         foreach ($permissions as $permission) {

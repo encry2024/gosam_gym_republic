@@ -10,6 +10,8 @@ use App\Http\Requests\Backend\Customer\StoreCustomerRequest;
 use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 use App\Http\Requests\Backend\Customer\UpdateCustomerRequest;
 use Auth;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class CustomerController.
@@ -73,7 +75,7 @@ class CustomerController extends Controller
             'emergency_number'
         ));
 
-        return redirect()->route('admin.customer.index')->withFlashSuccess(__('alerts.backend.customers.created', ['customer' => $customer->name]));
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.customers.created', ['customer' => $customer->name]));
     }
 
     /**
@@ -84,6 +86,10 @@ class CustomerController extends Controller
      */
     public function show(ManageCustomerRequest $request, Customer $customer)
     {
+        if ($request->ajax()) {
+            return Response::json($customer->load(['memberships.activity', 'memberships.coach']));
+        }
+
         return view('backend.customer.show')
             ->withCustomer($customer);
     }
@@ -135,7 +141,7 @@ class CustomerController extends Controller
     {
         $customerName = $customer->name;
 
-        $customer = $this->customerRepository->deleteById($customer->id);
+        $this->customerRepository->deleteById($customer->id);
 
         event(new CustomerDeleted(Auth::user()->full_name, $customerName));
 

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.coaches.management') . ' | ' . __('labels.backend.coaches.create'))
+@section('title', __('labels.backend.coaches.management') . ' | ' . __('labels.backend.coaches.edit'))
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -14,7 +14,7 @@
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
                             @lang('labels.backend.coaches.management')
-                            <small class="text-muted">@lang('labels.backend.coaches.create')</small>
+                            <small class="text-muted">@lang('labels.backend.coaches.edit')</small>
                         </h4>
                     </div><!--col-->
                 </div><!--row-->
@@ -71,6 +71,17 @@
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.coaches.employment_type'))->class('col-md-2 form-control-label')->for('employment_type') }}
+
+                            <div class="col-md-10">
+                                <select name="employment_type" id="employment_type" class="form-control">
+                                    <option value="employed">Employed</option>
+                                    <option value="freelance">Freelance</option>
+                                </select>
+                            </div><!--col-->
+                        </div><!--form-group-->
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-body-->
@@ -82,7 +93,7 @@
                     </div><!--col-->
 
                     <div class="col text-right">
-                        {{ form_submit(__('buttons.general.crud.create')) }}
+                        {{ form_submit(__('buttons.general.crud.edit')) }}
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-footer-->

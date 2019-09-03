@@ -2,9 +2,29 @@
 
 namespace App\Models\Customer\Traits\Relationship;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Membership\Membership;
+use App\Models\Payment\Payment;
 
-class CustomerRelationship extends Model
+/**
+ * Class CustomerRelationship.
+ */
+trait CustomerRelationship
 {
-    //
+    /**
+     * @return mixed
+     */
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

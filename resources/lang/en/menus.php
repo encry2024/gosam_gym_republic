@@ -13,6 +13,15 @@ return [
     */
 
     'backend' => [
+        'logs' => [
+            'view' => ':customer'
+        ],
+
+        'memberships' => [
+            'view'      => ':membership',
+            'deleted'   => 'Deleted Memberships',
+        ],
+
         'customers' => [
             'view'      => ':customer',
             'deleted'   => 'Deleted Customers',
@@ -70,6 +79,7 @@ return [
             'general' => 'General',
             'history' => 'History',
             'system' => 'System',
+            'membership' => 'Memberships'
         ],
     ],
 

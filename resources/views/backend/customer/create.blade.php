@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-12">
                     <h4 class="card-title mb-0">
                         @lang('labels.backend.customers.management')
                         <small class="text-muted">@lang('labels.backend.customers.create')</small>
@@ -37,7 +37,7 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
+                        {{ html()->label(__('validation.attributes.backend.customers.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
 
                         <div class="col-md-10">
                             {{ html()->text('last_name')
@@ -49,10 +49,10 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.address'))->class('col-md-2 form-control-label')->for('address') }}
+                        {{ html()->label(__('validation.attributes.backend.customers.address'))->class('col-md-2 form-control-label')->for('address') }}
 
                         <div class="col-md-10">
-                            {{ html()->text('address')
+                            {{ html()->textarea('address')
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.customers.address'))
                                 ->attribute('maxlength', 191)
@@ -61,7 +61,7 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.contact_number'))->class('col-md-2 form-control-label')->for('contact_number') }}
+                        {{ html()->label(__('validation.attributes.backend.customers.contact_number'))->class('col-md-2 form-control-label')->for('contact_number') }}
 
                         <div class="col-md-10">
                             {{ html()->text('contact_number')
@@ -73,10 +73,10 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.date_of_birth'))->class('col-md-2 form-control-label')->for('date_of_birth') }}
+                        {{ html()->label(__('validation.attributes.backend.customers.date_of_birth'))->class('col-md-2 form-control-label')->for('date_of_birth') }}
 
                         <div class="col-md-10">
-                            {{ html()->text('date_of_birth')
+                            {{ html()->date('date_of_birth')
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.customers.date_of_birth'))
                                 ->attribute('maxlength', 191)
@@ -85,7 +85,7 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.email'))->class('col-md-2 form-control-label')->for('email') }}
+                        {{ html()->label(__('validation.attributes.backend.customers.email'))->class('col-md-2 form-control-label')->for('email') }}
 
                         <div class="col-md-10">
                             {{ html()->email('email')
@@ -97,7 +97,7 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.customers.emergency_number'))->class('col-md-2 form-control-label')->for('emergency_number') }}
+                        {{ html()->label('Emergency No#')->class('col-md-2 form-control-label')->for('emergency_number') }}
 
                         <div class="col-md-10">
                             {{ html()->text('emergency_number')

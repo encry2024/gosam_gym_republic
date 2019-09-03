@@ -2,14 +2,16 @@
 
 namespace App\Models\Activity;
 
+use App\Models\Activity\Traits\Method\ActivityMethod;
+use App\Models\Activity\Traits\Relationship\ActivityRelationship;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Activity\Traits\Attribute\ActivityAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Activity\Traits\Relationship\ActivityRelationship;
 
 class Activity extends Model
 {
-    use ActivityAttribute,
+    use ActivityMethod,
+        ActivityAttribute,
         ActivityRelationship,
         SoftDeletes;
 

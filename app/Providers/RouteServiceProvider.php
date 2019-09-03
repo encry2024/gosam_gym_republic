@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Auth\User;
 use App\Models\Coach\Coach;
 use App\Models\Activity\Activity;
+use App\Models\Membership\Membership;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Models\Customer\Customer;
@@ -53,6 +54,12 @@ class RouteServiceProvider extends ServiceProvider
             $customer = new Customer();
 
             return Customer::withTrashed()->where($customer->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('membership', function ($value) {
+            $membership = new Membership();
+
+            return Membership::withTrashed()->where($membership->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();

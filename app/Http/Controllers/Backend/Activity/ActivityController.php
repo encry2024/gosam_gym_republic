@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Activity;
 
-use App\Models\Activity\Activity;
-use App\Http\Controllers\Controller;
 use App\Events\Backend\Activity\ActivityDeleted;
-use App\Repositories\Backend\ActivityRepository;
-use App\Http\Requests\Backend\Activity\StoreActivityRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Activity\ManageActivityRequest;
+use App\Http\Requests\Backend\Activity\StoreActivityRequest;
 use App\Http\Requests\Backend\Activity\UpdateActivityRequest;
-use Illuminate\Http\Request;
+use App\Models\Activity\Activity;
+use App\Repositories\Backend\ActivityRepository;
 use Auth;
+use Illuminate\Http\Response;
 
 /**
  * Class ActivityController.
@@ -44,9 +44,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * @param ManageActivityRequest    $request
-     * @param RoleRepository       $roleRepository
-     * @param PermissionRepository $permissionRepository
+     * @param ManageActivityRequest $request
+     * @param RoleRepository        $roleRepository
+     * @param PermissionRepository  $permissionRepository
      *
      * @return mixed
      */
@@ -58,8 +58,8 @@ class ActivityController extends Controller
     /**
      * @param StoreActivityRequest $request
      *
-     * @throws \Throwable
      * @return mixed
+     * @throws \Throwable
      */
     public function store(StoreActivityRequest $request)
     {
@@ -85,14 +85,18 @@ class ActivityController extends Controller
      */
     public function show(ManageActivityRequest $request, Activity $activity)
     {
+        if ($request->ajax()) {
+            return \Response::json($activity->load('activityCoaches'));
+        }
+
         return view('backend.activity.show')
             ->withActivity($activity);
     }
 
     /**
-     * @param ManageActivityRequest    $request
-     * @param PermissionRepository $permissionRepository
-     * @param Activity                 $activity
+     * @param ManageActivityRequest $request
+     * @param PermissionRepository  $permissionRepository
+     * @param Activity              $activity
      *
      * @return mixed
      */
@@ -105,14 +109,12 @@ class ActivityController extends Controller
      * @param UpdateActivityRequest $request
      * @param Activity              $activity
      *
-     * @throws \App\Exceptions\GeneralException
-     * @throws \Throwable
      * @return mixed
+     * @throws \Throwable
+     * @throws \App\Exceptions\GeneralException
      */
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
-        // return json_encode($request->all());
-
         $activity = $this->activityRepository->update($activity, $request->only(
             'name',
             'member_rate',
@@ -135,24 +137,50 @@ class ActivityController extends Controller
      * @param ManageActivityRequest $request
      * @param Activity              $activity
      *
-     * @throws \Exception
      * @return mixed
+     * @throws \Exception
      */
     public function destroy(ManageActivityRequest $request, Activity $activity)
     {
         $activityName = $activity->name;
 
-        $activity = $this->activityRepository->deleteById($activity->id);
+        $this->activityRepository->deleteById($activity->id);
 
         event(new ActivityDeleted(Auth::user()->full_name, $activityName));
 
         return redirect()->route('admin.activity.deleted')->withFlashSuccess(__('alerts.backend.activities.deleted', ['activity' => $activityName]));
     }
 
+    /**
+     * Check if the activity assigned to the coach exists.
+     *
+     * @param ManageActivityRequest $request
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function checkExistingActivity(ManageActivityRequest $request)
     {
         $ifActivityExists = $this->activityRepository->checkExistingActivity($request->only('name'));
 
         return $ifActivityExists;
+    }
+
+    public function getRelatedCoaches($activity)
+    {
+        $activityCoaches = [];
+
+        foreach ($activity->activityCoaches as $activityCoach) {
+            $activityCoaches[] = [
+                'id' => $activityCoach->id,
+                'text' => $activityCoach->name
+            ];
+        }
+
+        return json_encode(['coach' => $activityCoaches,
+            'membership_fee' => $activity->membership_rate,
+            'monthly_rate' => $activity->monthly_fee,
+            'coach_fee' => $activity->coach_rate
+        ]);
     }
 }

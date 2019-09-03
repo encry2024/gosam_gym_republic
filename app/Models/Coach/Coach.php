@@ -30,6 +30,4 @@ class Coach extends Model implements AuditableInterface
     protected $auditExclude = [
         'id'
     ];
-
-    protected $with = ['activityCoaches'];
 }

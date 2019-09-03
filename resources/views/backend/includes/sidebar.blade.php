@@ -9,7 +9,14 @@
                 <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/dashboard'))
                 }}" href="{{ route('admin.dashboard') }}">
-                    @lang('menus.backend.sidebar.dashboard')
+                    <i class="nav-icon fab fa-dashcube"></i> @lang('menus.backend.sidebar.dashboard')
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/logs*')) }}"
+                   href="{{ route('admin.logs.index') }}">
+                    <i class="nav-icon fas fa-book-open"></i> Log Book
                 </a>
             </li>
 
@@ -19,7 +26,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/activity*'))
                 }}" href="#">
-                    Activity
+                    <i class="nav-icon fas fa-dumbbell"></i> Activities
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -55,7 +62,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/coach*'))
                 }}" href="#">
-                    Coach
+                    <i class="nav-icon fas fa-chalkboard-teacher"></i> Coaches
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -91,7 +98,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                     active_class(Active::checkUriPattern('admin/customer*'))
                 }}" href="#">
-                    Customer
+                    <i class="nav-icon fas fa-users"></i> Customers
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -103,13 +110,13 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link {{
                             active_class(Active::checkUriPattern('admin/customer/create'))
                             }}" href="{{ route('admin.customer.create') }}">
                             Create
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a class="nav-link {{
@@ -121,11 +128,84 @@
                 </ul>
             </li> <!-- customer -->
 
+            <li class="nav-item nav-dropdown {{
+                active_class(Active::checkUriPattern('admin/membership*'), 'open')
+                }}">
+                <a class="nav-link nav-dropdown-toggle {{
+                    active_class(Active::checkUriPattern('admin/membership*'))
+                }}" href="#">
+                    <i class="nav-icon fas fa-certificate"></i> Memberships
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/membership/'))
+                            }}" href="{{ route('admin.membership.index') }}">
+                            List
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/membership/create'))
+                            }}" href="{{ route('admin.membership.create') }}">
+                            Create
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/membership/deleted'))
+                            }}" href="{{ route('admin.membership.deleted') }}">
+                            Deleted
+                        </a>
+                    </li>
+                </ul>
+            </li> <!-- customer -->
+
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/reports'))
+                }}" href="{{ route('admin.reports') }}">
+                    <i class="nav-icon fas fa-chart-line"></i> Reports
+                </a>
+            </li>
+
             @if ($logged_in_user->isAdmin())
+
+                <li class="nav-item nav-dropdown {{
+                    active_class(Active::checkUriPattern('admin/payment*'), 'open')
+                    }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Active::checkUriPattern('admin/payment*'))
+                    }}" href="#">
+                        <i class="nav-icon fas fa-money-bill"></i> Payments
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/payment'))
+                            }}" href="{{ route('admin.payment.index') }}">
+                                List
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/payment/deleted'))
+                            }}" href="{{ route('admin.payment.deleted') }}">
+                                Deleted
+                            </a>
+                        </li>
+                    </ul>
+                </li> <!-- payments -->
+
                 <li class="nav-item nav-dropdown {{
                     active_class(Active::checkUriPattern('admin/auth*'), 'open')
                 }}">
@@ -167,7 +247,7 @@
                 <li class="nav-item nav-dropdown {{
                     active_class(Active::checkUriPattern('admin/log-viewer*'), 'open')
                 }}">
-                        <a class="nav-link nav-dropdown-toggle {{
+                    <a class="nav-link nav-dropdown-toggle {{
                             active_class(Active::checkUriPattern('admin/log-viewer*'))
                         }}" href="#">
                         <i class="nav-icon fas fa-list"></i> @lang('menus.backend.log-viewer.main')
