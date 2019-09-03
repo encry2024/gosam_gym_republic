@@ -9,7 +9,12 @@ trait PaymentAttribute
 {
     public function getIncomeAttribute()
     {
-        $totalPaid = $this->amount_received;
+        if (class_basename($this->paymentable_type) == "Membership") {
+            $totalPaid = $this->amount_received + $this->paymentable->activity->coach_fee;
+        } else {
+
+            $totalPaid = $this->amount_received;
+        }
 
         return "PHP " . number_format($totalPaid, "2");
     }

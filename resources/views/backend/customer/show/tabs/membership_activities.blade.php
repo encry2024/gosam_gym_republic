@@ -11,7 +11,7 @@
             @foreach($customer->memberships as $membership)
                 <tr>
                     <td>{{ $membership->activity->name }}</td>
-                    <td>{{ $membership->coach->name }}</td>
+                    <td>{{ $membership->coach_id == 0 ? "N/A" : $membership->coach->name }}</td>
                     <td>{{ $membership->sessions }}</td>
                     <td>{{ date('F d, Y', strtotime($membership->activity_date_expiry)) }}</td>
                     <td>{!!  $membership->status_label !!}</td>

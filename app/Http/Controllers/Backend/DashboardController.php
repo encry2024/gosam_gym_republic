@@ -48,8 +48,9 @@ class DashboardController extends Controller
 
             // Foreach loop for memberships
             foreach($dailyIncomePerActivity->memberships as $membership) {
-                foreach ($membership->payments as $membership) {
-                    $membershipIncome += $membership->amount_received;
+
+                foreach ($membership->payments as $payment) {
+                    $membershipIncome += $payment->amount_received + $membership->coach_fee;
                 }
             }
 
