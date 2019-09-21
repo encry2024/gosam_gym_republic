@@ -15,7 +15,7 @@ class MembershipRenewed
      * @var
      */
     public $object;
-    public $activity
+    public $activity;
     public $doer;
 
     /**

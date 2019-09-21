@@ -15,7 +15,7 @@ class MembershipCancel
      * @var
      */
     public $object;
-    public $activity
+    public $activity;
     public $doer;
 
     /**

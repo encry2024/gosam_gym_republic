@@ -130,7 +130,7 @@
                         {{ form_submit(__('buttons.general.crud.create')) }}
                     </div><!--col-->
                 </div><!--row-->
-            </div><!--card-footer-->
+            </di v><!--card-footer-->
         </div><!--card-->
     {{ html()->form()->close() }}
 @endsection
